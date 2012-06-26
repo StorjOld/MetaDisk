@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+
+	<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		 Remove this if you use the .htaccess -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+	<title>page</title>
+	<meta name="description" content="" />
+	<meta name="author" content="khamza" />
+
+	<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+	<link rel="shortcut icon" href="/favicon.ico" />
+	<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+	<link rel="stylesheet" href="lib/qunit.css" />
+	<script src="lib/jquery-1.7.2.js"></script>
+	<script type="text/javascript" src="lib/qunit.js"></script>
+
+	<script type="text/javascript">
+		if (!$.browser.mozilla)
+		{
+			window.indexedDB = { polyfill : true };
+		}
+	</script>
+
+	<script type="text/javascript" src="indexedDB.polyfill.js"></script>
+	<script type="text/javascript" src="test/webkitIndexedDB.js"></script>
+	<script type="text/javascript" src="IDBRequest.js"></script>
+	<script type="text/javascript" src="IDBFactory.js"></script>
+	<script type="text/javascript" src="IDBDatabase.js"></script>
+	<script type="text/javascript" src="IDBTransaction.js"></script>
+	<script type="text/javascript" src="IDBObjectStore.js"></script>
+	<script type="text/javascript" src="IDBCursor.js"></script>
+	<script type="text/javascript" src="IDBKeyRange.js"></script>
+	<script type="text/javascript" src="IDBIndex.js"></script>
+
+	<script type="text/javascript" src="test/TestUtils.js"></script>
+	<script type="text/javascript" src="test/IDBFactoryTests.js"></script>
+	<script type="text/javascript" src="test/IDBDatabaseTests.js"></script>
+	<script type="text/javascript" src="test/IDBObjectStoreTests.js"></script>
+	<script type="text/javascript" src="test/IDBCursorTests.js"></script>
+	<script type="text/javascript" src="test/IDBIndexTests.js"></script>
+	<script type="text/javascript" src="test/PerformanceTests.js"></script>
+
+</head>
+
+<body>
+
+<h1 id="qunit-header">QUnit example</h1>
+<h2 id="qunit-banner"></h2>
+<div id="qunit-testrunner-toolbar"></div>
+<h2 id="qunit-userAgent"></h2>
+<ol id="qunit-tests"></ol>
+<div id="qunit-fixture">test markup, will be hidden</div>
+
+<script type="text/javascript">
+
+	//PerformanceTests.run();
+
+	IDBFactoryTests.run();
+	IDBDatabaseTests.run();
+	IDBObjectStoreTests.run();
+	IDBCursorTests.run();
+
+</script>
+</body>
+</html>
