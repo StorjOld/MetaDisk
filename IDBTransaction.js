@@ -30,7 +30,8 @@ if (window.indexedDB.polyfill)
 				me.error = sqlError;
 				if (me.onerror) me.onerror(util.event("error", me)); },
 			function () {
-				if (me.oncomplete) me.oncomplete(util.event("success", me)); });
+				if (me.oncomplete) me.oncomplete(util.event("success", me));
+			});
 	};
 
 	function performOperation(me, sqlTx, operationIndex)
@@ -39,13 +40,12 @@ if (window.indexedDB.polyfill)
 		{
 			me._active = false;
 			me._requests = [];
-			for (prop in me.db._objectStores)
+			for (var name in me.db._objectStores)
 			{
-				me.db._objectStores[prop].transaction = null;
+				me.db._objectStores[name].transaction = null;
 			}
 			return;
 		}
-
 		operation =  me._requests[operationIndex];
 		operation(sqlTx, function ()
 		{
@@ -66,6 +66,11 @@ if (window.indexedDB.polyfill)
 		{
 			throw util.error("NotFoundError");
 		}
+	};
+
+	IDBTransaction.prototype.abort = function ()
+	{
+
 	};
 
 	IDBTransaction.prototype._enqueueRequest = function (sqlTxCallback)

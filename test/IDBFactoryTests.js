@@ -171,7 +171,8 @@ var IDBFactoryTests = new (function ()
 
             promise.fail(function (e)
             {
-                ok(false, "Testing environment initialization failure. ", e);
+                ok(false, "Testing environment initialization failure. ");
+	            console.warn(e);
                 start();
             });
             promise.done(function (e)

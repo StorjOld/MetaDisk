@@ -72,7 +72,7 @@ var IDBDatabaseTests = new (function ()
 				ok(true, "Create ObjectStore outside of 'versionchange' transaction");
 			}
 
-			try { db.createObjectStore(env.cars); }
+			try { db.deleteObjectStore(env.cars); }
 			catch (ex)
 			{
 				ok(true, "Delete ObjectStore outside of 'versionchange' transaction");

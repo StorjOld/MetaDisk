@@ -15,8 +15,7 @@
 
 	// Configuration
 	indexedDB.SCHEMA_TABLE = "__IndexedDBSchemaInfo__";
-	indexedDB.INDEXEDDB_METADATA_CURRENT_VERSION = "v1.0";
-	indexedDB.DB_PREFIX = "__INDEXEDDB__";
+	indexedDB.DB_PREFIX = "__IndexedDB__";
 	indexedDB.DB_DESCRIPTION = "IndexedDB ";
 	indexedDB.DEFAULT_DB_SIZE = 5 * 1024 * 1024;
 	indexedDB.CURSOR_CHUNK_SIZE = 10;
@@ -31,28 +30,20 @@
 	};
 
 
-	indexedDB.util =
+	indexedDB.util = new (function ()
 	{
-		async : function (fn) { w_setTimeout(fn, 0); },
+		this.async = function (fn) { w_setTimeout(fn, 0); };
 
-		exception : function (type, message, innerException)
-		{
-			var result = new w_Error(message);
-			result.type = type;
-			result.inner = innerException;
-			return result;
-		},
-
-		error : function (name, message, inner)
+		this.error = function (name, message, innerError)
 		{
 			return {
 				name : name,
 				message : message,
-				inner : inner
+				inner : innerError
 			}
-		},
+		};
 
-		event : function (type, target)
+		this.event = function (type, target)
 		{
 			return {
 				type : type,
@@ -60,8 +51,45 @@
 				currentTarget : target,
 				preventDefault : function () { }
 			};
-		}
-	};
+		};
+
+		this.validateKeyPath = function (keyPath)
+		{
+			if (keyPath === "") return "";
+			if (keyPath == null) return null;
+
+			var r = /^([^\d\W]\w*\.)+$/i;
+			if (keyPath instanceof Array)
+			{
+				var i = keyPath.length;
+				if (i == 0) throw this.error("SyntaxError");
+
+				while (i--)
+				{
+					if (!r.test(keyPath[i] + ".")) throw this.error("SyntaxError");
+				}
+				return keyPath;
+			}
+			if (!r.test(keyPath + ".")) throw this.error("SyntaxError");
+			return keyPath;
+		};
+
+		this.arrayRemove = function (array, item)
+		{
+			var i = array.indexOf(item);
+			if (i > -1) array.splice(i, 1);
+		};
+
+		this.arrayAdd = function (array, item)
+		{
+			if (array.indexOf(item) == -1) array.push(item);
+		};
+
+		this.indexTable = function (objectStoreName, name)
+		{
+			return indexedDB.DB_PREFIX + "Index__" + objectStoreName + "__" + name;
+		};
+	});
 
 	/*
 	IDBVersionChangeEvent.prototype = new Event(null);

@@ -40,6 +40,7 @@
 	<script type="text/javascript" src="test/IDBFactoryTests.js"></script>
 	<script type="text/javascript" src="test/IDBDatabaseTests.js"></script>
 	<script type="text/javascript" src="test/IDBObjectStoreTests.js"></script>
+	<script type="text/javascript" src="test/IDBObjectStoreIndexTests.js"></script>
 	<script type="text/javascript" src="test/IDBCursorTests.js"></script>
 	<script type="text/javascript" src="test/IDBIndexTests.js"></script>
 	<script type="text/javascript" src="test/PerformanceTests.js"></script>
@@ -59,10 +60,17 @@
 
 	//PerformanceTests.run();
 
+	QUnit.testStart(function()
+	{
+		QUnit.config.current.ignoreGlobalErrors = true;
+	});
+
 	IDBFactoryTests.run();
 	IDBDatabaseTests.run();
 	IDBObjectStoreTests.run();
+	IDBObjectStoreIndexTests.run();
 	IDBCursorTests.run();
+	IDBIndexTests.run();
 
 </script>
 </body>

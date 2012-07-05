@@ -7,7 +7,7 @@ if (window.indexedDB.polyfill)
 		this.error = null;
 		this.source = source;
 		this.transaction = null;
-		this.readyState = null;
+		this.readyState = util.IDBRequest.LOADING;
 		this.onsuccess = null;
 		this.onerror = null;
 	};

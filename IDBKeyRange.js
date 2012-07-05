@@ -29,4 +29,17 @@ if (window.indexedDB.polyfill)
 		return new IDBKeyRange(lower, upper, lowerOpen || false, upperOpen || false);
 	};
 
+	IDBKeyRange.ensureKeyRange = function (arg)
+	{
+		if (arg == null)
+		{
+			return util.IDBKeyRange.bound();
+		}
+		if ((arg instanceof util.IDBKeyRange))
+		{
+			return arg;
+		}
+		return util.IDBKeyRange.only(arg);
+	}
+
 }(window, window.indexedDB.util));

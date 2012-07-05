@@ -6,7 +6,8 @@ if (window.indexedDB.polyfill)
 		if (version !== undefined)
 		{
 			version = parseInt(version);
-			if (isNaN(version) || version <= 0) throw util.exception("Invalid version");
+			if (isNaN(version) || version <= 0) throw util.error("TypeError",
+				"The method parameter is missing or invalid.");
 		}
 		var request = new util.IDBOpenDBRequest();
 		request.source = null;
@@ -52,26 +53,36 @@ if (window.indexedDB.polyfill)
 	function openLowerVersion(request, db, sqldbVersion)
 	{
 		var tx = new util.IDBTransaction(db, [], util.IDBTransaction.VERSION_CHANGE);
-		tx._enqueueRequest(function (sqlTx, nextRequestCallback)
+		if (sqldbVersion == 0)
 		{
-			request.transaction = db._versionChangeTx = tx;
-			if (sqldbVersion == 0)
+			tx._enqueueRequest(function (sqlTx, nextRequestCallback)
 			{
 				sqlTx.executeSql("CREATE TABLE '" + indexedDB.SCHEMA_TABLE + "' (" +
-					"id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-					"type TEXT NOT NULL, " +
-					"name TEXT NOT NULL, " +
-					"keyPath TEXT, " +
-					"autoInc BOOLEAN, " +
-					"currentNo INTEGER NOT NULL DEFAULT 1, " +
-					"UNIQUE (type, name) ON CONFLICT ROLLBACK)");
-			}
+				"id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+				"type TEXT NOT NULL, " +
+				"name TEXT NOT NULL, " +
+				"keyPath TEXT, " +
+				"currentNo INTEGER NOT NULL DEFAULT 1, " +
+				// specific to tables
+				"autoInc BOOLEAN, " +
+				// specific to indexes
+				"tableId INTEGER, " +
+				"\"unique\" BOOLEAN, " +
+				"multiEntry BOOLEAN, " +
+				"UNIQUE (type, name) ON CONFLICT ROLLBACK)");
+
+				nextRequestCallback();
+			});
+		}
+		tx._enqueueRequest(function (sqlTx, nextRequestCallback)
+		{
 			db._loadObjectStores(sqlTx,
 				function ()
 				{
 					request.result = db;
 					if (request.onupgradeneeded)
 					{
+						request.transaction = db._versionChangeTx = tx;
 						var e = util.event("onupgradeneeded", request);
 						e.oldVersion = sqldbVersion;
 						e.newVersion = db.version;
@@ -139,15 +150,20 @@ if (window.indexedDB.polyfill)
 				sqldb.changeVersion(sqldb.version, "",
 					function (tx)
 					{
-						tx.executeSql("SELECT name FROM '" + indexedDB.SCHEMA_TABLE +"'", null,
+
+						tx.executeSql("SELECT a.type, a.name, b.name 'table' FROM " + indexedDB.SCHEMA_TABLE +
+							" a LEFT JOIN " + indexedDB.SCHEMA_TABLE + " b ON a.type = 'index' AND a.tableId = b.Id",
+							null,
 							function (tx, results)
 							{
-								var i;
-								for (i = 0; i < results.rows.length; i++)
+								var name;
+								for (var i = 0; i < results.rows.length; i++)
 								{
-									tx.executeSql("DROP TABLE \"" + results.rows.item(i).name + "\"");
+									var item = results.rows.item(i);
+									name = item.type == 'table' ? item.name : util.indexTable(item.table, item.name);
+									tx.executeSql("DROP TABLE [" + name + "]");
 								}
-								tx.executeSql("DROP TABLE '" + indexedDB.SCHEMA_TABLE + "'");
+								tx.executeSql("DROP TABLE " + indexedDB.SCHEMA_TABLE);
 							});
 					},
 					function (e)
@@ -158,7 +174,7 @@ if (window.indexedDB.polyfill)
 					{
 						if (request.onsuccess) request.onsuccess(null);
 					});
-			};
+			}
 		});
 		return request;
 	};
@@ -168,7 +184,7 @@ if (window.indexedDB.polyfill)
 	{
 		// TODO: Compare according to doc
 		return first > second ? 1 : (first == second ? 0 : -1);
-	}
+	};
 
 	// Utils
 	function openSqlDB(name)

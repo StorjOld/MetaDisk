@@ -24,34 +24,40 @@ if (window.indexedDB.polyfill)
 			throw util.error("ConstraintError");
 		}
 
-		var op = optionalParameters || { };
-		var keyPath = op.keyPath || null;
-		var autoIncrement = op.autoIncrement && op.autoIncrement != false || false;
-		if (autoIncrement && (keyPath == "" || (keyPath instanceof Array)))
+		var params = optionalParameters || { };
+		var keyPath = util.validateKeyPath(params.keyPath);
+		var autoIncrement = params.autoIncrement && params.autoIncrement != false || false;
+
+		if (autoIncrement && (keyPath === "" || (keyPath instanceof Array)))
 		{
 			throw util.error("InvalidAccessError");
 		}
-		if (keyPath != null) keyPath = validateKeyPath(keyPath);
-
 		return createObjectStore(this, name, keyPath, autoIncrement);
 	};
 
 	IDBDatabase.prototype.deleteObjectStore = function (name)
 	{
-		validateVersionChangeTx(this._versionChangeTx);
+		var tx = this._versionChangeTx;
+		validateVersionChangeTx(tx);
 		if (this.objectStoreNames.indexOf(name) == -1)
 		{
 			throw util.error("NotFoundError");
 		}
-		var i = this.objectStoreNames.indexOf(name);
-		if (i > -1) this.objectStoreNames.splice(i, 1);
+		util.arrayRemove(this.objectStoreNames, name);
+		var objectStore = this._objectStores[name];
+		delete this._objectStores[name];
 		var me = this;
-		this._versionChangeTx._enqueueRequest(function (sqlTx, nextRequestCallback)
+		var errorCallback = function (tx, sqlError)
 		{
-			sqlTx.executeSql("DROP TABLE \"" + name + "\"", [], null,
-				function (tx, sqlError) { me.objectStoreNames.push(name); }
-			);
-			sqlTx.executeSql("DELETE FROM " + indexedDB.SCHEMA_TABLE + " WHERE type = 'table' AND name = ?", [name]);
+			me.objectStoreNames.push(name);
+			me._objectStores[name] = objectStore;
+		};
+		tx._enqueueRequest(function (sqlTx, nextRequestCallback)
+		{
+			sqlTx.executeSql("DROP TABLE \"" + name + "\"", null, null, errorCallback);
+			sqlTx.executeSql("DELETE FROM " + indexedDB.SCHEMA_TABLE + " WHERE type = 'table' AND name = ?",
+				[name], null, errorCallback);
+
 			nextRequestCallback();
 		});
 	};
@@ -69,19 +75,33 @@ if (window.indexedDB.polyfill)
 	IDBDatabase.prototype._loadObjectStores = function (sqlTx, successCallback, errorCallback)
 	{
 		var me = this;
-		sqlTx.executeSql("SELECT name, keyPath, autoInc FROM " + indexedDB.SCHEMA_TABLE +
-			" WHERE type='table'", null,
+		sqlTx.executeSql("SELECT * FROM " + indexedDB.SCHEMA_TABLE +
+			" ORDER BY type DESC", null,
 			function (sqlTx, resultSet)
 			{
 				me._objectStores = { };
-				var item = null;
+				var item, objectStore;
 				for (var i = 0; i < resultSet.rows.length; i++)
 				{
 					var item = resultSet.rows.item(i);
-
-					me.objectStoreNames.push(item.name);
-					me._objectStores[item.name] = new util.IDBObjectStore(
-						item.name, w_JSON.parse(item.keyPath), item.autoInc);
+					if (item.type == "table")
+					{
+						me.objectStoreNames.push(item.name);
+						objectStore = new util.IDBObjectStore(item.name, w_JSON.parse(item.keyPath), item.autoInc);
+						objectStore._metaId = item.id;
+						me._objectStores[item.name] = objectStore;
+					}
+					else if (item.type == "index")
+					{
+						for (var name in me._objectStores)
+						{
+							objectStore = me._objectStores[name];
+							if (objectStore._metaId == item.tableId) break;
+						}
+						objectStore.indexNames.push(item.name);
+						objectStore._indexes[item.name] = new util.IDBIndex(objectStore,
+							item.name, item.keyPath, item.unique, item.multiEntry)
+					}
 				}
 				if (successCallback) successCallback();
 			},
@@ -89,7 +109,7 @@ if (window.indexedDB.polyfill)
 			{
 				if (errorCallback) errorCallback(sqlError);
 			});
-	}
+	};
 
 	// Utils
 	var w_JSON = window.JSON;
@@ -102,48 +122,32 @@ if (window.indexedDB.polyfill)
 		}
 	}
 
-	function validateKeyPath(keyPath)
-	{
-		if (keyPath === "") return "";
-
-		var r = /^([^\d\W]\w*\.)+$/i;
-		if (keyPath instanceof Array)
-		{
-			var i = keyPath.length;
-			if (i == 0) throw util.error("SyntaxError");
-
-			while (i--)
-			{
-				if (!r.test(keyPath[i] + ".")) throw util.error("SyntaxError");
-			}
-			return keyPath;
-		}
-		if (!r.test(keyPath + ".")) throw util.error("SyntaxError");
-		return keyPath;
-	}
-
 	function createObjectStore(me, name, keyPath, autoIncrement)
 	{
 		var objectStore = new util.IDBObjectStore(name, keyPath, autoIncrement, me._versionChangeTx);
-		me._objectStores[name] = objectStore;
 		me.objectStoreNames.push(name);
+		me._objectStores[name] = objectStore;
+		var errorCallback = function (tx, sqlError)
+		{
+			util.arrayRemove(me.objectStoreNames, name);
+			delete me._objectStores[name];
+		};
 		me._versionChangeTx._enqueueRequest(function (sqlTx, nextRequestCallback)
 		{
 			sqlTx.executeSql("CREATE TABLE \"" + name + "\" (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-				"key TEXT, value BLOB)", [], null,
-				function (tx, sqlError)
-				{
-					var i = me.objectStoreNames.indexOf(name);
-					if (i > -1) me.objectStoreNames.splice(i, 1);
+				"key TEXT, value BLOB)", [], null, errorCallback);
 
-					delete me._objectStores[name];
-				}
-			);
-			sqlTx.executeSql("CREATE INDEX Index_" + name + "_key ON \"" + name + "\" (key)");
+			sqlTx.executeSql("CREATE INDEX INDEX_" + name + "_key ON \"" + name + "\" (key)", [], null, errorCallback);
 
 			sqlTx.executeSql("INSERT INTO " + indexedDB.SCHEMA_TABLE +
 				" (type, name, keyPath, autoInc) VALUES ('table', ?, ?, ?)",
-				[name, w_JSON.stringify(keyPath), autoIncrement ? 1 : 0]);
+				[name, w_JSON.stringify(keyPath), autoIncrement ? 1 : 0],
+				function (sqlTx, results)
+				{
+					objectStore._metaId = results.insertId;
+				},
+				errorCallback);
+
 			nextRequestCallback();
 		});
 		return objectStore;

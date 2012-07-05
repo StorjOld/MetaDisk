@@ -5,13 +5,12 @@ if (window.indexedDB.polyfill)
 	{
 		this.source = source;
 		this.direction = direction || IDBCursor.NEXT;
-		this.key = null;
-		this.primaryKey = null; // position, effective key
+		this.key = null;        // position
+		this.primaryKey = null; // effective key, object store position
 
 		this._request = request;
 		this._range = null;
 		this._gotValue = true;
-		this._objectStorePosition = null; // used for indexes
 	};
 
 	IDBCursor.prototype.update = function (value)
@@ -26,47 +25,57 @@ if (window.indexedDB.polyfill)
 
 	IDBCursor.prototype.continue = function (key)
 	{
-		if (!this._gotValue) throw util.exception("InvalidStateError");
+		if (!this._gotValue) throw util.error("InvalidStateError");
+		this._gotValue = false;
 
 		var range = this._range;
 		var filter = util.IDBKeyRange.bound(range.lower, range.upper, range.lowerOpen, range.upperOpen);
-		if (key)
+		var isIndex = this.source instanceof util.IDBIndex;
+		var position = this.key;
+		var noDuplicate = [IDBCursor.PREV_NO_DUPLICATE, IDBCursor.NEXT_NO_DUPLICATE].indexOf(this.direction) >= 0;
+		if (key != null)
 		{
-			if (isAsc(this))
+			if (isDesc(this))
 			{
-				if (key <= this.primaryKey) throw util.exception("DataError");
-				filter.lower = key;
-				filter.lowerOpen = false;
-			}
-			else
-			{
-				if (key >= this.primaryKey) throw util.exception("DataError");
+				if ((isIndex && key > position) || key >= position) throw util.error("DataError");
 				filter.upper = key;
 				filter.upperOpen = false;
 			}
-		}
-		else if (this.primaryKey)
-		{
-			if (isAsc(this))
+			else
 			{
-				filter.lower = this.primaryKey;
-				filter.lowerOpen = true;
+				if ((isIndex && key < position) || key <= position) throw util.error("DataError");
+				filter.lower = key;
+				filter.lowerOpen = false;
+			}
+		}
+		else if (position != null)
+		{
+			var open = !isIndex || noDuplicate;
+			if (isDesc(this))
+			{
+				filter.upper = position;
+				filter.upperOpen = open;
 			}
 			else
 			{
-				filter.upper = this.primaryKey;
-				filter.upperOpen = true;
+				filter.lower = position;
+				filter.lowerOpen = open;
 			}
 		}
-		iterateCursor(this, filter);
-		this._gotValue = false;
+		if (isIndex)
+		{
+			iterateIndexCursor(this, filter);
+		}
+		else
+		{
+			iterateCursor(this, filter);
+		}
 	};
 
 	IDBCursor.prototype.delete = function ()
 	{
 
 	};
-
 
 	// Internal methods
 	function iterateCursor(me, filter)
@@ -75,22 +84,24 @@ if (window.indexedDB.polyfill)
 		me._request.readyState = util.IDBRequest.LOADING;
 		tx._enqueueRequest(function (sqlTx, nextRequestCallback)
 		{
-			var sql = ["SELECT key, value FROM \"" + me.source.name + "\" WHERE (0 = 0)"];
+			var sql = ["SELECT key, value FROM [" + me.source.name + "]"];
+			var where = [];
 			var args = [];
 			if (filter.lower)
 			{
-				sql.push("AND (key >" + (filter.lowerOpen ? "" : "="), "?)");
+				where.push("(key >" + (filter.lowerOpen ? "" : "=") + " ?)");
 				args.push(w_JSON.stringify(filter.lower));
 			}
 			if (filter.upper)
 			{
-				sql.push("AND (key <" + (filter.upperOpen ? "" : "="), "?)");
+				where.push("(key <" + (filter.upperOpen ? "" : "=") + " ?)");
 				args.push(w_JSON.stringify(filter.upper));
 			}
-
-			sql.push("ORDER BY key");
-			if (!isAsc(me)) sql.push("DESC");
-			sql.push("LIMIT 1");
+			if (where.length > 0)
+			{
+				sql.push("WHERE", where.join(" AND "))
+			}
+			sql.push("ORDER BY key" + (isDesc(me) ? " DESC" : ""), "LIMIT 1");
 
 			sqlTx.executeSql(sql.join(" "), args,
 				function (tx, results)
@@ -105,7 +116,7 @@ if (window.indexedDB.polyfill)
 					}
 					else
 					{
-						var found = found = results.rows.item(0);
+						var found = results.rows.item(0);
 						me.key = me.primaryKey = w_JSON.parse(found.key);
 						if (typeof me.value !== "undefined") me.value = w_JSON.parse(found.value);
 						me._gotValue = true;
@@ -116,7 +127,108 @@ if (window.indexedDB.polyfill)
 				},
 				function (tx, sqlError)
 				{
-					var request = m._request;
+					var request = me._request;
+					request.error = sqlError;
+					if (request.onerror) request.onerror(util.event("error", request));
+					nextRequestCallback();
+				});
+		});
+	}
+
+	function iterateIndexCursor(me, filter)
+	{
+		var tx = me.source.objectStore.transaction;
+		me._request.readyState = util.IDBRequest.LOADING;
+		tx._enqueueRequest(function (sqlTx, nextRequestCallback)
+		{
+			var withValue = me instanceof IDBCursorWithValue;
+			var desc = isDesc(me);
+			var objectStoreName = me.source.objectStore.name;
+			var tableName = util.indexTable(objectStoreName, me.source.name);
+			var sql = ["SELECT i.key, i.primaryKey" + (withValue ? ", t.value" : ""),
+				"FROM [" + tableName + "] as i"];
+
+			if (withValue)
+			{
+				sql.push("LEFT JOIN [" + objectStoreName + "] as t ON t.Id = i.recordId");
+			}
+			var where = [], args = [], strPrimaryKey = null;
+			if (filter.lower)
+			{
+				var strLower = w_JSON.stringify(filter.lower);
+				args.push(strLower);
+				if (filter.lowerOpen)
+				{
+					where.push("(i.key > ?)");
+				}
+				else
+				{
+					if (me.primaryKey == null || desc)
+					{
+						where.push("(i.key >= ?)");
+					}
+					else
+					{
+						where.push("((i.key > ?) OR (i.key = ? AND i.primaryKey > ?))");
+						strPrimaryKey = w_JSON.stringify(me.primaryKey);
+						args.push(strLower, strPrimaryKey);
+					}
+				}
+			}
+			if (filter.upper)
+			{
+				var strUpper = w_JSON.stringify(filter.upper);
+				args.push(strUpper);
+				if (filter.upperOpen)
+				{
+					where.push("(i.key < ?)");
+				}
+				else
+				{
+					if (me.primaryKey == null || !desc)
+					{
+						where.push("(i.key <= ?)");
+					}
+					else
+					{
+						where.push("((i.key < ?) OR (i.key = ? AND i.primaryKey < ?))");
+						args.push(strUpper, strPrimaryKey || w_JSON.stringify(me.primaryKey));
+					}
+				}
+			}
+			if (where.length > 0)
+			{
+				sql.push("WHERE", where.join(" AND "))
+			}
+			var sDesc = desc ? " DESC" : "";
+			sql.push("ORDER BY i.key" + sDesc + ", i.primaryKey" + sDesc + " LIMIT 1");
+
+			sqlTx.executeSql(sql.join(" "), args,
+				function (tx, results)
+				{
+					var request = me._request;
+					request.readyState = util.IDBRequest.DONE;
+					if (results.rows.length == 0)
+					{
+						me.key = me.primaryKey = undefined;
+						if (typeof me.value !== "undefined") me.value = undefined;
+						request.result = null;
+					}
+					else
+					{
+						var found = results.rows.item(0);
+						me.key = w_JSON.parse(found.key);
+						me.primaryKey = w_JSON.parse(found.primaryKey);
+						if (typeof me.value !== "undefined") me.value = w_JSON.parse(found.value);
+						me._gotValue = true;
+						request.result = me;
+					}
+					if (request.onsuccess) request.onsuccess(util.event("success", request));
+					nextRequestCallback();
+				},
+				function (tx, sqlError)
+				{
+					var request = me._request;
 					request.error = sqlError;
 					if (request.onerror) request.onerror(util.event("error", request));
 					nextRequestCallback();
@@ -127,9 +239,9 @@ if (window.indexedDB.polyfill)
 	// Utils
 	var w_JSON = window.JSON;
 
-	function isAsc(cursor)
+	function isDesc(cursor)
 	{
-		return [IDBCursor.NEXT, IDBCursor.NEXT_NO_DUPLICATE].indexOf(cursor.direction) >= 0;
+		return [IDBCursor.PREV, IDBCursor.PREV_NO_DUPLICATE].indexOf(cursor.direction) >= 0;
 	}
 
 

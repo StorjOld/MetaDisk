@@ -335,7 +335,7 @@ var IDBObjectStoreTests = new (function ()
 			});
 			promise.fail(function (e)
 			{
-				ok(false, "Testing environment initialization failure. ");
+				ok(false, "Testing environment initialization failure.");
 				console.warn(e);
 				start();
 			});
