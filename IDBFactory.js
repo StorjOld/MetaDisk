@@ -135,23 +135,21 @@ if (window.indexedDB.polyfill)
 	indexedDB.deleteDatabase = function (name)
 	{
 		// INFO: There is no way to delete database in Web SQL Database API.
-		var request = new util.IDBOpenDBRequest();
-		request.readyState = util.IDBRequest.LOADING;
+		var request = new util.IDBOpenDBRequest(null);
 		indexedDB.util.async(function()
 		{
 			request.readyState = util.IDBRequest.DONE;
 			var sqldb = openSqlDB(name);
 			if (sqldb.version == "")
 			{
-				if (request.onsuccess) request.onsuccess(null);
+				if (request.onsuccess) request.onsuccess(util.event("success", request));
 			}
 			else
 			{
 				sqldb.changeVersion(sqldb.version, "",
-					function (tx)
+					function (sqlTx)
 					{
-
-						tx.executeSql("SELECT a.type, a.name, b.name 'table' FROM " + indexedDB.SCHEMA_TABLE +
+						sqlTx.executeSql("SELECT a.type, a.name, b.name 'table' FROM " + indexedDB.SCHEMA_TABLE +
 							" a LEFT JOIN " + indexedDB.SCHEMA_TABLE + " b ON a.type = 'index' AND a.tableId = b.Id",
 							null,
 							function (tx, results)
@@ -172,7 +170,7 @@ if (window.indexedDB.polyfill)
 					},
 					function ()
 					{
-						if (request.onsuccess) request.onsuccess(null);
+						if (request.onsuccess) request.onsuccess(util.event("success", request));
 					});
 			}
 		});

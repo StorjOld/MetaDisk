@@ -12,12 +12,12 @@ if (window.indexedDB.polyfill)
 
 		this._webdb = webdb;
 		this._objectStores = null;
+		this._closePending = false;
 	};
 
 	IDBDatabase.prototype.createObjectStore = function (name, optionalParameters)
 	{
-		validateVersionChangeTx(this._versionChangeTx);
-
+		IDBTransaction._assertVersionChange(this._versionChangeTx);
 		// Validate existence of ObjectStore
 		if (this.objectStoreNames.indexOf(name) >= 0)
 		{
@@ -38,7 +38,7 @@ if (window.indexedDB.polyfill)
 	IDBDatabase.prototype.deleteObjectStore = function (name)
 	{
 		var tx = this._versionChangeTx;
-		validateVersionChangeTx(tx);
+		IDBTransaction._assertVersionChange(tx);
 		if (this.objectStoreNames.indexOf(name) == -1)
 		{
 			throw util.error("NotFoundError");
@@ -69,7 +69,7 @@ if (window.indexedDB.polyfill)
 
 	IDBDatabase.prototype.close = function ()
 	{
-		return null;
+		this._closePending = true;
 	};
 
 	IDBDatabase.prototype._loadObjectStores = function (sqlTx, successCallback, errorCallback)
@@ -113,14 +113,6 @@ if (window.indexedDB.polyfill)
 
 	// Utils
 	var w_JSON = window.JSON;
-
-	function validateVersionChangeTx(tx)
-	{
-		if (!tx || tx.mode !== util.IDBTransaction.VERSION_CHANGE)
-		{
-			throw util.error("InvalidStateError");
-		}
-	}
 
 	function createObjectStore(me, name, keyPath, autoIncrement)
 	{

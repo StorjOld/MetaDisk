@@ -17,8 +17,7 @@ if (window.indexedDB.polyfill)
 		var request = new util.IDBRequest(this);
 		request.readyState = util.IDBRequest.LOADING;
 		var cursor = new util.IDBCursorWithValue(this, direction, request);
-
-		cursor._range = util.IDBKeyRange.ensureKeyRange(range);
+		cursor._range = util.IDBKeyRange._ensureKeyRange(range);
 		cursor.continue();
 		return request;
 	};
@@ -28,8 +27,7 @@ if (window.indexedDB.polyfill)
 		var request = new util.IDBRequest(this);
 		request.readyState = util.IDBRequest.LOADING;
 		var cursor = new util.IDBCursor(this, direction, request);
-
-		cursor._range = util.IDBKeyRange.ensureKeyRange(range);
+		cursor._range = util.IDBKeyRange._ensureKeyRange(range);
 		cursor.continue();
 		return request;
 	};

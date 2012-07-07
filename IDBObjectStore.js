@@ -26,7 +26,7 @@ if (window.indexedDB.polyfill)
 	//region add & put helper functions
 	function storeRecord(me, value, key, noOverwrite)
 	{
-		assertReadOnly(me.transaction);
+		util.IDBTransaction._assertNotReadOnly(me.transaction);
 		var validation = validateObjectStoreKey(me.keyPath, me.autoIncrement, value, key);
 		var key = validation.key, strKey = validation.str;
 
@@ -52,7 +52,7 @@ if (window.indexedDB.polyfill)
 		{
 			if (key != null) throw util.error("DataError");
 
-			key = extractKeyFromValue(value, keyPath);
+			key = util.extractKeyFromValue(keyPath, value);
 		}
 		if (key == null)
 		{
@@ -76,32 +76,6 @@ if (window.indexedDB.polyfill)
 			(/[,[](true|false)[,\]]/).test(strKey)) return true;
 
 		return false;
-	}
-
-	function extractKeyFromValue(value, keyPath)
-	{
-		var key, i;
-		if (keyPath instanceof Array)
-		{
-			key = [];
-			for (i = 0; i < keyPath.length; i++)
-			{
-				key.push(extractKeyFromValue(value, keyPath[i]));
-			}
-		}
-		else
-		{
-			if (keyPath === "") return value;
-
-			key = value;
-			var paths = keyPath.split(".");
-			for (i = 0; i < paths.length; i++)
-			{
-				if (key == null) return null;
-				key = key[paths[i]];
-			}
-		}
-		return key;
 	}
 
 	function runStepsForStoringRecord(context, key, strKey)
@@ -134,7 +108,7 @@ if (window.indexedDB.polyfill)
 						incrementCurrentNumber(sqlTx, me.name, Math.floor(key + 1));
 					}
 					context.sqlTx = sqlTx;
-					sqlInsertKeyValue(context, strKey);
+					me._insertOrReplaceRecord(context, strKey);
 				},
 				function (_, sqlError)
 				{
@@ -145,7 +119,7 @@ if (window.indexedDB.polyfill)
 		}
 		else
 		{
-			sqlInsertKeyValue(context, strKey);
+			me._insertOrReplaceRecord(context, strKey);
 		}
 	}
 
@@ -182,33 +156,10 @@ if (window.indexedDB.polyfill)
 
 	}
 
-	function sqlInsertKeyValue(context, strKey)
-	{
-		var request = context.request;
-		var sql = (context.noOverwrite ? "INSERT" : "REPLACE") + " INTO \"" +
-			request.source.name + "\" (key, value) VALUES (?, ?)";
-
-		context.primaryKey = strKey;
-		var strValue = w_JSON.stringify(context.value);
-		context.sqlTx.executeSql(sql, [strKey, strValue],
-			function (sqlTx, results)
-			{
-				context.sqlTx = sqlTx;
-				context.recordId = results.insertId;
-				storeIndexes(context);
-			},
-			function (sqlTx, sqlError)
-			{
-				request.error = sqlError;
-				if (request.onerror) request.onerror(util.event("error", request));
-				context.nextRequestCallback();
-			});
-	}
-
 	function storeIndexes(context)
 	{
 		var request = context.request;
-		var me = request.source;
+		var me = context.objectStore;
 		var indexes = [], strKeys = [];
 		for (var indexName in me._indexes)
 		{
@@ -239,7 +190,7 @@ if (window.indexedDB.polyfill)
 
 	function getValidIndexKeyString(index, value)
 	{
-		var key = extractKeyFromValue(value, index.keyPath);
+		var key = util.extractKeyFromValue(index.keyPath, value);
 		if (key == null) return null;
 
 		if (key instanceof Array)
@@ -307,23 +258,25 @@ if (window.indexedDB.polyfill)
 
 	IDBObjectStore.prototype.delete = function (key)
 	{
-		assertReadOnly(this.transaction);
+		util.IDBTransaction._assertNotReadOnly(this.transaction);
+		if (!(key instanceof util.IDBKeyRange)) throw util.error("DataError");
+		var strKey = w_JSON.stringify(key);
+		if (notValidKey(strKey)) throw util.error("DataError");
 
-		var request = new util.IDBRequest();
-		request.source = this;
+		var request = new util.IDBRequest(this);
 		var me = this;
 		this.transaction._enqueueRequest(function (sqlTx, nextRequestCallback)
 		{
-			var strKey = w_JSON.stringify(key);
-			sqlTx.executeSql("DELETE FROM \"" + me.name + "\" WHERE key = ?", [strKey],
-				function (_, results)
+			me._deleteRecord(sqlTx, strKey,
+				function ()
 				{
 					if (request.onsuccess) request.onsuccess(util.event("success", request));
 					nextRequestCallback();
 				},
 				function (_, sqlError)
 				{
-					if (request.onerror) request.onerror(sqlError);
+					request.error = sqlError;
+					if (request.onerror) request.onerror(util.event("error", request));
 					nextRequestCallback();
 				});
 		});
@@ -369,14 +322,14 @@ if (window.indexedDB.polyfill)
 		request.readyState = util.IDBRequest.LOADING;
 		var cursor = new util.IDBCursorWithValue(this, direction, request);
 
-		cursor._range = util.IDBKeyRange.ensureKeyRange(range);
+		cursor._range = util.IDBKeyRange._ensureKeyRange(range);
 		cursor.continue();
 		return request;
 	};
 
 	IDBObjectStore.prototype.createIndex = function (name, keyPath, optionalParameters)
 	{
-		validateVersionChangeTx(this.transaction);
+		util.IDBTransaction._assertVersionChange(this.transaction);
 		if (this.indexNames.indexOf(name) >= 0)
 		{
 			throw util.error("ConstraintError");
@@ -409,7 +362,7 @@ if (window.indexedDB.polyfill)
 
 	IDBObjectStore.prototype.deleteIndex = function (indexName)
 	{
-		validateVersionChangeTx(this.transaction);
+		util.IDBTransaction._assertVersionChange(this.transaction);
 		if (this.indexNames.indexOf(indexName) == -1)
 		{
 			throw util.error("ConstraintError");
@@ -438,24 +391,69 @@ if (window.indexedDB.polyfill)
 	{
 	};
 
+	IDBObjectStore.prototype._deleteRecord = function (sqlTx, strKeyOrRange, onsuccess, onerror)
+	{
+		var objectStore = this;
+		var sql, where, args = [];
+		if (strKeyOrRange instanceof util.IDBKeyRange)
+		{
+			var filter = strKeyOrRange._getSqlFilter();
+			where = "WHERE " + filter.sql;
+			args = filter.args;
+		}
+		else
+		{
+			where = "WHERE (key = ?)";
+			args.push(strKeyOrRange);
+		}
+		for (var indexName in objectStore._indexes)
+		{
+			var index = objectStore._indexes[indexName];
+			sql = ["DELETE FROM [" + util.indexTable(objectStore.name, index.name) + "]"];
+			if (args.length > 0)
+			{
+				sql.push("WHERE recordId IN (SELECT id FROM [" + objectStore.name + "]", where + ")");
+			}
+			sqlTx.executeSql(sql.join(" "), args, null, onerror);
+		}
+		sqlTx.executeSql("DELETE FROM [" + objectStore.name + "] " + where, args, onsuccess, onerror);
+	};
+
+	IDBObjectStore.prototype._insertOrReplaceRecord = function (context, strKey)
+	{
+		var request = context.request;
+		if (!context.noOverwrite)
+		{
+			this._deleteRecord(context.sqlTx, strKey, null,
+				function (_, sqlError)
+				{
+					request.error = sqlError;
+					if (request.onerror) request.onerror(util.event("error", request));
+					context.nextRequestCallback();
+				});
+		}
+		var me = this;
+		var strValue = w_JSON.stringify(context.value);
+		context.sqlTx.executeSql("INSERT INTO [" + me.name + "] (key, value) VALUES (?, ?)",
+			[strKey, strValue],
+			function (sqlTx, results)
+			{
+				context.objectStore = me;
+				context.sqlTx = sqlTx;
+				context.primaryKey = strKey;
+				context.recordId = results.insertId;
+				storeIndexes(context);
+			},
+			function (sqlTx, sqlError)
+			{
+				request.error = sqlError;
+				if (request.onerror) request.onerror(util.event("error", request));
+				context.nextRequestCallback();
+			});
+	};
+
 	// Utils
 	var w_JSON = window.JSON;
-
-	function assertReadOnly(tx)
-	{
-		if (tx.mode === util.IDBTransaction.READ_ONLY)
-		{
-			throw util.error("ReadOnlyError", "A mutation operation was attempted in a READ_ONLY transaction.");
-		}
-	}
-
-	function validateVersionChangeTx(tx)
-	{
-		if (!tx || tx.mode !== util.IDBTransaction.VERSION_CHANGE)
-		{
-			throw util.error("InvalidStateError");
-		}
-	}
 
 	function isPositiveFloat(value)
 	{

@@ -12,3 +12,15 @@ code needs to be wrapped by stop-start sign posts correctly and there must be on
 very end, 'start' command may be executed too early leaving other async code with unit tests to be left out of a test
 scope. This results test failures also affects to subsequent tests with outcomes like databases left unclosed or current
 test's 'stop' stops the 'start' from previous unsuccessful test, thus leaving current closing 'start' without a match.
+
+
+B. Useful Resources.
+
+1) Test suits http://w3c-test.org/webapps/IndexedDB/.
+
+Among test suits from w3c-test.org/webapps/IndexedDB/tests/submissions/Microsoft/ the following are failing:
+idbdatabase_close*, idbdatabase_transaction*, idbfactory_cmp, idbfactory_open8,
+
+
+2) Mozilla IndexedDB implementation: http://hg.mozilla.org/mozilla-central/file/895e12563245/dom/indexedDB/ and
+http://people.mozilla.org/~jcranmer2/c-ccov-js/mozilla/dom/indexedDB/.

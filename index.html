@@ -18,23 +18,8 @@
 	<script src="lib/jquery-1.7.2.js"></script>
 	<script type="text/javascript" src="lib/qunit.js"></script>
 
-	<script type="text/javascript">
-		if (!$.browser.mozilla)
-		{
-			window.indexedDB = { polyfill : true };
-		}
-	</script>
-
-	<script type="text/javascript" src="indexedDB.polyfill.js"></script>
+	<script type="text/javascript" src="indexedDB.polyfill.debug.js"></script>
 	<script type="text/javascript" src="test/webkitIndexedDB.js"></script>
-	<script type="text/javascript" src="IDBRequest.js"></script>
-	<script type="text/javascript" src="IDBFactory.js"></script>
-	<script type="text/javascript" src="IDBDatabase.js"></script>
-	<script type="text/javascript" src="IDBTransaction.js"></script>
-	<script type="text/javascript" src="IDBObjectStore.js"></script>
-	<script type="text/javascript" src="IDBCursor.js"></script>
-	<script type="text/javascript" src="IDBKeyRange.js"></script>
-	<script type="text/javascript" src="IDBIndex.js"></script>
 
 	<script type="text/javascript" src="test/TestUtils.js"></script>
 	<script type="text/javascript" src="test/IDBFactoryTests.js"></script>

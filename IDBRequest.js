@@ -3,7 +3,7 @@ if (window.indexedDB.polyfill)
 {
 	var IDBRequest = util.IDBRequest = window.IDBRequest = function(source)
 	{
-		this.result = null;
+		this.result = undefined;
 		this.error = null;
 		this.source = source;
 		this.transaction = null;
@@ -16,7 +16,7 @@ if (window.indexedDB.polyfill)
 
 	var IDBOpenDBRequest = util.IDBOpenDBRequest = window.IDBOpenDBRequest = function(source)
 	{
-		IDBRequest.call(this, arguments);
+		IDBRequest.apply(this, arguments);
 		this.onblocked = null;
 		this.onupgradeneeded = null;
 	};

@@ -40,10 +40,10 @@ if (window.indexedDB.polyfill)
 		{
 			me._active = false;
 			me._requests = [];
-			for (var name in me.db._objectStores)
+			/*for (var name in me.db._objectStores)
 			{
 				me.db._objectStores[name].transaction = null;
-			}
+			}*/
 			return;
 		}
 		operation =  me._requests[operationIndex];
@@ -77,6 +77,22 @@ if (window.indexedDB.polyfill)
 	{
 		validateActive(this);
 		this._requests.push(sqlTxCallback);
+	};
+
+	IDBTransaction._assertNotReadOnly = function (tx)
+	{
+		if (tx.mode === util.IDBTransaction.READ_ONLY)
+		{
+			throw util.error("ReadOnlyError", "A mutation operation was attempted in a READ_ONLY transaction.");
+		}
+	};
+
+	IDBTransaction._assertVersionChange = function (tx)
+	{
+		if (!tx || tx.mode !== util.IDBTransaction.VERSION_CHANGE)
+		{
+			throw util.error("InvalidStateError");
+		}
 	};
 
 	IDBTransaction.READ_ONLY = "readonly";
