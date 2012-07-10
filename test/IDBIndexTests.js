@@ -6,6 +6,7 @@ var IDBIndexTests = new (function ()
 		module("IDBIndex");
 		_test("openKeyCursor", testOpenKeyCursor);
 		_test("openCursor", testOpenCursor);
+		module("Fail");
 		_test("Unique index constraint error", testUniqueIndexConstraintError);
 		_test("MultiEntry enabled", testArrayKeyPath);
 	};

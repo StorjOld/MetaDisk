@@ -24,6 +24,7 @@
                 rqOpen2.onerror = t.step_func( assert_database_error );;
                 rqOpen2.onsuccess = t.step_func( function (event) {
                     assert_true(bBlockEventFired && bUpgradeNeededEventFired, "version change transaction is not unblocked when existing database connection is closed")
+	                var d = rqOpen.result == rqOpen2.result;
                     t.done();
                     return;
                 });

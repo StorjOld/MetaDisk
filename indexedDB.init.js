@@ -1,11 +1,9 @@
 (function(window, undefined)
 {
+
 	var indexedDB = window.indexedDB = window.indexedDB || window.mozIndexedDB ||
 		window.webkitIndexedDB || window.msIndexedDB || { polyfill : true };
 
-	window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction;
-	window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange;
-	window.IDBCursor = window.IDBCursor || window.webkitIDBCursor;
 
 	if (!indexedDB.polyfill) return;
 
@@ -32,7 +30,11 @@
 
 	indexedDB.util = new (function ()
 	{
-		this.async = function (fn) { w_setTimeout(fn, 0); };
+		this.async = function (fn, async)
+		{
+			if (async == null || async) w_setTimeout(fn, 0);
+			else fn();
+		};
 
 		this.error = function (name, message, innerError)
 		{
@@ -49,7 +51,8 @@
 				type : type,
 				target : target,
 				currentTarget : target,
-				preventDefault : function () { }
+				preventDefault : function () { },
+				stopPropagation : function () { }
 			};
 		};
 
@@ -82,6 +85,11 @@
 
 		this.indexTable = function (objectStoreName, name)
 		{
+			if (arguments.length == 1 && (objectStoreName instanceof this.IDBIndex))
+			{
+				name = objectStoreName.name;
+				objectStoreName = objectStoreName.objectStore.name;
+			}
 			return indexedDB.DB_PREFIX + "Index__" + objectStoreName + "__" + name;
 		};
 
@@ -93,7 +101,7 @@
 				key = [];
 				for (var i = 0; i < keyPath.length; i++)
 				{
-					key.push(extractKeyFromValue(value, keyPath[i]));
+					key.push(this.extractKeyFromValue(keyPath[i], value));
 				}
 			}
 			else
@@ -109,18 +117,57 @@
 				}
 			}
 			return key;
+		};
+
+		this.notValidKey = function (strKey)
+		{
+			// TODO: key validation according to spec
+			if (strKey === "true" || strKey === "false") return true;
+
+			if ((/[,[]{.*?}[,\]]/).test(strKey) ||
+				(/^{.*?}$/).test(strKey) ||
+				(/[,[](true|false)[,\]]/).test(strKey)) return true;
+
+			return false;
+		};
+
+		this.validateKeyOrRange = function (key)
+		{
+			if (!(key instanceof this.IDBKeyRange))
+			{
+				key = w_JSON.stringify(key);
+				if (this.notValidKey(key)) throw this.error("DataError");
+			}
+			return key;
+		};
+
+		this.wait = function (conditionFunc, bodyFunc, async)
+		{
+			var me = this;
+			this.async(function ()
+			{
+				if (conditionFunc()) bodyFunc();
+				else
+				{
+					w_setTimeout(function ()
+					{
+						me.wait(conditionFunc, bodyFunc);
+					}, 10);
+				}
+			},
+			async);
 		}
 	});
 
-	/*
-	IDBVersionChangeEvent.prototype = new Event(null);
-	IDBVersionChangeEvent.prototype.constructor = IDBVersionChangeEvent;
-	function IDBVersionChangeEvent ()
+	// Classes
+	var IDBVersionChangeEvent = window.IDBVersionChangeEvent = indexedDB.util.IDBVersionChangeEvent =
+		function (type, target, oldVersion, newVersion)
 	{
-		this.oldVersoin = null;
-		this.newVersion = null;
-	}
-	*/
+		this.type = type;
+		this.target = this.currentTarget = target;
+		this.oldVersion = oldVersion;
+		this.newVersion = newVersion;
+	};
 
 	var IDBDatabaseException = window.IDBDatabaseException = indexedDB.util.IDBDatabaseException =
 	{
@@ -140,5 +187,6 @@
 
 	// Cached
 	var w_setTimeout = window.setTimeout;
+	var w_JSON = window.JSON;
 
 }(window));

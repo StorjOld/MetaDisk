@@ -56,19 +56,19 @@ table#results td {
     border-bottom:thin solid black;
 }
 
-tr.pass  td:first-child {
+tr.pass > td:first-child {
     color:green;
 }
 
-tr.fail  td:first-child {
+tr.fail > td:first-child {
     color:red;
 }
 
-tr.timeout td:first-child {
+tr.timeout > td:first-child {
     color:red;
 }
 
-tr.notrun td:first-child {
+tr.notrun > td:first-child {
     color:blue;
 }
 
@@ -89,3 +89,4 @@ table#results span.actual {
     font-family:DejaVu Sans Mono, Bitstream Vera Sans Mono, Monospace;
     white-space:pre;
 }
+

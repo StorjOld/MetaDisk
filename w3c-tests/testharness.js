@@ -361,15 +361,30 @@ policies and contribution forms [3].
         return prefix + suffix;
     }
 
+    function __delayFuncCall(func)
+    {
+        window.setTimeout(function () {
+            window.setTimeout(function () {
+                window.setTimeout(function () {
+                    func();
+                }, 10);
+            }, 10);
+        }, 10);
+    }
+
+
+
     function test(func, name, properties)
     {
         var test_name = name ? name : next_default_name();
         properties = properties ? properties : {};
         var test_obj = new Test(test_name, properties);
-        test_obj.step(func);
-        if (test_obj.status === test_obj.NOTRUN) {
-            test_obj.done();
-        }
+        __delayFuncCall(function () {
+            test_obj.step(func);
+            if (test_obj.status === test_obj.NOTRUN) {
+                test_obj.done();
+            }
+        });
     }
 
     function async_test(name, properties)
@@ -382,25 +397,20 @@ policies and contribution forms [3].
 
     function setup(func_or_properties, maybe_properties)
     {
-	    window.setTimeout(function () {
-	    window.setTimeout(function () {
-	    window.setTimeout(function () {
-
-	        var func = null;
-	        var properties = {};
-	        if (arguments.length === 2) {
-	            func = func_or_properties;
-	            properties = maybe_properties;
-	        } else if (func_or_properties instanceof Function){
-	            func = func_or_properties;
-	        } else {
-	            properties = func_or_properties;
-	        }
-	        tests.setup(func, properties);
-	        output.setup(properties);
-	    }, 10);
-	    }, 10);
-	    }, 10);
+        __delayFuncCall(function () {
+            var func = null;
+            var properties = {};
+            if (arguments.length === 2) {
+                func = func_or_properties;
+                properties = maybe_properties;
+            } else if (func_or_properties instanceof Function){
+                func = func_or_properties;
+            } else {
+                properties = func_or_properties;
+            }
+            tests.setup(func, properties);
+            output.setup(properties);
+        });
     }
 
     function done() {
@@ -1569,7 +1579,7 @@ policies and contribution forms [3].
             }
             return false;
         }
-        
+
         function get_assertion(test)
         {
             if (test.properties.hasOwnProperty("assert")) {
@@ -1580,7 +1590,7 @@ policies and contribution forms [3].
             }
             return '';
         }
-        
+
         log.appendChild(document.createElementNS(xhtml_ns, "section"));
         var assertions = has_assertions();
         var html = "<h2>Details</h2><table id='results' " + (assertions ? "class='assertions'" : "" ) + ">"

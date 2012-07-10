@@ -61,21 +61,9 @@ if (window.indexedDB.polyfill)
 		else
 		{
 			str = w_JSON.stringify(key);
-			if (notValidKey(str)) throw util.error("DataError");
+			if (util.notValidKey(str)) throw util.error("DataError");
 		}
 		return { key : key, str : str };
-	}
-
-	function notValidKey(strKey)
-	{
-		// TODO: key validation according to spec
-		if (strKey === "true" || strKey === "false") return true;
-
-		if ((/[,[]{.*?}[,\]]/).test(strKey) ||
-			(/^{.*?}$/).test(strKey) ||
-			(/[,[](true|false)[,\]]/).test(strKey)) return true;
-
-		return false;
 	}
 
 	function runStepsForStoringRecord(context, key, strKey)
@@ -197,10 +185,8 @@ if (window.indexedDB.polyfill)
 		{
 			if (key.length == 0) return null;
 		}
-		else
-		{
-			if (notValidKey(w_JSON.stringify(key))) return null;
-		}
+		if (util.notValidKey(w_JSON.stringify(key))) return null;
+
 		if (index.multiEntry && (key instanceof Array))
 		{
 			// clean-up
@@ -208,7 +194,7 @@ if (window.indexedDB.polyfill)
 			for (var i = 0; i < key.length; i++)
 			{
 				str = w_JSON.stringify(key[i]);
-				if (tmp.indexOf(str) >= 0 || notValidKey(str)) continue;
+				if (tmp.indexOf(str) >= 0 || util.notValidKey(str)) continue;
 				tmp.push(str);
 			}
 			if (tmp.length == 0) return null;
@@ -249,7 +235,9 @@ if (window.indexedDB.polyfill)
 			},
 			function (_, sqlError)
 			{
-				request.error = sqlError;
+				// TODO: proper error handling
+				request.error = util.error("ConstraintError");
+				//request.error = sqlError;
 				if (request.onerror) request.onerror(util.event("error", request));
 				context.nextRequestCallback();
 			});
@@ -259,15 +247,12 @@ if (window.indexedDB.polyfill)
 	IDBObjectStore.prototype.delete = function (key)
 	{
 		util.IDBTransaction._assertNotReadOnly(this.transaction);
-		if (!(key instanceof util.IDBKeyRange)) throw util.error("DataError");
-		var strKey = w_JSON.stringify(key);
-		if (notValidKey(strKey)) throw util.error("DataError");
-
+		key = util.validateKeyOrRange(key);
 		var request = new util.IDBRequest(this);
 		var me = this;
 		this.transaction._enqueueRequest(function (sqlTx, nextRequestCallback)
 		{
-			me._deleteRecord(sqlTx, strKey,
+			me._deleteRecord(sqlTx, key,
 				function ()
 				{
 					if (request.onsuccess) request.onsuccess(util.event("success", request));
@@ -285,43 +270,73 @@ if (window.indexedDB.polyfill)
 
 	IDBObjectStore.prototype.get = function (key)
 	{
-		var request = new util.IDBRequest();
+		key = util.validateKeyOrRange(key);
+		var request = new util.IDBRequest(this);
 		var me = this;
-		request.source = me;
 		me.transaction._enqueueRequest(function (sqlTx, nextRequestCallback)
 		{
-			var strKey = w_JSON.stringify(key);
-			sqlTx.executeSql("SELECT value FROM \"" + me.name + "\" WHERE key = ?", [strKey],
-				function (tx, resultSet)
+			var where = "", args = [];
+			if (key instanceof util.IDBKeyRange)
+			{
+				var filter = key._getSqlFilter();
+				where = "WHERE " + filter.sql;
+				args = filter.args;
+			}
+			else if (key != null)
+			{
+				where = "WHERE (key = ?)";
+				args.push(key);
+			}
+
+			sqlTx.executeSql("SELECT [value] FROM [" + me.name + "] " + where +" LIMIT 1", args,
+				function (_, results)
 				{
-					if (resultSet.rows.length > 0)
-					{
-						var strValue = resultSet.rows.item(0).value;
-						request.result = w_JSON.parse(strValue);
-					}
+					request.result = results.rows.length > 0 ? w_JSON.parse(results.rows.item(0).value) : undefined;
 					if (request.onsuccess) request.onsuccess(util.event("success", request));
-					nextRequestCallback();
 				},
-				function (tx, sqlError)
+				function (_, sqlError)
 				{
 					request.error = sqlError;
 					if (request.onerror) request.onerror(util.event("error", request));
-					nextRequestCallback();
 				});
+
+			nextRequestCallback();
 		});
 		return request;
 	};
 
 	IDBObjectStore.prototype.clear = function ()
 	{
+		util.IDBTransaction._assertNotReadOnly(this.transaction);
+		var request = new util.IDBRequest(this);
+		var me = this;
+		this.transaction._enqueueRequest(function (sqlTx, nextRequestCallback)
+		{
+			var errorCallback = function (_, sqlError)
+			{
+				request.error = sqlError;
+				if (request.onerror) request.onerror(util.event("error", request));
+			};
+			for (var indexName in me._indexes)
+			{
+				var tableName = util.indexTable(me._indexes[indexName]);
+				sqlTx.executeSql("DELETE FROM [" + tableName + "]", null, null, errorCallback);
+			}
+			sqlTx.executeSql("DELETE FROM [" + me.name + "]", null,
+				function (_, results)
+				{
+					request.result = undefined;
+					if (request.onsuccess) request.onsuccess(util.event("success", request));
+				},
+				errorCallback);
+		});
+		return request;
 	};
 
 	IDBObjectStore.prototype.openCursor = function (range, direction)
 	{
 		var request = new util.IDBRequest(this);
-		request.readyState = util.IDBRequest.LOADING;
 		var cursor = new util.IDBCursorWithValue(this, direction, request);
-
 		cursor._range = util.IDBKeyRange._ensureKeyRange(range);
 		cursor.continue();
 		return request;
@@ -371,7 +386,7 @@ if (window.indexedDB.polyfill)
 		var index = this._indexes[indexName];
 		delete this._indexes[indexName];
 		var me = this;
-		var errorCallback = function ()
+		var errorCallback = function (_, sqlError)
 		{
 			me.indexNames.push(indexName);
 			me._indexes[indexName] = index;
@@ -380,7 +395,7 @@ if (window.indexedDB.polyfill)
 		{
 			sqlTx.executeSql("DROP TABLE " + util.indexTable(me.name, indexName), null, null, errorCallback);
 
-			sqlTx.executeSql("DELETE FROM " + indexedDB.SCHEMA_TABLE + " WHERE type = 'index', name = ?",
+			sqlTx.executeSql("DELETE FROM " + indexedDB.SCHEMA_TABLE + " WHERE type = 'index' AND name = ?",
 				[indexName], null, errorCallback);
 
 			nextRequestCallback();
@@ -389,6 +404,38 @@ if (window.indexedDB.polyfill)
 
 	IDBObjectStore.prototype.count = function (key)
 	{
+		key = util.validateKeyOrRange(key);
+		var request = new util.IDBRequest(this);
+		var me = this;
+		this.transaction._enqueueRequest(function (sqlTx, nextRequestCallback)
+		{
+			var where = "", args = [];
+			if (key instanceof util.IDBKeyRange)
+			{
+				var filter = key._getSqlFilter();
+				where = "WHERE " + filter.sql;
+				args = filter.args;
+			}
+			else if (key != null)
+			{
+				where = "WHERE (key = ?)";
+				args.push(key);
+			}
+			sqlTx.executeSql("SELECT COUNT(id) AS 'count' FROM [" + me.name + "] " + where, args,
+				function (_, results)
+				{
+					request.result = results.rows.item(0).count;
+					if (request.onsuccess) request.onsuccess(util.event("success", request));
+				},
+				function (_, sqlError)
+				{
+					request.error = sqlError;
+					if (request.onerror) request.onerror(util.event("error", request));
+				});
+
+			nextRequestCallback();
+		});
+		return request;
 	};
 
 	IDBObjectStore.prototype._deleteRecord = function (sqlTx, strKeyOrRange, onsuccess, onerror)
@@ -446,7 +493,8 @@ if (window.indexedDB.polyfill)
 			},
 			function (sqlTx, sqlError)
 			{
-				request.error = sqlError;
+				// TODO: proper error handling
+				request.error = util.error("ConstraintError");
 				if (request.onerror) request.onerror(util.event("error", request));
 				context.nextRequestCallback();
 			});
@@ -510,7 +558,11 @@ if (window.indexedDB.polyfill)
 						}
 					}
 					sql.push(select.join(" UNION ALL "));
-					sqlTx.executeSql(sql.join(" "), args);
+					sqlTx.executeSql(sql.join(" "), args, null,
+						function (_, sqlError)
+						{
+							throw util.error("AbortError");
+						});
 				});
 
 			index._ready = true;

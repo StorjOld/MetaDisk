@@ -54,21 +54,21 @@ if (window.indexedDB.polyfill)
 		var sql = [], args = [];
 		var hasLower = this.lower != null, hasUpper = this.upper != null;
 
-		if (hasLower && hasUpper && !this.lowerOpen && !this.upperOpen)
+		if (this.lower == this.upper)
 		{
-			sql.push("(key = ?)");
+			sql.push("(" + keyColumnName + " = ?)");
 			args = [this.lower];
 		}
 		else
 		{
 			if (hasLower)
 			{
-				sql.push("(key >" + (this.lowerOpen ? "" : "=") + " ?)");
+				sql.push("(? <" + (this.lowerOpen ? "" : "=") + " " + keyColumnName + ")");
 				args.push(w_JSON.stringify(this.lower));
 			}
 			if (hasUpper)
 			{
-				sql.push("(key <" + (this.upperOpen ? "" : "=") + " ?)");
+				sql.push("(" + keyColumnName + " <" + (this.upperOpen ? "" : "=") + " ?)");
 				args.push(w_JSON.stringify(this.upper));
 			}
 		}

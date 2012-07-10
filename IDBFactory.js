@@ -1,17 +1,18 @@
 if (window.indexedDB.polyfill)
 (function(window, indexedDB, util, undefined)
 {
+	var origin = { };
+
 	indexedDB.open = function (name, version)
 	{
+		if (arguments.length == 2 && version == undefined) throw util.error("TypeError");
 		if (version !== undefined)
 		{
-			version = parseInt(version);
-			if (isNaN(version) || version <= 0) throw util.error("TypeError",
-				"The method parameter is missing or invalid.");
+			version = parseInt(version.valueOf());
+			if (isNaN(version) || version <= 0)
+				throw util.error("TypeError", "The method parameter is missing or invalid.");
 		}
-		var request = new util.IDBOpenDBRequest();
-		request.source = null;
-		request.readyState = util.IDBRequest.LOADING;
+		var request = new util.IDBOpenDBRequest(null);
 		util.async(function ()
 		{
 			request.readyState = util.IDBRequest.DONE;
@@ -25,67 +26,94 @@ if (window.indexedDB.polyfill)
 		var sqldb = openSqlDB(name);
 		if (sqldb.version !== "" && isNaN(parseInt(sqldb.version))) // sqldb.version is corrupt
 		{
-			request.errorCode = util.IDBDatabaseException.VERSION_ERR;
+			request.error = util.error("VersionError");
 			if (request.onerror) request.onerror(util.event("error", request));
 			return;
 		}
-		var db = new util.IDBDatabase(name, sqldb);
-		var sqldbVersion = sqldb.version == "" ? 0 : parseInt(sqldb.version);
-		db.version = (version === undefined) ?
-			(sqldbVersion === 0 ? 1 : sqldbVersion) :
-			version;
 
-		if (sqldbVersion < db.version)
-		{
-			openLowerVersion(request, db, sqldbVersion);
-		}
-		else if (sqldbVersion == db.version)
-		{
-			openVersionMatch(request, db, sqldb);
-		}
-		else
-		{
-			request.error = util.error("VersionError");
-			if (request.onerror) request.onerror(util.event("error", request));
-		}
+		var connection = new util.IDBDatabase(name, sqldb);
+		var oldVersion = sqldb.version == "" ? 0 : parseInt(sqldb.version);
+		connection.version = (version === undefined) ? (oldVersion === 0 ? 1 : oldVersion) : version;
+		var database = getOriginDatabase(name);
+
+		util.wait(function ()
+			{
+				// www.w3.org/TR/IndexedDB 4.1.3
+				if (database.deletePending) return false;
+				for (var i = 0; i < database.connections.length; i++)
+				{
+					if (database.connections[i]._versionChangeTransaction != null) return false;
+				}
+				return true;
+			},
+			function ()
+			{
+				if (oldVersion < connection.version)
+				{
+					runStepsForVersionChangeTransaction(request, connection, oldVersion);
+				}
+				else if (oldVersion == connection.version)
+				{
+					openVersionMatch(request, connection, sqldb);
+				}
+				else
+				{
+					request.error = util.error("VersionError");
+					if (request.onerror) request.onerror(util.event("error", request));
+				}
+			});
 	}
 
-	function openLowerVersion(request, db, sqldbVersion)
+	function runStepsForVersionChangeTransaction(request, connection, oldVersion)
 	{
-		var tx = new util.IDBTransaction(db, [], util.IDBTransaction.VERSION_CHANGE);
-		if (sqldbVersion == 0)
+		fireVersionChangeEvent(request, connection.name, oldVersion, connection.version);
+		util.wait(function ()
+			{
+				return getOriginDatabase(name).connections.length == 0;
+			},
+			function ()
+			{
+				startVersionChangeTransaction(request, connection, oldVersion);
+			});
+	}
+
+	function startVersionChangeTransaction(request, connection, oldVersion)
+	{
+		var database = getOriginDatabase(connection.name);
+		database.connections.push(connection);
+		var tx = new util.IDBTransaction(connection, [], util.IDBTransaction.VERSION_CHANGE);
+		if (oldVersion == 0)
 		{
 			tx._enqueueRequest(function (sqlTx, nextRequestCallback)
 			{
-				sqlTx.executeSql("CREATE TABLE '" + indexedDB.SCHEMA_TABLE + "' (" +
-				"id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-				"type TEXT NOT NULL, " +
-				"name TEXT NOT NULL, " +
-				"keyPath TEXT, " +
-				"currentNo INTEGER NOT NULL DEFAULT 1, " +
-				// specific to tables
-				"autoInc BOOLEAN, " +
-				// specific to indexes
-				"tableId INTEGER, " +
-				"\"unique\" BOOLEAN, " +
-				"multiEntry BOOLEAN, " +
-				"UNIQUE (type, name) ON CONFLICT ROLLBACK)");
+				sqlTx.executeSql("CREATE TABLE [" + indexedDB.SCHEMA_TABLE + "] (" +
+					"id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+					"type TEXT NOT NULL, " +
+					"name TEXT NOT NULL, " +
+					"keyPath TEXT, " +
+					"currentNo INTEGER NOT NULL DEFAULT 1, " +
+					// specific to tables
+					"autoInc BOOLEAN, " +
+					// specific to indexes
+					"tableId INTEGER, " +
+					"[unique] BOOLEAN, " +
+					"multiEntry BOOLEAN, " +
+					"UNIQUE (type, name) ON CONFLICT ROLLBACK)");
 
 				nextRequestCallback();
 			});
 		}
 		tx._enqueueRequest(function (sqlTx, nextRequestCallback)
 		{
-			db._loadObjectStores(sqlTx,
+			connection._loadObjectStores(sqlTx,
 				function ()
 				{
-					request.result = db;
+					request.result = connection;
 					if (request.onupgradeneeded)
 					{
-						request.transaction = db._versionChangeTx = tx;
-						var e = util.event("onupgradeneeded", request);
-						e.oldVersion = sqldbVersion;
-						e.newVersion = db.version;
+						request.transaction = connection._versionChangeTransaction = tx;
+						var e = new util.IDBVersionChangeEvent("onupgradeneeded",
+							request, oldVersion, connection.version);
 						request.onupgradeneeded(e);
 					}
 					nextRequestCallback();
@@ -96,27 +124,33 @@ if (window.indexedDB.polyfill)
 					nextRequestCallback();
 				});
 		});
+		tx.onabort = function (e)
+		{
+			request.transaction = connection._versionChangeTransaction = null;
+			request.error = tx.error;
+			if (request.onerror) request.onerror(util.event("abort", request));
+		};
 		tx.onerror = function (e)
 		{
 			// NOTE: All create/deleteObjectStore errors handled here, hence no need for
 			// unnecessary generic handlers for each.
-			request.transaction = db._versionChangeTx = null;
+			request.transaction = connection._versionChangeTransaction = null;
 			request.error = tx.error;
 			if (request.onerror) request.onerror(util.event("error", request));
 		};
 		tx.oncomplete = function (e)
 		{
-			request.transaction = db._versionChangeTx = null;
+			request.transaction = connection._versionChangeTransaction = null;
 			if (request.onsuccess) request.onsuccess(util.event("success", request));
 		};
 	}
 
-	function openVersionMatch(request, db, sqldb)
+	function openVersionMatch(request, connection, sqldb)
 	{
 		sqldb.transaction(
 			function (sqlTx)
 			{
-				db._loadObjectStores(sqlTx);
+				connection._loadObjectStores(sqlTx);
 			},
 			function (sqlError)
 			{
@@ -125,7 +159,7 @@ if (window.indexedDB.polyfill)
 			},
 			function ()
 			{
-				request.result = db;
+				request.result = connection;
 				if (request.onsuccess) request.onsuccess(util.event("success", request));
 			}
 		);
@@ -135,42 +169,28 @@ if (window.indexedDB.polyfill)
 	indexedDB.deleteDatabase = function (name)
 	{
 		// INFO: There is no way to delete database in Web SQL Database API.
+		var database = getOriginDatabase(name);
+		database.deletePending = true;
 		var request = new util.IDBOpenDBRequest(null);
-		indexedDB.util.async(function()
+		util.async(function()
 		{
 			request.readyState = util.IDBRequest.DONE;
 			var sqldb = openSqlDB(name);
 			if (sqldb.version == "")
 			{
+				database.deletePending = false;
 				if (request.onsuccess) request.onsuccess(util.event("success", request));
 			}
 			else
 			{
-				sqldb.changeVersion(sqldb.version, "",
-					function (sqlTx)
+				fireVersionChangeEvent(request, name, parseInt(sqldb.version), null);
+				util.wait(function ()
 					{
-						sqlTx.executeSql("SELECT a.type, a.name, b.name 'table' FROM " + indexedDB.SCHEMA_TABLE +
-							" a LEFT JOIN " + indexedDB.SCHEMA_TABLE + " b ON a.type = 'index' AND a.tableId = b.Id",
-							null,
-							function (tx, results)
-							{
-								var name;
-								for (var i = 0; i < results.rows.length; i++)
-								{
-									var item = results.rows.item(i);
-									name = item.type == 'table' ? item.name : util.indexTable(item.table, item.name);
-									tx.executeSql("DROP TABLE [" + name + "]");
-								}
-								tx.executeSql("DROP TABLE " + indexedDB.SCHEMA_TABLE);
-							});
-					},
-					function (e)
-					{
-						if (request.onerror) request.onerror(e);
+						return database.connections.length == 0;
 					},
 					function ()
 					{
-						if (request.onsuccess) request.onsuccess(util.event("success", request));
+						deleteDatabase(request, sqldb, database);
 					});
 			}
 		});
@@ -184,6 +204,13 @@ if (window.indexedDB.polyfill)
 		return first > second ? 1 : (first == second ? 0 : -1);
 	};
 
+	indexedDB._notifyConnectionClosed = function (connection)
+	{
+		var database = getOriginDatabase(connection.name);
+		var i = database.connections.indexOf(connection);
+		if (i >= 0) database.connections.splice(i, 1);
+	};
+
 	// Utils
 	function openSqlDB(name)
 	{
@@ -191,6 +218,74 @@ if (window.indexedDB.polyfill)
 			indexedDB.DB_PREFIX + name, "",
 			indexedDB.DB_DESCRIPTION + name,
 			indexedDB.DEFAULT_DB_SIZE);
+	}
+
+	function getOriginDatabase(name)
+	{
+		var db = origin[name];
+		if (db == null)
+		{
+			db = {
+				name : name,
+				deletePending : false,
+				connections : []    // openDatabases
+			};
+			origin[name] = db;
+		}
+		return db;
+	}
+
+	function fireVersionChangeEvent(request, name, oldVersion, newVersion)
+	{
+		var database = getOriginDatabase(name);
+		var anyOpenConnection = false;
+		for (var i = 0; i < database.connections.length; i++)
+		{
+			var conn = database.connections[i];
+			if (conn._closePending) continue;
+
+			anyOpenConnection = true;
+			var event = new util.IDBVersionChangeEvent("versionchange", request, oldVersion, newVersion);
+			if (conn.onversionchange) conn.onversionchange(event);
+		}
+		if (anyOpenConnection)
+		{
+			var event = new util.IDBVersionChangeEvent("blocked", request, oldVersion, newVersion);
+			if (request.onblocked) request.onblocked(event);
+		}
+	}
+
+	function deleteDatabase(request, sqldb, database)
+	{
+		sqldb.changeVersion(sqldb.version, "",
+			function (sqlTx)
+			{
+				sqlTx.executeSql("SELECT a.type, a.name, b.name 'table' FROM " + indexedDB.SCHEMA_TABLE +
+					" a LEFT JOIN " + indexedDB.SCHEMA_TABLE + " b ON a.type = 'index' AND a.tableId = b.Id",
+					null,
+					function (tx, results)
+					{
+						var name;
+						for (var i = 0; i < results.rows.length; i++)
+						{
+							var item = results.rows.item(i);
+							name = item.type == 'table' ? item.name : util.indexTable(item.table, item.name);
+							tx.executeSql("DROP TABLE [" + name + "]");
+						}
+						tx.executeSql("DROP TABLE " + indexedDB.SCHEMA_TABLE);
+					});
+			},
+			function (sqlError)
+			{
+				database.deletePending = false;
+				request.error = sqlError;
+				if (request.onerror) request.onerror(util.event("error", request));
+			},
+			function ()
+			{
+				database.deletePending = false;
+				if (request.onsuccess) request.onsuccess(util.event("success", request));
+			});
 	}
 
 }(window, window.indexedDB, window.indexedDB.util));

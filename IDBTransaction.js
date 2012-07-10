@@ -14,6 +14,8 @@ if (window.indexedDB.polyfill)
 		var sqldb = this.db._webdb;
 
 		// Main
+		db._activeTransactionCounter++;
+
 		var txFn;
 		if (mode === IDBTransaction.READ_ONLY) txFn = sqldb.readTransaction;
 		else if (mode === IDBTransaction.READ_WRITE) txFn = sqldb.transaction;
@@ -24,18 +26,28 @@ if (window.indexedDB.polyfill)
 
 		var me = this;
 		txFn && txFn.call(sqldb,
-			function (sqlTx) {
-				performOperation(me, sqlTx, 0); },
-			function (sqlError) {
-				me.error = sqlError;
-				if (me.onerror) me.onerror(util.event("error", me)); },
-			function () {
+			function (sqlTx) { performOperation(me, sqlTx, 0); },
+			function (sqlError)
+			{
+				db.close();
+
+				db._transactionCompleted();
+
+				me.error = util.error("AbortError", null, sqlError);
+				if (me.onabort) me.onabort(util.event("abort", me));
+			},
+			function ()
+			{
+				db._transactionCompleted();
+
 				if (me.oncomplete) me.oncomplete(util.event("success", me));
 			});
 	};
 
 	function performOperation(me, sqlTx, operationIndex)
 	{
+		if (!me._active) return;
+
 		if (operationIndex >= me._requests.length)
 		{
 			me._active = false;
@@ -70,7 +82,11 @@ if (window.indexedDB.polyfill)
 
 	IDBTransaction.prototype.abort = function ()
 	{
-
+		if (!this._active) throw util.error("InvalidStateError");
+		this._enqueueRequest(function (sqlTx, nextRequestCallback)
+		{
+			throw util.error("AbortError");
+		});
 	};
 
 	IDBTransaction.prototype._enqueueRequest = function (sqlTxCallback)

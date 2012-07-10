@@ -8,16 +8,18 @@ if (window.indexedDB.polyfill)
 		this.objectStoreNames = new indexedDB.DOMStringList();
 		this.onabort = null;
 		this.onerror = null;
-		this.onversionchange = null
+		this.onversionchange = null;
 
 		this._webdb = webdb;
-		this._objectStores = null;
+		this._objectStores = null;  // TODO: ObjectStores are specific to IDBTransaction
 		this._closePending = false;
+		this._activeTransactionCounter = 0;
+		this._closed = false;
 	};
 
 	IDBDatabase.prototype.createObjectStore = function (name, optionalParameters)
 	{
-		IDBTransaction._assertVersionChange(this._versionChangeTx);
+		IDBTransaction._assertVersionChange(this._versionChangeTransaction);
 		// Validate existence of ObjectStore
 		if (this.objectStoreNames.indexOf(name) >= 0)
 		{
@@ -37,7 +39,7 @@ if (window.indexedDB.polyfill)
 
 	IDBDatabase.prototype.deleteObjectStore = function (name)
 	{
-		var tx = this._versionChangeTx;
+		var tx = this._versionChangeTransaction;
 		IDBTransaction._assertVersionChange(tx);
 		if (this.objectStoreNames.indexOf(name) == -1)
 		{
@@ -64,12 +66,27 @@ if (window.indexedDB.polyfill)
 
 	IDBDatabase.prototype.transaction = function (storeNames, mode)
 	{
+		// TODO: 4.2.1. throw InvalidStateError if a transaction being createing within transaction callback
+		if (storeNames instanceof Array || storeNames == null)
+		{
+			if (storeNames.length == 0) throw util.error("InvalidAccessError");
+		}
+		else
+		{
+			storeNames = [storeNames.toString()];
+		}
+		for (var i = 0; i < storeNames.length; i++)
+		{
+			if (!this.objectStoreNames.contains(storeNames[i])) throw util.error("NotFoundError");
+		}
+		if (this._closePending || this._closed) throw util.error("InvalidStateError");
 		return new util.IDBTransaction(this, storeNames, mode || util.IDBTransaction.READ_ONLY);
 	};
 
 	IDBDatabase.prototype.close = function ()
 	{
 		this._closePending = true;
+		needDBClose(this);
 	};
 
 	IDBDatabase.prototype._loadObjectStores = function (sqlTx, successCallback, errorCallback)
@@ -111,12 +128,18 @@ if (window.indexedDB.polyfill)
 			});
 	};
 
+	IDBDatabase.prototype._transactionCompleted = function ()
+	{
+		this._activeTransactionCounter--;
+		needDBClose(this);
+	};
+
 	// Utils
 	var w_JSON = window.JSON;
 
 	function createObjectStore(me, name, keyPath, autoIncrement)
 	{
-		var objectStore = new util.IDBObjectStore(name, keyPath, autoIncrement, me._versionChangeTx);
+		var objectStore = new util.IDBObjectStore(name, keyPath, autoIncrement, me._versionChangeTransaction);
 		me.objectStoreNames.push(name);
 		me._objectStores[name] = objectStore;
 		var errorCallback = function (tx, sqlError)
@@ -124,10 +147,10 @@ if (window.indexedDB.polyfill)
 			util.arrayRemove(me.objectStoreNames, name);
 			delete me._objectStores[name];
 		};
-		me._versionChangeTx._enqueueRequest(function (sqlTx, nextRequestCallback)
+		me._versionChangeTransaction._enqueueRequest(function (sqlTx, nextRequestCallback)
 		{
 			sqlTx.executeSql("CREATE TABLE \"" + name + "\" (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-				"key TEXT, value BLOB)", [], null, errorCallback);
+				"key TEXT UNIQUE, value BLOB)", [], null, errorCallback);
 
 			sqlTx.executeSql("CREATE INDEX INDEX_" + name + "_key ON \"" + name + "\" (key)", [], null, errorCallback);
 
@@ -143,6 +166,16 @@ if (window.indexedDB.polyfill)
 			nextRequestCallback();
 		});
 		return objectStore;
+	}
+
+	function needDBClose(me)
+	{
+		if (me._closePending && me._activeTransactionCounter == 0)
+		{
+			me._closePending = false;
+			me._closed = true;
+			indexedDB._notifyConnectionClosed(me);
+		}
 	}
 
 }(window, window.indexedDB, window.indexedDB.util));
