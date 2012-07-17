@@ -84,7 +84,7 @@ if (window.indexedDB.polyfill)
 		var tx = new util.IDBTransaction(connection, [], util.IDBTransaction.VERSION_CHANGE);
 		if (oldVersion == 0)
 		{
-			tx._enqueueRequest(function (sqlTx, nextRequestCallback)
+			tx._queueOperation(function (sqlTx, nextRequestCallback)
 			{
 				sqlTx.executeSql("CREATE TABLE [" + indexedDB.SCHEMA_TABLE + "] (" +
 					"id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -103,7 +103,7 @@ if (window.indexedDB.polyfill)
 				nextRequestCallback();
 			});
 		}
-		tx._enqueueRequest(function (sqlTx, nextRequestCallback)
+		tx._queueOperation(function (sqlTx, nextRequestCallback)
 		{
 			connection._loadObjectStores(sqlTx,
 				function ()
@@ -200,7 +200,8 @@ if (window.indexedDB.polyfill)
 	// IDBFactory.cmp
 	indexedDB.cmp = function (first, second)
 	{
-		// TODO: Compare according to doc
+		first = util.encodeKey(first);
+		second = util.encodeKey(second);
 		return first > second ? 1 : (first == second ? 0 : -1);
 	};
 

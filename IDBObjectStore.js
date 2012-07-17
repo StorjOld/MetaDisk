@@ -28,10 +28,9 @@ if (window.indexedDB.polyfill)
 	{
 		util.IDBTransaction._assertNotReadOnly(me.transaction);
 		var validation = validateObjectStoreKey(me.keyPath, me.autoIncrement, value, key);
-		var key = validation.key, strKey = validation.str;
 
 		var request = new util.IDBRequest(me);
-		me.transaction._enqueueRequest(function (sqlTx, nextRequestCallback)
+		me.transaction._queueOperation(function (sqlTx, nextRequestCallback)
 		{
 			var context = {
 				request : request,
@@ -40,7 +39,7 @@ if (window.indexedDB.polyfill)
 				noOverwrite : noOverwrite,
 				value : value
 			};
-			runStepsForStoringRecord(context, key, strKey);
+			runStepsForStoringRecord(context, validation.key, validation.encodedKey);
 		});
 		return request;
 	}
@@ -60,13 +59,13 @@ if (window.indexedDB.polyfill)
 		}
 		else
 		{
-			str = w_JSON.stringify(key);
-			if (util.notValidKey(str)) throw util.error("DataError");
+			encodedKey = util.encodeKey(key);
+			if (encodedKey === null) throw util.error("DataError");
 		}
-		return { key : key, str : str };
+		return { key : key, encodedKey : encodedKey };
 	}
 
-	function runStepsForStoringRecord(context, key, strKey)
+	function runStepsForStoringRecord(context, key, encodedKey)
 	{
 		var request = context.request;
 		var me = request.source;
@@ -85,7 +84,7 @@ if (window.indexedDB.polyfill)
 					if (key == null)
 					{
 						key = currentNo;
-						strKey = key.toString();
+						encodedKey = key.toString();
 						if (me.keyPath != null)
 						{
 							assignKeyToValue(context.value, me.keyPath, key);
@@ -96,7 +95,7 @@ if (window.indexedDB.polyfill)
 						incrementCurrentNumber(sqlTx, me.name, Math.floor(key + 1));
 					}
 					context.sqlTx = sqlTx;
-					me._insertOrReplaceRecord(context, strKey);
+					me._insertOrReplaceRecord(context, encodedKey);
 				},
 				function (_, sqlError)
 				{
@@ -107,7 +106,7 @@ if (window.indexedDB.polyfill)
 		}
 		else
 		{
-			me._insertOrReplaceRecord(context, strKey);
+			me._insertOrReplaceRecord(context, encodedKey);
 		}
 	}
 
@@ -185,22 +184,23 @@ if (window.indexedDB.polyfill)
 		{
 			if (key.length == 0) return null;
 		}
-		if (util.notValidKey(w_JSON.stringify(key))) return null;
+		var encodedKey = util.encodeKey(key);
+		if (encodedKey === null) return null;
 
 		if (index.multiEntry && (key instanceof Array))
 		{
 			// clean-up
-			var tmp = [], str;
+			var tmp = [];
 			for (var i = 0; i < key.length; i++)
 			{
-				str = w_JSON.stringify(key[i]);
-				if (tmp.indexOf(str) >= 0 || util.notValidKey(str)) continue;
-				tmp.push(str);
+				encodedKey = util.encodeKey(key[i]);
+				if (encodedKey === null || tmp.indexOf(encodedKey) >= 0) continue;
+				tmp.push(encodedKey);
 			}
 			if (tmp.length == 0) return null;
 			return tmp;
 		}
-		return w_JSON.stringify(key);
+		return encodedKey;
 	}
 
 	function storeIndex(context, index, strKey, isLast)
@@ -250,7 +250,7 @@ if (window.indexedDB.polyfill)
 		key = util.validateKeyOrRange(key);
 		var request = new util.IDBRequest(this);
 		var me = this;
-		this.transaction._enqueueRequest(function (sqlTx, nextRequestCallback)
+		this.transaction._queueOperation(function (sqlTx, nextRequestCallback)
 		{
 			me._deleteRecord(sqlTx, key,
 				function ()
@@ -273,7 +273,7 @@ if (window.indexedDB.polyfill)
 		key = util.validateKeyOrRange(key);
 		var request = new util.IDBRequest(this);
 		var me = this;
-		me.transaction._enqueueRequest(function (sqlTx, nextRequestCallback)
+		me.transaction._queueOperation(function (sqlTx, nextRequestCallback)
 		{
 			var where = "", args = [];
 			if (key instanceof util.IDBKeyRange)
@@ -310,7 +310,7 @@ if (window.indexedDB.polyfill)
 		util.IDBTransaction._assertNotReadOnly(this.transaction);
 		var request = new util.IDBRequest(this);
 		var me = this;
-		this.transaction._enqueueRequest(function (sqlTx, nextRequestCallback)
+		this.transaction._queueOperation(function (sqlTx, nextRequestCallback)
 		{
 			var errorCallback = function (_, sqlError)
 			{
@@ -391,7 +391,7 @@ if (window.indexedDB.polyfill)
 			me.indexNames.push(indexName);
 			me._indexes[indexName] = index;
 		};
-		this.transaction._enqueueRequest(function (sqlTx, nextRequestCallback)
+		this.transaction._queueOperation(function (sqlTx, nextRequestCallback)
 		{
 			sqlTx.executeSql("DROP TABLE " + util.indexTable(me.name, indexName), null, null, errorCallback);
 
@@ -407,7 +407,7 @@ if (window.indexedDB.polyfill)
 		key = util.validateKeyOrRange(key);
 		var request = new util.IDBRequest(this);
 		var me = this;
-		this.transaction._enqueueRequest(function (sqlTx, nextRequestCallback)
+		this.transaction._queueOperation(function (sqlTx, nextRequestCallback)
 		{
 			var where = "", args = [];
 			if (key instanceof util.IDBKeyRange)
@@ -466,12 +466,12 @@ if (window.indexedDB.polyfill)
 		sqlTx.executeSql("DELETE FROM [" + objectStore.name + "] " + where, args, onsuccess, onerror);
 	};
 
-	IDBObjectStore.prototype._insertOrReplaceRecord = function (context, strKey)
+	IDBObjectStore.prototype._insertOrReplaceRecord = function (context, encodedKey)
 	{
 		var request = context.request;
 		if (!context.noOverwrite)
 		{
-			this._deleteRecord(context.sqlTx, strKey, null,
+			this._deleteRecord(context.sqlTx, encodedKey, null,
 				function (_, sqlError)
 				{
 					request.error = sqlError;
@@ -480,14 +480,14 @@ if (window.indexedDB.polyfill)
 				});
 		}
 		var me = this;
-		var strValue = w_JSON.stringify(context.value);
+		var encodedValue = w_JSON.stringify(context.value);
 		context.sqlTx.executeSql("INSERT INTO [" + me.name + "] (key, value) VALUES (?, ?)",
-			[strKey, strValue],
+			[encodedKey, encodedValue],
 			function (sqlTx, results)
 			{
 				context.objectStore = me;
 				context.sqlTx = sqlTx;
-				context.primaryKey = strKey;
+				context.primaryKey = encodedKey;
 				context.recordId = results.insertId;
 				storeIndexes(context);
 			},
@@ -519,13 +519,13 @@ if (window.indexedDB.polyfill)
 			util.arrayRemove(me.indexNames, name);
 			delete me._indexes[name];
 		};
-		me.transaction._enqueueRequest(function (sqlTx, nextRequestCallback)
+		me.transaction._queueOperation(function (sqlTx, nextRequestCallback)
 		{
 			sqlTx.executeSql("CREATE TABLE " + util.indexTable(me.name, name) + " (recordId INTEGER, key TEXT" +
 				(unique ? " UNIQUE" : "") + ", primaryKey TEXT)", null, null, errorCallback);
 
 			sqlTx.executeSql("INSERT INTO " + indexedDB.SCHEMA_TABLE +
-				" (name, type, keyPath, tableId, \"unique\", multiEntry) VALUES (?, 'index', ?, " +
+				" (name, type, keyPath, tableId, [unique], multiEntry) VALUES (?, 'index', ?, " +
 				"(SELECT Id FROM " + indexedDB.SCHEMA_TABLE + " WHERE type = 'table' AND name = ?), ?, ?)",
 				[name, w_JSON.stringify(keyPath), me.name, unique ? 1 : 0, multiEntry ? 1 : 0],
 				null, errorCallback);

@@ -330,7 +330,7 @@ IdlArray.prototype.test = function()
         {
             this.objects[name].forEach(function(str)
             {
-                this.members[name].test_object(str);
+                this.members[name].test_object(encodedKey);
             }.bind(this));
         }
     }

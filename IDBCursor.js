@@ -26,7 +26,7 @@ if (window.indexedDB.polyfill)
 		}
 		var request = new util.IDBRequest(this);
 		var me = this;
-		objectStore.transaction._enqueueRequest(function (sqlTx, nextRequestCallback)
+		objectStore.transaction._queueOperation(function (sqlTx, nextRequestCallback)
 		{
 			objectStore._insertOrReplaceRecord(
 			{
@@ -62,7 +62,7 @@ if (window.indexedDB.polyfill)
 
 		var request = new util.IDBRequest(this);
 		var me = this;
-		objectStore.transaction._enqueueRequest(function (sqlTx, nextRequestCallback)
+		objectStore.transaction._queueOperation(function (sqlTx, nextRequestCallback)
 		{
 			objectStore._deleteRecord(sqlTx, me._effectiveKey,
 				function ()
@@ -128,7 +128,7 @@ if (window.indexedDB.polyfill)
 	{
 		var tx = me.source.transaction;
 		me._request.readyState = util.IDBRequest.LOADING;
-		tx._enqueueRequest(function (sqlTx, nextRequestCallback)
+		tx._queueOperation(function (sqlTx, nextRequestCallback)
 		{
 			var sql = ["SELECT key, value FROM [" + me.source.name + "]"];
 			var where = [];
@@ -136,12 +136,12 @@ if (window.indexedDB.polyfill)
 			if (filter.lower != null)
 			{
 				where.push("(key >" + (filter.lowerOpen ? "" : "=") + " ?)");
-				args.push(w_JSON.stringify(filter.lower));
+				args.push(util.encodeKey(filter.lower));
 			}
 			if (filter.upper != null)
 			{
 				where.push("(key <" + (filter.upperOpen ? "" : "=") + " ?)");
-				args.push(w_JSON.stringify(filter.upper));
+				args.push(util.encodeKey(filter.upper));
 			}
 			if (where.length > 0)
 			{
@@ -165,7 +165,7 @@ if (window.indexedDB.polyfill)
 					{
 						var found = results.rows.item(filter.count - 1);
 						me._effectiveKey = found.key;
-						me.key = me.primaryKey = w_JSON.parse(found.key);
+						me.key = me.primaryKey = util.decodeKey(found.key);
 						if (typeof me.value !== "undefined") me.value = w_JSON.parse(found.value);
 						me._gotValue = true;
 						request.result = me;
@@ -187,7 +187,7 @@ if (window.indexedDB.polyfill)
 	{
 		var tx = me.source.objectStore.transaction;
 		me._request.readyState = util.IDBRequest.LOADING;
-		tx._enqueueRequest(function (sqlTx, nextRequestCallback)
+		tx._queueOperation(function (sqlTx, nextRequestCallback)
 		{
 			var withValue = me instanceof IDBCursorWithValue;
 			var desc = isDesc(me);
@@ -203,7 +203,7 @@ if (window.indexedDB.polyfill)
 			var where = [], args = [];
 			if (filter.lower != null)
 			{
-				var strLower = w_JSON.stringify(filter.lower);
+				var strLower = util.encodeKey(filter.lower);
 				args.push(strLower);
 				if (filter.lowerOpen)
 				{
@@ -224,7 +224,7 @@ if (window.indexedDB.polyfill)
 			}
 			if (filter.upper != null)
 			{
-				var strUpper = w_JSON.stringify(filter.upper);
+				var strUpper = util.encodeKey(filter.upper);
 				args.push(strUpper);
 				if (filter.upperOpen)
 				{
@@ -265,9 +265,9 @@ if (window.indexedDB.polyfill)
 					else
 					{
 						var found = results.rows.item(filter.count - 1);
-						me.key = w_JSON.parse(found.key);
+						me.key = util.decodeKey(found.key);
 						me._effectiveKey = found.primaryKey;
-						me.primaryKey = w_JSON.parse(found.primaryKey);
+						me.primaryKey = util.decodeKey(found.primaryKey);
 						if (typeof me.value !== "undefined") me.value = w_JSON.parse(found.value);
 						me._gotValue = true;
 						request.result = me;

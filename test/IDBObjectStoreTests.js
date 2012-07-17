@@ -232,7 +232,7 @@ var IDBObjectStoreTests = new (function ()
 	{
 		expect(2);
 		var tx = db.transaction([env.specs], IDBTransaction.READ_WRITE);
-		var record = { year : 1998, id : [2, ['#@$', [[]]], (new Date()).getDate()], foo : { bar : "abc", baz : 0 } };
+		var record = { year : 1998, id : [2, ['#@$', [[], '{ }']], (new Date()).getDate()], foo : { bar : "abc", baz : 0 } };
 		tx.objectStore(env.specs).add(record);
 
 		tx.oncomplete = function (e)

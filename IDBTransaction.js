@@ -83,13 +83,13 @@ if (window.indexedDB.polyfill)
 	IDBTransaction.prototype.abort = function ()
 	{
 		if (!this._active) throw util.error("InvalidStateError");
-		this._enqueueRequest(function (sqlTx, nextRequestCallback)
+		this._queueOperation(function (sqlTx, nextRequestCallback)
 		{
 			throw util.error("AbortError");
 		});
 	};
 
-	IDBTransaction.prototype._enqueueRequest = function (sqlTxCallback)
+	IDBTransaction.prototype._queueOperation = function (sqlTxCallback)
 	{
 		validateActive(this);
 		this._requests.push(sqlTxCallback);

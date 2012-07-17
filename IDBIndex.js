@@ -26,7 +26,7 @@ if (window.indexedDB.polyfill)
 		key = util.validateKeyOrRange(key);
 		var request = new util.IDBRequest(this);
 		var me = this;
-		this.objectStore.transaction._enqueueRequest(function (sqlTx, nextRequestCallback)
+		this.objectStore.transaction._queueOperation(function (sqlTx, nextRequestCallback)
 		{
 			var sql = ["SELECT s.value FROM [" + util.indexTable(me) + "] AS i INNER JOIN"];
 			sql.push("[" + me.objectStore.name + "] AS s ON s.id = i.recordId")
@@ -65,7 +65,7 @@ if (window.indexedDB.polyfill)
 		key = util.validateKeyOrRange(key);
 		var request = new util.IDBRequest(this);
 		var me = this;
-		this.objectStore.transaction._enqueueRequest(function (sqlTx, nextRequestCallback)
+		this.objectStore.transaction._queueOperation(function (sqlTx, nextRequestCallback)
 		{
 			var sql = ["SELECT primaryKey FROM [" + util.indexTable(me) + "]"];
 			var args = [];
@@ -85,7 +85,7 @@ if (window.indexedDB.polyfill)
 				function (_, results)
 				{
 					request.result = results.rows.length > 0 ?
-						w_JSON.parse(results.rows.item(0).primaryKey) : undefined;
+						util.decodeKey(results.rows.item(0).primaryKey) : undefined;
 					if (request.onsuccess) request.onsuccess(util.event("success", request));
 				},
 				function (_, sqlError)
@@ -104,7 +104,7 @@ if (window.indexedDB.polyfill)
 		key = util.validateKeyOrRange(key);
 		var request = new util.IDBRequest(this);
 		var me = this;
-		this.objectStore.transaction._enqueueRequest(function (sqlTx, nextRequestCallback)
+		this.objectStore.transaction._queueOperation(function (sqlTx, nextRequestCallback)
 		{
 			var sql = ["SELECT COUNT(recordId) AS 'count' FROM [" + util.indexTable(me) + "]"];
 			var args = [];

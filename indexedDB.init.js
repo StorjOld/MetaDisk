@@ -1,6 +1,5 @@
 (function(window, undefined)
 {
-
 	var indexedDB = window.indexedDB = window.indexedDB || window.mozIndexedDB ||
 		window.webkitIndexedDB || window.msIndexedDB || { polyfill : true };
 
@@ -16,7 +15,7 @@
 	indexedDB.DB_PREFIX = "__IndexedDB__";
 	indexedDB.DB_DESCRIPTION = "IndexedDB ";
 	indexedDB.DEFAULT_DB_SIZE = 5 * 1024 * 1024;
-	indexedDB.CURSOR_CHUNK_SIZE = 10;
+	//indexedDB.CURSOR_CHUNK_SIZE = 10;
 
 	// Data types
 	indexedDB.DOMStringList = function () { };
@@ -27,7 +26,7 @@
 		return this.indexOf(str) >= 0;
 	};
 
-
+	// Util
 	indexedDB.util = new (function ()
 	{
 		this.async = function (fn, async)
@@ -119,55 +118,44 @@
 			return key;
 		};
 
-		this.notValidKey = function (strKey)
+		this.validateKeyOrRange = function (encodedKey)
 		{
-			// TODO: key validation according to spec
-			if (strKey === "true" || strKey === "false") return true;
-
-			if ((/[,[]{.*?}[,\]]/).test(strKey) ||
-				(/^{.*?}$/).test(strKey) ||
-				(/[,[](true|false)[,\]]/).test(strKey)) return true;
-
-			return false;
-		};
-
-		this.validateKeyOrRange = function (key)
-		{
-			if (!(key instanceof this.IDBKeyRange))
+			if (!(encodedKey instanceof this.IDBKeyRange))
 			{
-				key = w_JSON.stringify(key);
-				if (this.notValidKey(key)) throw this.error("DataError");
+				encodedKey = this.encodeKey(encodedKey);
+				if (encodedKey === null) throw this.error("DataError");
 			}
-			return key;
+			return encodedKey;
 		};
 
 		this.wait = function (conditionFunc, bodyFunc, async)
 		{
 			var me = this;
 			this.async(function ()
-			{
-				if (conditionFunc()) bodyFunc();
-				else
 				{
-					w_setTimeout(function ()
+					if (conditionFunc()) bodyFunc();
+					else
 					{
-						me.wait(conditionFunc, bodyFunc);
-					}, 10);
-				}
-			},
-			async);
-		}
+						w_setTimeout(function ()
+						{
+							me.wait(conditionFunc, bodyFunc);
+						}, 10);
+					}
+				},
+				async);
+		};
 	});
+
 
 	// Classes
 	var IDBVersionChangeEvent = window.IDBVersionChangeEvent = indexedDB.util.IDBVersionChangeEvent =
 		function (type, target, oldVersion, newVersion)
-	{
-		this.type = type;
-		this.target = this.currentTarget = target;
-		this.oldVersion = oldVersion;
-		this.newVersion = newVersion;
-	};
+		{
+			this.type = type;
+			this.target = this.currentTarget = target;
+			this.oldVersion = oldVersion;
+			this.newVersion = newVersion;
+		};
 
 	var IDBDatabaseException = window.IDBDatabaseException = indexedDB.util.IDBDatabaseException =
 	{
@@ -185,8 +173,8 @@
 		VERSION_ERR : 12
 	};
 
+
 	// Cached
 	var w_setTimeout = window.setTimeout;
-	var w_JSON = window.JSON;
 
 }(window));

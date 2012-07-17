@@ -54,9 +54,9 @@ if (window.indexedDB.polyfill)
 			me.objectStoreNames.push(name);
 			me._objectStores[name] = objectStore;
 		};
-		tx._enqueueRequest(function (sqlTx, nextRequestCallback)
+		tx._queueOperation(function (sqlTx, nextRequestCallback)
 		{
-			sqlTx.executeSql("DROP TABLE \"" + name + "\"", null, null, errorCallback);
+			sqlTx.executeSql("DROP TABLE [" + name + "]", null, null, errorCallback);
 			sqlTx.executeSql("DELETE FROM " + indexedDB.SCHEMA_TABLE + " WHERE type = 'table' AND name = ?",
 				[name], null, errorCallback);
 
@@ -147,12 +147,12 @@ if (window.indexedDB.polyfill)
 			util.arrayRemove(me.objectStoreNames, name);
 			delete me._objectStores[name];
 		};
-		me._versionChangeTransaction._enqueueRequest(function (sqlTx, nextRequestCallback)
+		me._versionChangeTransaction._queueOperation(function (sqlTx, nextRequestCallback)
 		{
-			sqlTx.executeSql("CREATE TABLE \"" + name + "\" (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+			sqlTx.executeSql("CREATE TABLE [" + name + "] (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				"key TEXT UNIQUE, value BLOB)", [], null, errorCallback);
 
-			sqlTx.executeSql("CREATE INDEX INDEX_" + name + "_key ON \"" + name + "\" (key)", [], null, errorCallback);
+			sqlTx.executeSql("CREATE INDEX INDEX_" + name + "_key ON [" + name + "] (key)", [], null, errorCallback);
 
 			sqlTx.executeSql("INSERT INTO " + indexedDB.SCHEMA_TABLE +
 				" (type, name, keyPath, autoInc) VALUES ('table', ?, ?, ?)",

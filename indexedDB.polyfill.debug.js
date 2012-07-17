@@ -3,6 +3,7 @@
 	var files = [
 		"lib/jquery-1.7.2.js",
 		"indexedDB.init.js",
+		"key.js",
 		"IDBRequest.js",
 		"IDBFactory.js",
 		"IDBDatabase.js",

@@ -64,12 +64,12 @@ if (window.indexedDB.polyfill)
 			if (hasLower)
 			{
 				sql.push("(? <" + (this.lowerOpen ? "" : "=") + " " + keyColumnName + ")");
-				args.push(w_JSON.stringify(this.lower));
+				args.push(util.encodeKey(this.lower));
 			}
 			if (hasUpper)
 			{
 				sql.push("(" + keyColumnName + " <" + (this.upperOpen ? "" : "=") + " ?)");
-				args.push(w_JSON.stringify(this.upper));
+				args.push(util.encodeKey(this.upper));
 			}
 		}
 		return { sql : sql.join(" AND "), args : args };

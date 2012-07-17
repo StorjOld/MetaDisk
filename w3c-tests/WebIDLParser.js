@@ -1414,7 +1414,7 @@ window.WebIDLParser = (function(){
           pos = savedPos1;
         }
         var result2 = result1 !== null
-          ? (function(str) { return str.join(""); })(result1[1])
+          ? (function(str) { return encodedKey.join(""); })(result1[1])
           : null;
         if (result2 !== null) {
           var result0 = result2;
