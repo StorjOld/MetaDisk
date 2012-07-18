@@ -37,7 +37,6 @@
 
 		this.error = function (name, message, innerError)
 		{
-			console.gro
 			return {
 				name : name,
 				message : message,
