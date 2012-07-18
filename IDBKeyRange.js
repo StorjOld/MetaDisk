@@ -50,32 +50,25 @@ if (window.indexedDB.polyfill)
 	IDBKeyRange.prototype._getSqlFilter = function (keyColumnName)
 	{
 		if (keyColumnName == undefined) keyColumnName = "key";
-
-		var sql = [], args = [];
-		var hasLower = this.lower != null, hasUpper = this.upper != null;
-
+		var sql = [], hasLower = this.lower != null, hasUpper = this.upper != null;
 		if (this.lower == this.upper)
 		{
-			sql.push("(" + keyColumnName + " = ?)");
-			args = [this.lower];
+			sql.push("(" + keyColumnName + " = X'" + util.encodeKey(this.lower) + "')");
 		}
 		else
 		{
 			if (hasLower)
 			{
-				sql.push("(? <" + (this.lowerOpen ? "" : "=") + " " + keyColumnName + ")");
-				args.push(util.encodeKey(this.lower));
+				sql.push("(X'" + util.encodeKey(this.lower) + "' <" +
+					(this.lowerOpen ? "" : "=") + " " + keyColumnName + ")");
 			}
 			if (hasUpper)
 			{
-				sql.push("(" + keyColumnName + " <" + (this.upperOpen ? "" : "=") + " ?)");
-				args.push(util.encodeKey(this.upper));
+				sql.push("(" + keyColumnName + " <" +
+					(this.upperOpen ? "" : "=") + " X'" + util.encodeKey(this.upper) +"')");
 			}
 		}
-		return { sql : sql.join(" AND "), args : args };
+		return sql.join(" AND ");
 	};
-
-	// Utils
-	var w_JSON = window.JSON;
 
 }(window, window.indexedDB.util));

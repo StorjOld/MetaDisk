@@ -37,6 +37,7 @@
 
 		this.error = function (name, message, innerError)
 		{
+			console.gro
 			return {
 				name : name,
 				message : message,
@@ -118,14 +119,15 @@
 			return key;
 		};
 
-		this.validateKeyOrRange = function (encodedKey)
+		this.validateKeyOrRange = function (key)
 		{
-			if (!(encodedKey instanceof this.IDBKeyRange))
+			if (key == null) return null;
+			if (!(key instanceof this.IDBKeyRange))
 			{
-				encodedKey = this.encodeKey(encodedKey);
-				if (encodedKey === null) throw this.error("DataError");
+				key = this.encodeKey(key);
+				if (key === null) throw this.error("DataError");
 			}
-			return encodedKey;
+			return key;
 		};
 
 		this.wait = function (conditionFunc, bodyFunc, async)
@@ -176,5 +178,27 @@
 
 	// Cached
 	var w_setTimeout = window.setTimeout;
+
+	// Temp
+	var db = openDatabase("__TEMP__32D0E022D11311E1B4DD4EB66188709B", "", null, null);
+	db.transaction(function (sqlTx)
+	{
+		var exec = sqlTx.constructor.prototype.executeSql;
+		sqlTx.constructor.prototype.executeSql = function (sql, args, callback, errorCallback)
+		{
+			console.log("[SQL]: %s; args: %o", sql, args);
+			exec.call(this, sql, args,
+				function (sqlTx, results)
+				{
+					if (callback) callback(sqlTx, results);
+				},
+				function (sqlTx, sqlError)
+				{
+					console.error("[SQL Error]: ", sqlError);
+					if (errorCallback) errorCallback(sqlTx, sqlError);
+				})
+		}
+	});
+
 
 }(window));

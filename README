@@ -4,13 +4,11 @@ A. Unit Test.
 
 To run unit tests open index.html in target browser. To verify unit tests against Firefox's native implementation of IndexedDB API, open the same page through web (http) server. Because, otherwise Firefox does not let to create IndexedDB databases under localhost origin.
 
-Tests sometimes may fail due to their incompleteness in development. Particularly, QUnit's execution of asynchronous code needs to be wrapped by stop-start sign posts correctly and there must be one-to-one correspondence between all 'stops' and 'starts' in the code. However, sometimes it is not easy to foresee which async code get executed at the very end, 'start' command may be executed too early leaving other async code with unit tests to be left out of a test scope. This results test failures also affects to subsequent tests with outcomes like databases left unclosed or current test's 'stop' stops the 'start' from previous unsuccessful test, thus leaving current closing 'start' without a match.
-
 B. Useful Resources.
 
 1) Test suits http://w3c-test.org/webapps/IndexedDB/.
 
-Among test suits from w3c-test.org/webapps/IndexedDB/tests/submissions/Microsoft/ the following are failing: idbobjectstore_count2 & index_sort_order & objectstore_keyorder (lacking monotonic encoding), idbobjectstore_get3 (lacking Date support). In sum 4 tests failed out of 107. Last Update: Jule 9, 2012.
+Among test suits from w3c-test.org/webapps/IndexedDB/tests/submissions/Microsoft/ the following are failing: idbobjectstore_get3 (JSON lacks Date support). In sum 4 tests failed out of 107. Last Update: Jule 9, 2012.
 
 
 2) Mozilla IndexedDB implementation: http://hg.mozilla.org/mozilla-central/file/895e12563245/dom/indexedDB/ and http://people.mozilla.org/~jcranmer2/c-ccov-js/mozilla/dom/indexedDB/.

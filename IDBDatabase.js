@@ -49,7 +49,7 @@ if (window.indexedDB.polyfill)
 		var objectStore = this._objectStores[name];
 		delete this._objectStores[name];
 		var me = this;
-		var errorCallback = function (tx, sqlError)
+		var errorCallback = function (_, sqlError)
 		{
 			me.objectStoreNames.push(name);
 			me._objectStores[name] = objectStore;
@@ -66,7 +66,7 @@ if (window.indexedDB.polyfill)
 
 	IDBDatabase.prototype.transaction = function (storeNames, mode)
 	{
-		// TODO: 4.2.1. throw InvalidStateError if a transaction being createing within transaction callback
+		// TODO: 4.2.1. throw InvalidStateError if a transaction being creating within transaction callback
 		if (storeNames instanceof Array || storeNames == null)
 		{
 			if (storeNames.length == 0) throw util.error("InvalidAccessError");
@@ -142,7 +142,7 @@ if (window.indexedDB.polyfill)
 		var objectStore = new util.IDBObjectStore(name, keyPath, autoIncrement, me._versionChangeTransaction);
 		me.objectStoreNames.push(name);
 		me._objectStores[name] = objectStore;
-		var errorCallback = function (tx, sqlError)
+		var errorCallback = function (_, sqlError)
 		{
 			util.arrayRemove(me.objectStoreNames, name);
 			delete me._objectStores[name];
@@ -150,9 +150,9 @@ if (window.indexedDB.polyfill)
 		me._versionChangeTransaction._queueOperation(function (sqlTx, nextRequestCallback)
 		{
 			sqlTx.executeSql("CREATE TABLE [" + name + "] (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-				"key TEXT UNIQUE, value BLOB)", [], null, errorCallback);
+				"key BLOB UNIQUE, value BLOB)", null, null, errorCallback);
 
-			sqlTx.executeSql("CREATE INDEX INDEX_" + name + "_key ON [" + name + "] (key)", [], null, errorCallback);
+			sqlTx.executeSql("CREATE INDEX INDEX_" + name + "_key ON [" + name + "] (key)", null, null, errorCallback);
 
 			sqlTx.executeSql("INSERT INTO " + indexedDB.SCHEMA_TABLE +
 				" (type, name, keyPath, autoInc) VALUES ('table', ?, ?, ?)",

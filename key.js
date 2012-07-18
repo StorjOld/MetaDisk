@@ -27,7 +27,7 @@
  Chars (3FFF+80) - FFFF         are encoded as 11xxxxxx xxxxxxxx xx000000
 
  This ensures that the first byte is never encoded as 0, which means that the
- string terminator (per basic-stategy table) sorts before any character.
+ string terminator (per basic-strategy table) sorts before any character.
  The reason that (3FFF+80) - FFFF is encoded "shifted up" 6 bits is to maximize
  the chance that the last character is 0. See below for why.
 
@@ -67,7 +67,7 @@
 
  We could use a much higher number than 3 at no complexity or performance cost,
  however it seems unlikely that it'll make a practical difference, and the low
- limit makes testing eaiser.
+ limit makes testing easier.
 
 
  As a final optimization we do a post-encoding step which drops all 0s at the
@@ -93,12 +93,12 @@ if (window.indexedDB.polyfill)
 
 	util.encodeKey = function (key)
 	{
-		var stack = [key], buffer = [], type = 0, dataType, obj, tmp;
+		var stack = [key], writer = new HexStringWriter(), type = 0, dataType, obj;
 		while ((obj = stack.pop()) !== undefined)
 		{
 			if (type % 4 === 0 && type + TYPE_ARRAY > MAX_TYPE_BYTE_SIZE)
 			{
-				buffer.push(type);
+				writer.write(type);
 				type = 0;
 			}
 			dataType = typeof obj;
@@ -114,35 +114,35 @@ if (window.indexedDB.polyfill)
 				}
 				else
 				{
-					buffer.push(type);
+					writer.write(type);
 				}
 			}
 			else if (dataType === "number")
 			{
 				type += TYPE_NUMBER;
-				buffer.push(type);
-				encodeNumber(buffer, obj);
+				writer.write(type);
+				encodeNumber(writer, obj);
 			}
 			else if (obj instanceof Date)
 			{
 				type += TYPE_DATE;
-				buffer.push(type);
-				encodeNumber(buffer, obj.valueOf());
+				writer.write(type);
+				encodeNumber(writer, obj.valueOf());
 			}
 			else if (dataType === "string")
 			{
 				type += TYPE_STRING;
-				buffer.push(type);
-				encodeString(buffer, obj);
+				writer.write(type);
+				encodeString(writer, obj);
 			}
 			else if (obj === ARRAY_TERMINATOR)
 			{
-				buffer.push(BYTE_TERMINATOR);
+				writer.write(BYTE_TERMINATOR);
 			}
 			else return null;
 			type = 0;
 		}
-		return bufferToUnicodeString(buffer);
+		return writer.trim().toString();
 	};
 
 	util.decodeKey = function (encodedKey)
@@ -150,22 +150,22 @@ if (window.indexedDB.polyfill)
 		var rootArray = []; // one-element root array that contains the result
 		var parentArray = rootArray;
 		var type, arrayStack = [], depth, tmp;
-		var byteReader = new ByteReader(encodedKey);
-		while (byteReader.read() != null)
+		var reader = new HexStringReader(encodedKey);
+		while (reader.read() != null)
 		{
-			if (byteReader.current === 0) // end of array
+			if (reader.current === 0) // end of array
 			{
 				parentArray = arrayStack.pop();
 				continue;
 			}
-			if (byteReader.current === null)
+			if (reader.current === null)
 			{
 				return rootArray[0];
 			}
 			do
 			{
-				depth = byteReader.current / 4 | 0;
-				type = byteReader.current % 4;
+				depth = reader.current / 4 | 0;
+				type = reader.current % 4;
 				for (var i = 0; i < depth; i++)
 				{
 					tmp = [];
@@ -173,24 +173,24 @@ if (window.indexedDB.polyfill)
 					arrayStack.push(parentArray);
 					parentArray = tmp;
 				}
-				if (type === 0 && byteReader.current + TYPE_ARRAY > MAX_TYPE_BYTE_SIZE)
+				if (type === 0 && reader.current + TYPE_ARRAY > MAX_TYPE_BYTE_SIZE)
 				{
-					byteReader.read();
+					reader.read();
 				}
 				else break;
 			} while (true);
 
 			if (type === TYPE_NUMBER)
 			{
-				parentArray.push(decodeNumber(byteReader));
+				parentArray.push(decodeNumber(reader));
 			}
 			else if (type === TYPE_DATE)
 			{
-				parentArray.push(new Date(decodeNumber(byteReader)));
+				parentArray.push(new Date(decodeNumber(reader)));
 			}
 			else if (type === TYPE_STRING)
 			{
-				parentArray.push(decodeString(byteReader));
+				parentArray.push(decodeString(reader));
 			}
 			else if (type === 0) // empty array case
 			{
@@ -246,7 +246,7 @@ if (window.indexedDB.polyfill)
 		return { sign : s, exponent : e, mantissa : m };
 	}
 
-	function encodeNumber(buffer, number)
+	function encodeNumber(writer, number)
 	{
 		var number = ieee754(number);
 		if (number.sign)
@@ -256,40 +256,37 @@ if (window.indexedDB.polyfill)
 		}
 		var word, m = number.mantissa;
 
-		buffer.push((number.sign ? 0 : 0x80) | (number.exponent >> 4));
-		buffer.push((number.exponent & 0xF) << 4 | (0 | m / p48));
+		writer.write((number.sign ? 0 : 0x80) | (number.exponent >> 4));
+		writer.write((number.exponent & 0xF) << 4 | (0 | m / p48));
 
 		m %= p48; word = 0 | m / p32;
-		buffer.push(word >> 8, word & 0xFF);
+		writer.write(word >> 8, word & 0xFF);
 
 		m %= p32; word = 0 | m / p16;
-		buffer.push(word >> 8, word & 0xFF);
+		writer.write(word >> 8, word & 0xFF);
 
 		word = m % p16;
-		buffer.push(word >> 8, word & 0xFF);
+		writer.write(word >> 8, word & 0xFF);
 	}
 
-	function decodeNumber(byteReader)
+	function decodeNumber(reader)
 	{
-		var b = byteReader.read();
+		var b = reader.read() | 0;
 		var sign = b >> 7 ? false : true;
 
 		var s = sign ? -1 : 1;
 
 		var e = (b & 0x7F) << 4;
-		b = byteReader.read();
+		b = reader.read() | 0;
 		e += b >> 4;
 		if (sign) e = 0x7FF - e;
 
 		var tmp = [sign ? (0xF - (b & 0xF)) : b & 0xF];
 		var i = 6;
-		while (i--) tmp.push(sign ? (0xFF - byteReader.read()) : byteReader.read());
+		while (i--) tmp.push(sign ? (0xFF - (reader.read() | 0)) : reader.read() | 0);
 
 		var m = 0; i = 7;
-		while (i--)
-		{
-			m = m / 256 + tmp[i];
-		}
+		while (i--) m = m / 256 + tmp[i];
 		m /= 16;
 
 		if (m === 0 && e === 0) return 0;
@@ -298,7 +295,7 @@ if (window.indexedDB.polyfill)
 
 	var secondLayer = 0x3FFF + 0x7F;
 
-	function encodeString(buffer, string)
+	function encodeString(writer, string)
 	{
 		/* 3 layers:
 		 Chars 0         - 7E            are encoded as 0xxxxxxx with 1 added
@@ -310,58 +307,58 @@ if (window.indexedDB.polyfill)
 			var code = string.charCodeAt(i);
 			if (code <= 0x7E)
 			{
-				buffer.push(code + 1);
+				writer.write(code + 1);
 			}
 			else if (code <= secondLayer)
 			{
 				code -= 0x7F;
-				buffer.push(0x80 | code >> 8, code & 0xFF);
+				writer.write(0x80 | code >> 8, code & 0xFF);
 			}
 			else
 			{
-				buffer.push(0xC0 | code >> 10, code >> 2 | 0xFF, (code | 3) << 6);
+				writer.write(0xC0 | code >> 10, code >> 2 | 0xFF, (code | 3) << 6);
 			}
 		}
-		buffer.push(BYTE_TERMINATOR);
+		writer.write(BYTE_TERMINATOR);
 	}
 
-	function decodeString(byteReader)
+	function decodeString(reader)
 	{
-		var buffer = [], layer = 0, unicode = 0, count = 0, byte, tmp;
+		var buffer = [], layer = 0, unicode = 0, count = 0, $byte, tmp;
 		while (true)
 		{
-			byte = byteReader.read();
-			if (byte === 0 || byte == null) break;
+			$byte = reader.read();
+			if ($byte === 0 || $byte == null) break;
 
 			if (layer === 0)
 			{
-				tmp = byte >> 6;
+				tmp = $byte >> 6;
 				if (tmp < 2)
 				{
-					buffer.push(String.fromCharCode(byte - 1));
+					buffer.push(String.fromCharCode($byte - 1));
 				}
 				else // tmp equals 2 or 3
 				{
 					layer = tmp;
-					unicode = byte << 10;
+					unicode = $byte << 10;
 					count++;
 				}
 			}
 			else if (layer === 2)
 			{
-				buffer.push(String.fromCharCode(unicode + byte + 0x7F));
+				buffer.push(String.fromCharCode(unicode + $byte + 0x7F));
 				layer = unicode = count = 0;
 			}
 			else // layer === 3
 			{
 				if (count === 2)
 				{
-					unicode += byte << 2;
+					unicode += $byte << 2;
 					count++;
 				}
 				else // count === 3
 				{
-					buffer.push(String.fromCharCode(unicode | byte >> 6));
+					buffer.push(String.fromCharCode(unicode | $byte >> 6));
 					layer = unicode = count = 0;
 				}
 			}
@@ -369,48 +366,42 @@ if (window.indexedDB.polyfill)
 		return buffer.join("");
 	}
 
-	var ByteReader = function (string)
+	var HexStringReader = function (string)
 	{
 		this.current = null;
 
 		var string = string;
-		var code, index = -1, high = false;
+		var lastIndex = string.length - 1;
+		var index = -1;
 
 		this.read = function ()
 		{
-			high = !high;
-			if (high)
-			{
-				index++;
-				code = string.charCodeAt(index);
-			}
-			if (isNaN(code))
-			{
-				this.current = null;
-			}
-			else
-			{
-				this.current = high ? code >> 8 : code & 0xFF;
-			}
-			return this.current;
+			return this.current = index < lastIndex ? parseInt(string[++index] + string[++index], 16) : null;
 		}
 	};
 
-	function bufferToUnicodeString(buffer)
+	var HexStringWriter = function()
 	{
-		var index = buffer.length;
-		while (buffer[--index] === 0);
-		buffer.length = ++index;
-
-		if ((index & 1) === 1) buffer.push(0);
-		var result = [], length = buffer.length >> 1;
-
-		for (var i = 0; i < length; i++)
+		var buffer = [], c;
+		this.write = function ($byte)
 		{
-			index = i << 1;
-			result.push(String.fromCharCode(buffer[index] << 8 | buffer[index + 1]));
+			for (var i = 0; i < arguments.length; i++)
+			{
+				c = arguments[i].toString(16);
+				buffer.push(c.length === 2 ? c : c = "0" + c);
+			}
+		};
+		this.toString = function ()
+		{
+			return buffer.length ? buffer.join("") : null;
+		};
+		this.trim = function()
+		{
+			var length = buffer.length;
+			while (buffer[--length] === "00");
+			buffer.length = ++length;
+			return this;
 		}
-		return result.join("");
-	}
+	};
 
 }(window.indexedDB.util));

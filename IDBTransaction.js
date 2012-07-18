@@ -58,8 +58,7 @@ if (window.indexedDB.polyfill)
 			}*/
 			return;
 		}
-		operation =  me._requests[operationIndex];
-		operation(sqlTx, function ()
+		me._requests[operationIndex](sqlTx, function ()
 		{
 			performOperation(me, sqlTx, operationIndex + 1);
 		});

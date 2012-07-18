@@ -11,7 +11,7 @@ if (window.indexedDB.polyfill)
 		this._request = request;
 		this._range = null;
 		this._gotValue = true;
-		this._effectiveKey = null;
+		this._effectiveKeyEncoded = null;
 	};
 
 	IDBCursor.prototype.update = function (value)
@@ -36,7 +36,7 @@ if (window.indexedDB.polyfill)
 				noOverwrite : false,
 				value : value
 			},
-			me._effectiveKey);
+			me._effectiveKeyEncoded);
 		});
 		return request;
 	};
@@ -64,7 +64,7 @@ if (window.indexedDB.polyfill)
 		var me = this;
 		objectStore.transaction._queueOperation(function (sqlTx, nextRequestCallback)
 		{
-			objectStore._deleteRecord(sqlTx, me._effectiveKey,
+			objectStore._deleteRecord(sqlTx, me._effectiveKeyEncoded,
 				function ()
 				{
 					if (request.onsuccess) request.onsuccess(util.event("success", request));
@@ -130,18 +130,16 @@ if (window.indexedDB.polyfill)
 		me._request.readyState = util.IDBRequest.LOADING;
 		tx._queueOperation(function (sqlTx, nextRequestCallback)
 		{
-			var sql = ["SELECT key, value FROM [" + me.source.name + "]"];
+			var sql = ["SELECT hex(key) 'key', value FROM [" + me.source.name + "]"];
 			var where = [];
 			var args = [];
 			if (filter.lower != null)
 			{
-				where.push("(key >" + (filter.lowerOpen ? "" : "=") + " ?)");
-				args.push(util.encodeKey(filter.lower));
+				where.push("(key >" + (filter.lowerOpen ? "" : "=") + " X'" + util.encodeKey(filter.lower) + "')");
 			}
 			if (filter.upper != null)
 			{
-				where.push("(key <" + (filter.upperOpen ? "" : "=") + " ?)");
-				args.push(util.encodeKey(filter.upper));
+				where.push("(key <" + (filter.upperOpen ? "" : "=") + " X'" + util.encodeKey(filter.upper) + "')");
 			}
 			if (where.length > 0)
 			{
@@ -157,14 +155,14 @@ if (window.indexedDB.polyfill)
 					request.readyState = util.IDBRequest.DONE;
 					if (results.rows.length < filter.count)
 					{
-						me.key = me.primaryKey = me._effectiveKey = undefined;
+						me.key = me.primaryKey = me._effectiveKeyEncoded = undefined;
 						if (typeof me.value !== "undefined") me.value = undefined;
 						request.result = null;
 					}
 					else
 					{
 						var found = results.rows.item(filter.count - 1);
-						me._effectiveKey = found.key;
+						me._effectiveKeyEncoded = found.key;
 						me.key = me.primaryKey = util.decodeKey(found.key);
 						if (typeof me.value !== "undefined") me.value = w_JSON.parse(found.value);
 						me._gotValue = true;
@@ -193,53 +191,51 @@ if (window.indexedDB.polyfill)
 			var desc = isDesc(me);
 			var objectStoreName = me.source.objectStore.name;
 			var tableName = util.indexTable(objectStoreName, me.source.name);
-			var sql = ["SELECT i.key, i.primaryKey" + (withValue ? ", t.value" : ""),
+			var sql = ["SELECT hex(i.key) 'key', hex(i.primaryKey) 'primaryKey'" + (withValue ? ", t.value" : ""),
 				"FROM [" + tableName + "] as i"];
 
 			if (withValue)
 			{
 				sql.push("LEFT JOIN [" + objectStoreName + "] as t ON t.Id = i.recordId");
 			}
-			var where = [], args = [];
+			var where = [], args = [], encoded;
 			if (filter.lower != null)
 			{
-				var strLower = util.encodeKey(filter.lower);
-				args.push(strLower);
+				encoded = util.encodeKey(filter.lower);
 				if (filter.lowerOpen)
 				{
-					where.push("(i.key > ?)");
+					where.push("(i.key > X'" + encoded + "')");
 				}
 				else
 				{
-					if (me._effectiveKey == null || desc)
+					if (me._effectiveKeyEncoded == null || desc)
 					{
-						where.push("(i.key >= ?)");
+						where.push("(i.key >= X'" + encoded+ "')");
 					}
 					else
 					{
-						where.push("((i.key > ?) OR (i.key = ? AND i.primaryKey > ?))");
-						args.push(strLower, me._effectiveKey);
+						where.push("((i.key > X'" + encoded + "') OR (i.key = X'" + encoded +
+							"' AND i.primaryKey > X'" + me._effectiveKeyEncoded + "'))");
 					}
 				}
 			}
 			if (filter.upper != null)
 			{
-				var strUpper = util.encodeKey(filter.upper);
-				args.push(strUpper);
+				encoded = util.encodeKey(filter.upper);
 				if (filter.upperOpen)
 				{
-					where.push("(i.key < ?)");
+					where.push("(i.key < X'" + encoded + "')");
 				}
 				else
 				{
-					if (me._effectiveKey == null || !desc)
+					if (me._effectiveKeyEncoded == null || !desc)
 					{
-						where.push("(i.key <= ?)");
+						where.push("(i.key <= X'" + encoded + "')");
 					}
 					else
 					{
-						where.push("((i.key < ?) OR (i.key = ? AND i.primaryKey < ?))");
-						args.push(strUpper, me._effectiveKey);
+						where.push("((i.key < X'" + encoded + "') OR (i.key = X'" + encoded +
+							"' AND i.primaryKey < X'" + me._effectiveKeyEncoded + "'))");
 					}
 				}
 			}
@@ -258,7 +254,7 @@ if (window.indexedDB.polyfill)
 					request.readyState = util.IDBRequest.DONE;
 					if (results.rows.length < filter.count)
 					{
-						me.key = me.primaryKey = me._effectiveKey = undefined;
+						me.key = me.primaryKey = me._effectiveKeyEncoded = undefined;
 						if (typeof me.value !== "undefined") me.value = undefined;
 						request.result = null;
 					}
@@ -266,7 +262,7 @@ if (window.indexedDB.polyfill)
 					{
 						var found = results.rows.item(filter.count - 1);
 						me.key = util.decodeKey(found.key);
-						me._effectiveKey = found.primaryKey;
+						me._effectiveKeyEncoded = found.primaryKey;
 						me.primaryKey = util.decodeKey(found.primaryKey);
 						if (typeof me.value !== "undefined") me.value = w_JSON.parse(found.value);
 						me._gotValue = true;

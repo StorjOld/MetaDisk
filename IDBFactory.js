@@ -5,6 +5,7 @@ if (window.indexedDB.polyfill)
 
 	indexedDB.open = function (name, version)
 	{
+		console.group
 		if (arguments.length == 2 && version == undefined) throw util.error("TypeError");
 		if (version !== undefined)
 		{
@@ -168,24 +169,30 @@ if (window.indexedDB.polyfill)
 	// IDBFactory.deleteDatabase
 	indexedDB.deleteDatabase = function (name)
 	{
+		console.groupCollapsed("indexedDB.deleteDatabase('%s')", name);
 		// INFO: There is no way to delete database in Web SQL Database API.
 		var database = getOriginDatabase(name);
 		database.deletePending = true;
 		var request = new util.IDBOpenDBRequest(null);
 		util.async(function()
 		{
+			console.log("deleteDatabase async started.");
 			request.readyState = util.IDBRequest.DONE;
 			var sqldb = openSqlDB(name);
 			if (sqldb.version == "")
 			{
+				console.log("Database deleted succesfully. (No such database was found)");
+				console.groupEnd();
 				database.deletePending = false;
 				if (request.onsuccess) request.onsuccess(util.event("success", request));
 			}
 			else
 			{
+				console.log("Deleting existing database");
 				fireVersionChangeEvent(request, name, parseInt(sqldb.version), null);
 				util.wait(function ()
 					{
+						console.log("Waiting %d connection to be closed", database.connections.length);
 						return database.connections.length == 0;
 					},
 					function ()
@@ -245,12 +252,14 @@ if (window.indexedDB.polyfill)
 			var conn = database.connections[i];
 			if (conn._closePending) continue;
 
+			console.log("Open connection found, firing versionchange event on them.");
 			anyOpenConnection = true;
 			var event = new util.IDBVersionChangeEvent("versionchange", request, oldVersion, newVersion);
 			if (conn.onversionchange) conn.onversionchange(event);
 		}
 		if (anyOpenConnection)
 		{
+			console.log("Open connection found, firing onblocked event.");
 			var event = new util.IDBVersionChangeEvent("blocked", request, oldVersion, newVersion);
 			if (request.onblocked) request.onblocked(event);
 		}
@@ -258,32 +267,39 @@ if (window.indexedDB.polyfill)
 
 	function deleteDatabase(request, sqldb, database)
 	{
+		console.log("Setting sql database version %d to empty.", sqldb.version);
 		sqldb.changeVersion(sqldb.version, "",
 			function (sqlTx)
 			{
+				console.log("Selecting all tables and indexes from schema table.");
 				sqlTx.executeSql("SELECT a.type, a.name, b.name 'table' FROM " + indexedDB.SCHEMA_TABLE +
 					" a LEFT JOIN " + indexedDB.SCHEMA_TABLE + " b ON a.type = 'index' AND a.tableId = b.Id",
 					null,
-					function (tx, results)
+					function (sqlTx, results)
 					{
 						var name;
 						for (var i = 0; i < results.rows.length; i++)
 						{
 							var item = results.rows.item(i);
 							name = item.type == 'table' ? item.name : util.indexTable(item.table, item.name);
-							tx.executeSql("DROP TABLE [" + name + "]");
+							console.log("Dropping table %s.", name);
+							sqlTx.executeSql("DROP TABLE [" + name + "]");
 						}
-						tx.executeSql("DROP TABLE " + indexedDB.SCHEMA_TABLE);
+						console.log("Dropping schema table.");
+						sqlTx.executeSql("DROP TABLE " + indexedDB.SCHEMA_TABLE);
 					});
 			},
 			function (sqlError)
 			{
+				console.error("Database (version %d) deletion failed.", sqldb.version, sqlError);
 				database.deletePending = false;
 				request.error = sqlError;
 				if (request.onerror) request.onerror(util.event("error", request));
 			},
 			function ()
 			{
+				console.log("Database deleted successfully.");
+				console.groupEnd();
 				database.deletePending = false;
 				if (request.onsuccess) request.onsuccess(util.event("success", request));
 			});

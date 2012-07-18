@@ -23,27 +23,23 @@ if (window.indexedDB.polyfill)
 
 	IDBIndex.prototype.get = function (key)
 	{
-		key = util.validateKeyOrRange(key);
+		var encodedKeyOrRange = util.validateKeyOrRange(key);
 		var request = new util.IDBRequest(this);
 		var me = this;
 		this.objectStore.transaction._queueOperation(function (sqlTx, nextRequestCallback)
 		{
 			var sql = ["SELECT s.value FROM [" + util.indexTable(me) + "] AS i INNER JOIN"];
-			sql.push("[" + me.objectStore.name + "] AS s ON s.id = i.recordId")
-			var args = [];
-			if (key instanceof util.IDBKeyRange)
+			sql.push("[" + me.objectStore.name + "] AS s ON s.id = i.recordId");
+			if (encodedKeyOrRange instanceof util.IDBKeyRange)
 			{
-				var filter = key._getSqlFilter("i.key");
-				sql.push("WHERE", filter.sql);
-				args = filter.args;
+				sql.push("WHERE", encodedKeyOrRange._getSqlFilter("i.key"));
 			}
-			else if (key != null)
+			else if (encodedKeyOrRange != null)
 			{
-				sql.push("WHERE (i.key = ?)");
-				args.push(key);
+				sql.push("WHERE (i.key = X'" + encodedKeyOrRange + "')");
 			}
 			sql.push("ORDER BY i.key, i.primaryKey LIMIT 1");
-			sqlTx.executeSql(sql.join(" "), args,
+			sqlTx.executeSql(sql.join(" "), null,
 				function (_, results)
 				{
 					request.result = results.rows.length > 0 ? w_JSON.parse(results.rows.item(0).value) : undefined;
@@ -62,26 +58,22 @@ if (window.indexedDB.polyfill)
 
 	IDBIndex.prototype.getKey = function (key)
 	{
-		key = util.validateKeyOrRange(key);
+		var encodedKeyOrRange = util.validateKeyOrRange(key);
 		var request = new util.IDBRequest(this);
 		var me = this;
 		this.objectStore.transaction._queueOperation(function (sqlTx, nextRequestCallback)
 		{
-			var sql = ["SELECT primaryKey FROM [" + util.indexTable(me) + "]"];
-			var args = [];
-			if (key instanceof util.IDBKeyRange)
+			var sql = ["SELECT hex(primaryKey) 'primaryKey' FROM [" + util.indexTable(me) + "]"];
+			if (encodedKeyOrRange instanceof util.IDBKeyRange)
 			{
-				var filter = key._getSqlFilter();
-				sql.push("WHERE", filter.sql);
-				args = filter.args;
+				sql.push("WHERE", encodedKeyOrRange._getSqlFilter());
 			}
-			else if (key != null)
+			else if (encodedKeyOrRange != null)
 			{
-				sql.push("WHERE (key = ?)");
-				args.push(key);
+				sql.push("WHERE (key = X'" + encodedKeyOrRange + "')");
 			}
 			sql.push("LIMIT 1");
-			sqlTx.executeSql(sql.join(" "), args,
+			sqlTx.executeSql(sql.join(" "), null,
 				function (_, results)
 				{
 					request.result = results.rows.length > 0 ?
@@ -101,25 +93,21 @@ if (window.indexedDB.polyfill)
 
 	IDBIndex.prototype.count = function (key)
 	{
-		key = util.validateKeyOrRange(key);
+		var encodedKeyOrRange = util.validateKeyOrRange(key);
 		var request = new util.IDBRequest(this);
 		var me = this;
 		this.objectStore.transaction._queueOperation(function (sqlTx, nextRequestCallback)
 		{
 			var sql = ["SELECT COUNT(recordId) AS 'count' FROM [" + util.indexTable(me) + "]"];
-			var args = [];
-			if (key instanceof util.IDBKeyRange)
+			if (encodedKeyOrRange instanceof util.IDBKeyRange)
 			{
-				var filter = key._getSqlFilter();
-				sql.push("WHERE", filter.sql);
-				args = filter.args;
+				sql.push("WHERE", encodedKeyOrRange._getSqlFilter());
 			}
-			else if (key != null)
+			else if (encodedKeyOrRange != null)
 			{
-				sql.push("WHERE (key = ?)");
-				args.push(key);
+				sql.push("WHERE (key = X'" + encodedKeyOrRange + "')");
 			}
-			sqlTx.executeSql(sql.join(" "), args,
+			sqlTx.executeSql(sql.join(" "), null,
 				function (_, results)
 				{
 					request.result = results.rows.item(0).count;

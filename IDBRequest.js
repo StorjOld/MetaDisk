@@ -1,5 +1,5 @@
 if (window.indexedDB.polyfill)
-(function(window, indexedDB, util, undefined)
+(function(window, util, undefined)
 {
 	var IDBRequest = util.IDBRequest = window.IDBRequest = function(source)
 	{
@@ -23,4 +23,4 @@ if (window.indexedDB.polyfill)
 	IDBOpenDBRequest.prototype = new IDBRequest();
 	IDBOpenDBRequest.prototype.constructor = IDBOpenDBRequest;
 
-}(window, window.indexedDB, window.indexedDB.util));
+}(window, window.indexedDB.util));

@@ -363,13 +363,16 @@ policies and contribution forms [3].
 
     function __delayFuncCall(func)
     {
+	    var delay = 25;
+	    window.setTimeout(function () {
         window.setTimeout(function () {
             window.setTimeout(function () {
                 window.setTimeout(function () {
                     func();
-                }, 10);
-            }, 10);
-        }, 10);
+                }, delay);
+            }, delay);
+        }, delay);
+        }, delay);
     }
 
 

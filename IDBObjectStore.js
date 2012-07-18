@@ -46,7 +46,7 @@ if (window.indexedDB.polyfill)
 
 	function validateObjectStoreKey(keyPath, autoIncrement, value, key)
 	{
-		var key = key, str;
+		var key = key, encodedKey;
 		if (keyPath != null)
 		{
 			if (key != null) throw util.error("DataError");
@@ -84,7 +84,7 @@ if (window.indexedDB.polyfill)
 					if (key == null)
 					{
 						key = currentNo;
-						encodedKey = key.toString();
+						encodedKey = util.encodeKey(key);
 						if (me.keyPath != null)
 						{
 							assignKeyToValue(context.value, me.keyPath, key);
@@ -121,7 +121,7 @@ if (window.indexedDB.polyfill)
 					// TODO: error
 				}
 			},
-			function (sqlTx, sqlError)
+			function (_, sqlError)
 			{
 				// TODO: error
 			});
@@ -203,26 +203,26 @@ if (window.indexedDB.polyfill)
 		return encodedKey;
 	}
 
-	function storeIndex(context, index, strKey, isLast)
+	function storeIndex(context, index, encodedKey, isLast)
 	{
 		var indexTable = util.indexTable(index.objectStore.name, index.name);
 
 		var sql = ["INSERT INTO", indexTable, "(recordId, key, primaryKey)"];
 		var args = [];
-		if (index.multiEntry && (strKey instanceof Array))
+		if (index.multiEntry && (encodedKey instanceof Array))
 		{
 			var select = [];
-			for (var i = 0; i < strKey.length; i++)
+			for (var i = 0; i < encodedKey.length; i++)
 			{
-				sql.push("SELECT ?, ?, ?");
-				args.push(context.recordId, strKey[i], context.primaryKey);
+				sql.push("SELECT ?, X'" + encodedKey[i] + "', X'" + context.primaryKeyEncoded + "'");
+				args.push(context.recordId);
 			}
 			sql.push(select.join(" UNION ALL "))
 		}
 		else
 		{
-			sql.push("VALUES (?, ?, ?)");
-			args.push(context.recordId, strKey, context.primaryKey);
+			sql.push("VALUES (?, X'" + encodedKey + "', X'" + context.primaryKeyEncoded +"')");
+			args.push(context.recordId);
 		}
 		var request = context.request;
 		context.sqlTx.executeSql(sql.join(" "), args,
@@ -270,22 +270,19 @@ if (window.indexedDB.polyfill)
 
 	IDBObjectStore.prototype.get = function (key)
 	{
-		key = util.validateKeyOrRange(key);
+		var encodedKeyOrRange = util.validateKeyOrRange(key);
 		var request = new util.IDBRequest(this);
 		var me = this;
 		me.transaction._queueOperation(function (sqlTx, nextRequestCallback)
 		{
 			var where = "", args = [];
-			if (key instanceof util.IDBKeyRange)
+			if (encodedKeyOrRange instanceof util.IDBKeyRange)
 			{
-				var filter = key._getSqlFilter();
-				where = "WHERE " + filter.sql;
-				args = filter.args;
+				where = "WHERE " + encodedKeyOrRange._getSqlFilter();
 			}
-			else if (key != null)
+			else if (encodedKeyOrRange != null)
 			{
-				where = "WHERE (key = ?)";
-				args.push(key);
+				where = "WHERE (key = X'" + encodedKeyOrRange + "')";
 			}
 
 			sqlTx.executeSql("SELECT [value] FROM [" + me.name + "] " + where +" LIMIT 1", args,
@@ -404,22 +401,19 @@ if (window.indexedDB.polyfill)
 
 	IDBObjectStore.prototype.count = function (key)
 	{
-		key = util.validateKeyOrRange(key);
+		var encodedKeyOrRange = util.validateKeyOrRange(key);
 		var request = new util.IDBRequest(this);
 		var me = this;
 		this.transaction._queueOperation(function (sqlTx, nextRequestCallback)
 		{
 			var where = "", args = [];
-			if (key instanceof util.IDBKeyRange)
+			if (encodedKeyOrRange instanceof util.IDBKeyRange)
 			{
-				var filter = key._getSqlFilter();
-				where = "WHERE " + filter.sql;
-				args = filter.args;
+				where = "WHERE " + encodedKeyOrRange._getSqlFilter();
 			}
-			else if (key != null)
+			else if (encodedKeyOrRange != null)
 			{
-				where = "WHERE (key = ?)";
-				args.push(key);
+				where = "WHERE (key = X'" + encodedKeyOrRange + "')";
 			}
 			sqlTx.executeSql("SELECT COUNT(id) AS 'count' FROM [" + me.name + "] " + where, args,
 				function (_, results)
@@ -438,32 +432,29 @@ if (window.indexedDB.polyfill)
 		return request;
 	};
 
-	IDBObjectStore.prototype._deleteRecord = function (sqlTx, strKeyOrRange, onsuccess, onerror)
+	IDBObjectStore.prototype._deleteRecord = function (sqlTx, encodedKeyOrRange, onsuccess, onerror)
 	{
 		var objectStore = this;
-		var sql, where, args = [];
-		if (strKeyOrRange instanceof util.IDBKeyRange)
+		var sql, where;
+		if (encodedKeyOrRange instanceof util.IDBKeyRange)
 		{
-			var filter = strKeyOrRange._getSqlFilter();
-			where = "WHERE " + filter.sql;
-			args = filter.args;
+			where = "WHERE " + encodedKeyOrRange._getSqlFilter();
 		}
 		else
 		{
-			where = "WHERE (key = ?)";
-			args.push(strKeyOrRange);
+			where = "WHERE (key = X'" + encodedKeyOrRange + "')";
 		}
 		for (var indexName in objectStore._indexes)
 		{
 			var index = objectStore._indexes[indexName];
 			sql = ["DELETE FROM [" + util.indexTable(objectStore.name, index.name) + "]"];
-			if (args.length > 0)
+			if (where)
 			{
 				sql.push("WHERE recordId IN (SELECT id FROM [" + objectStore.name + "]", where + ")");
 			}
-			sqlTx.executeSql(sql.join(" "), args, null, onerror);
+			sqlTx.executeSql(sql.join(" "), null, null, onerror);
 		}
-		sqlTx.executeSql("DELETE FROM [" + objectStore.name + "] " + where, args, onsuccess, onerror);
+		sqlTx.executeSql("DELETE FROM [" + objectStore.name + "] " + where, null, onsuccess, onerror);
 	};
 
 	IDBObjectStore.prototype._insertOrReplaceRecord = function (context, encodedKey)
@@ -481,17 +472,17 @@ if (window.indexedDB.polyfill)
 		}
 		var me = this;
 		var encodedValue = w_JSON.stringify(context.value);
-		context.sqlTx.executeSql("INSERT INTO [" + me.name + "] (key, value) VALUES (?, ?)",
-			[encodedKey, encodedValue],
+		context.sqlTx.executeSql("INSERT INTO [" + me.name + "] (key, value) VALUES (X'" + encodedKey + "', ?)",
+			[encodedValue],
 			function (sqlTx, results)
 			{
 				context.objectStore = me;
 				context.sqlTx = sqlTx;
-				context.primaryKey = encodedKey;
+				context.primaryKeyEncoded = encodedKey;
 				context.recordId = results.insertId;
 				storeIndexes(context);
 			},
-			function (sqlTx, sqlError)
+			function (_, sqlError)
 			{
 				// TODO: proper error handling
 				request.error = util.error("ConstraintError");
@@ -521,8 +512,8 @@ if (window.indexedDB.polyfill)
 		};
 		me.transaction._queueOperation(function (sqlTx, nextRequestCallback)
 		{
-			sqlTx.executeSql("CREATE TABLE " + util.indexTable(me.name, name) + " (recordId INTEGER, key TEXT" +
-				(unique ? " UNIQUE" : "") + ", primaryKey TEXT)", null, null, errorCallback);
+			sqlTx.executeSql("CREATE TABLE " + util.indexTable(me.name, name) + " (recordId INTEGER, key BLOB" +
+				(unique ? " UNIQUE" : "") + ", primaryKey BLOB)", null, null, errorCallback);
 
 			sqlTx.executeSql("INSERT INTO " + indexedDB.SCHEMA_TABLE +
 				" (name, type, keyPath, tableId, [unique], multiEntry) VALUES (?, 'index', ?, " +
@@ -530,7 +521,7 @@ if (window.indexedDB.polyfill)
 				[name, w_JSON.stringify(keyPath), me.name, unique ? 1 : 0, multiEntry ? 1 : 0],
 				null, errorCallback);
 
-			sqlTx.executeSql("SELECT id, key, value FROM [" + me.name + "]", null,
+			sqlTx.executeSql("SELECT id, hex(key) 'key', value FROM [" + me.name + "]", null,
 				function (sqlTx, results)
 				{
 					if (results.rows.length == 0) return;
@@ -540,21 +531,21 @@ if (window.indexedDB.polyfill)
 					for (var i = 0; i < results.rows.length; i++)
 					{
 						var item = results.rows.item(i);
-						var strKey = getValidIndexKeyString(index, w_JSON.parse(item.value));
-						if (strKey == null) continue;
+						var encodedKey = getValidIndexKeyString(index, w_JSON.parse(item.value));
+						if (encodedKey == null) continue;
 
-						if (index.multiEntry && (strKey instanceof Array))
+						if (index.multiEntry && (encodedKey instanceof Array))
 						{
-							for (var j = 0; j < strKey.length; j++)
+							for (var j = 0; j < encodedKey.length; j++)
 							{
-								select.push("SELECT ?, ?, ?");
-								args.push(item.id, strKey[j], item.key);
+								select.push("SELECT ?, X'" + encodedKey[j] + "', X'" + item.key + "'");
+								args.push(item.id);
 							}
 						}
 						else
 						{
-							select.push("SELECT ?, ?, ?");
-							args.push(item.id, strKey, item.key);
+							select.push("SELECT ?, X'" + encodedKey + "', X'" + item.key + "'");
+							args.push(item.id);
 						}
 					}
 					sql.push(select.join(" UNION ALL "));
