@@ -13,8 +13,6 @@
 	// Configuration
 	indexedDB.SCHEMA_TABLE = "__IndexedDBSchemaInfo__";
 	indexedDB.DB_PREFIX = "__IndexedDB__";
-	indexedDB.DB_DESCRIPTION = "IndexedDB ";
-	indexedDB.DEFAULT_DB_SIZE = 5 * 1024 * 1024;
 	//indexedDB.CURSOR_CHUNK_SIZE = 10;
 
 	// Data types
@@ -37,7 +35,6 @@
 
 		this.error = function (name, message, innerError)
 		{
-			console.gro
 			return {
 				name : name,
 				message : message,
@@ -178,27 +175,5 @@
 
 	// Cached
 	var w_setTimeout = window.setTimeout;
-
-	// Temp
-	var db = openDatabase("__TEMP__32D0E022D11311E1B4DD4EB66188709B", "", null, null);
-	db.transaction(function (sqlTx)
-	{
-		var exec = sqlTx.constructor.prototype.executeSql;
-		sqlTx.constructor.prototype.executeSql = function (sql, args, callback, errorCallback)
-		{
-			console.log("[SQL]: %s; args: %o", sql, args);
-			exec.call(this, sql, args,
-				function (sqlTx, results)
-				{
-					if (callback) callback(sqlTx, results);
-				},
-				function (sqlTx, sqlError)
-				{
-					console.error("[SQL Error]: ", sqlError);
-					if (errorCallback) errorCallback(sqlTx, sqlError);
-				})
-		}
-	});
-
 
 }(window));

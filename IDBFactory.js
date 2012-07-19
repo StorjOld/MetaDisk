@@ -24,7 +24,7 @@ if (window.indexedDB.polyfill)
 
 	function runStepsForOpeningDB(name, version, request)
 	{
-		var sqldb = openSqlDB(name);
+		var sqldb = util.openDatabase(name);
 		if (sqldb.version !== "" && isNaN(parseInt(sqldb.version))) // sqldb.version is corrupt
 		{
 			request.error = util.error("VersionError");
@@ -178,7 +178,7 @@ if (window.indexedDB.polyfill)
 		{
 			console.log("deleteDatabase async started.");
 			request.readyState = util.IDBRequest.DONE;
-			var sqldb = openSqlDB(name);
+			var sqldb = util.openDatabase(name);
 			if (sqldb.version == "")
 			{
 				console.log("Database deleted succesfully. (No such database was found)");
@@ -220,14 +220,6 @@ if (window.indexedDB.polyfill)
 	};
 
 	// Utils
-	function openSqlDB(name)
-	{
-		return window.openDatabase(
-			indexedDB.DB_PREFIX + name, "",
-			indexedDB.DB_DESCRIPTION + name,
-			indexedDB.DEFAULT_DB_SIZE);
-	}
-
 	function getOriginDatabase(name)
 	{
 		var db = origin[name];
