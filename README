@@ -8,7 +8,7 @@ B. Useful Resources.
 
 1) Test suits http://w3c-test.org/webapps/IndexedDB/.
 
-Among test suits from w3c-test.org/webapps/IndexedDB/tests/submissions/Microsoft/ the following are failing: idbobjectstore_get3 (JSON lacks Date support). In sum 4 tests failed out of 107. Last Update: Jule 9, 2012.
+Among test suits from w3c-test.org/webapps/IndexedDB/tests/submissions/Microsoft/ the following are failing: idbobjectstore_get3 (JSON lacks Date support). In sum only 1 test is failing out of 107. Last Update: Jule 9, 2012.
 
 
 2) Mozilla IndexedDB implementation: http://hg.mozilla.org/mozilla-central/file/895e12563245/dom/indexedDB/ and http://people.mozilla.org/~jcranmer2/c-ccov-js/mozilla/dom/indexedDB/.
