@@ -16,12 +16,12 @@
 	];
 
 
-	function loadScript(i)
+	function loadScript(source)
 	{
 		var s = document.createElement('script');
 		s.type = 'text/javascript';
 		s.async = false;
-		s.src = "/git/" + files[i];
+		s.src = source;
 		var x = document.getElementsByTagName('script')[0];
 		x.parentNode.insertBefore(s, x);
 	}
@@ -33,6 +33,6 @@
 	}
 	for (var i = 1; i < files.length; i++)
 	{
-		loadScript(i);
+		loadScript(files[i]);
 	}
 }());
