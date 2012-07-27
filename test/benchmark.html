@@ -1,0 +1,133 @@
+<!--
+Copyright 2012 Facebook Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+		"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>IndexedDB performance benchmarking</title>
+	<script type="text/javascript" src="../lib/jquery-1.7.2.js"></script>
+	<script type="text/javascript" src="BenchmarkTests.js"></script>
+	<script type="text/javascript" src="util.js"></script>
+	<script type="text/javascript" src="webkitIndexedDB.js"></script>
+	<script type="text/javascript" language="JavaScript">
+
+		function startTest() {
+			window.indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB;
+			window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.mozIDBTransaction;
+			window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.mozIDBKeyRange;
+
+			$("#btnStart").attr("disabled", true);
+			if (!$('#chkAppend').is(':checked')) $("#divResults").html("");
+			var startTime = new Date();
+			BenchmarkTests.run(
+					parseInt($("#attempts").val()),
+					$("#sizes").val().split(","),
+					parseInt($("#skipAttempts").val()),
+					function (results) {
+						$("#btnStart").attr("disabled", false);
+						var text = [];
+						text.push($("#divResults").html());
+						text.push("===  " + getTime() + "  ====== <br />");
+						text.push(results);
+						text.push("<br /><br />");
+						$("#divResults").html(text.join(""));
+						$("#status").text();
+					},
+					function (percentage, text) {
+						var tmp = (new Date() - startTime) / 1000 | 0;
+						var s = twoDigit(tmp % 60);
+						tmp = tmp / 60 | 0;
+						var m = twoDigit(tmp % 60);
+						tmp = tmp / 60 | 0;
+						var h = twoDigit(tmp % 24);
+
+						$("#status").text("Time " + h + ":" + m + ":" + s + ", " +
+								percentage + "%, processing \"" + text + "\"");
+					}
+			);
+		}
+
+		function getTime() {
+			var d = new Date();
+			return d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate() + " " +
+					d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+		}
+		function twoDigit(number) {
+			return number < 10 ? "0" + number : number.toString();
+		}
+
+		INDEXEDDB_POLYFILL_DEBUG_SOURCE_PATH = "../";
+	</script>
+	<script type="text/javascript" src="../indexedDB.polyfill.debug.js"></script>
+
+	<style type="text/css">
+		div {
+			margin-bottom: 8px
+		}
+
+		.info-box {
+			color: #b8860b;
+		}
+
+		.field {
+			margin-right: 16px
+		}
+
+		.num-textbox {
+			margin: 0;
+			padding: 0;
+			border: 1px solid #AAAAAA;
+			height: 16px
+		}
+	</style>
+</head>
+<body>
+<div style="">
+	<div>
+			<span class="field">
+				<label for="attempts">Number of attempts:</label>
+				<input type="text" id="attempts" value="6" class="num-textbox" style="width: 24px">
+			</span>
+
+			<span class="field">
+				(Skip first
+				<input type="text" id="skipAttempts" value="0" class="num-textbox" style="width: 18px">
+				attempts)
+			</span>
+
+			<span class="field">
+				<label for="sizes">ObjectStore initial sizes:</label>
+				<input type="text" id="sizes" value="0,10,50,100" class="num-textbox" style="width: 200px">
+			</span>
+
+			<span class="field">
+				<input type="button" id="btnStart" value="Start" onclick="startTest()"/>
+			</span>
+
+			<span class="field">
+				<input type="checkbox" id="chkAppend"/>
+				<label for="chkAppend">Append</label>
+			</span>
+
+			<span class="field" id="status" style="font-style: italic; color: gray;">
+			</span>
+	</div>
+	<div id="divResults" class="info-box"></div>
+</div>
+</body>
+</html>
