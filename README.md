@@ -27,6 +27,10 @@ All you have to do is to include _indexeddb.polyfill.js_ file into your web page
 
 If the target browser does not support IndexedDB, the polyfill automatically creates _indexedDB_ global object and thus exposes its functionality. So you do not have to modify anything in your existing project with IndexedDB code. If the target browser has native implementation of IndexedDB, the polyfill will not interfere with it.
 
+To force using polyfill append the following script before including the polyfill:
+
+>window.indexedDB = { polyfill : true };
+
 ###3. Unit Tests
 
 To run unit tests open _index.html_ in target browser. To verify unit tests against Firefox's native implementation of IndexedDB API, open the same page through web (http) server. Because, otherwise Firefox does not let to create IndexedDB databases under localhost origin.
