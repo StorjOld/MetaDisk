@@ -1,0 +1,71 @@
+<!-- Header -->
+		{% include 'header.html' %}
+<!--Header-->
+<body>
+  <div class="header-main header-tp" id="anchorHome">
+    <div class="container">
+  <nav class="navbar navbar-default" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button class="navbar-toggle" data-target=".navbar-ex1-collapse" data-toggle="collapse" type="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="current navbar-brand" href="/static/images/Responsive HTML template for Bootstrap 3.html">
+        <h3 style="margin-top:5px;">PyStorage</h3>
+      </a>
+    </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+      <a class="btn btn-default navbar-btn navbar-right" data-toggle="modal" href="upload">
+        Upload
+        <i class="icon-signin"></i>
+      </a>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="current active">
+          <a class="current" href="/">Home</a>
+        </li>
+        <li class="current active">
+          <a class="current" href="/">About</a>
+        </li>
+        <li class="current active">
+          <a class="current" href="/">Contact</a>
+        </li>
+        <li class="current active">
+          <a class="current" href="/">SignIn</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+ </div>
+<div class="separator-shadow-bottom bottom-margin">
+    <img alt="" src="/static/images/shadow-separator-wide-bottom.png">
+</div>
+  </div>
+	<div class="upload-container">
+	<h3>Upload Files</h3>
+				<form id="upload" method="post" action="/upload" enctype="multipart/form-data">
+			<div id="drop">
+				Drop Files Here or Click Browse <br/>
+				<a class="btn btn-primary btn-lg"> <i class="icon icon-plus"></i> Browse</a>
+				<button type="button" class="btn btn-info" id="cancel-upload">
+                    <i class="icon icon-ban-circle"></i>
+                    Cancel
+                </button>
+                <button type="button" class="btn btn-danger" id="delete-upload">
+                    <i class="icon icon-trash"></i>
+                    Delete
+                </button>
+				<input type="file" name="file" multiple />
+			</div>
+
+			<ul>
+			</ul>
+		</form>
+	</div>
+<!-- Footer -->
+		{% include 'footer-upload.html' %}
+<!--Footer-->
+</body>
