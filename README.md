@@ -40,4 +40,4 @@ In an effort to be as automated as possible, BitStratus will install all needed 
 4. The file is available across the Storj network. User is able to set redundancy and availability.
 4. The user is allowed to freely use/download/share the file until the credits/tokens balance is 0. 
 
-Design Ideas: [BitFetch](https://bitfetch.com/).
+Design Ideas: [BitFetch](https://bitfetch.com/), [Javascript File Encryption](http://demo.tutorialzine.com/2013/11/javascript-file-encrypter/)
