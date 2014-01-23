@@ -32,8 +32,9 @@ In an effort to be as automated as possible, BitStratus will install all needed 
 
 ### B. Filehost Use ###
 1. The user wants to store a video file on the web to share with friends. 
-2. The user pays the BitStratus node for file storage and bandwidth in [Bitcoin](http://bitcoin.org/en/).
-3. 
+2. The user pays the BitStratus node for file storage and bandwidth credits/tokens in [Bitcoin](http://bitcoin.org/en/).
+3. The user uploads the file to BitStratus using the web interface.
+4. The user is allowed to freely use/download/share the file until the credits/tokens balance is 0. 
 
 ### C. Storj Network ###
 1. The user wants to store a video file on the web to share with friends.
