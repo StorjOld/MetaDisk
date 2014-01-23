@@ -1,17 +1,14 @@
 BitStratus
 ========
+BitStratus, a filehost web app, that allows anyone to upload files via a web interface or API. It can be run as a standalone app for personal cloud storage or used in a group setting to provide "Dropbox" like functionality. BitStratus also serves as a web node to the Storj network where it can freely buy and sell bandwidth and storage.
 
-A web node for the StorJ network. Coded in [Python](http://python.org/) and [Flask](http://flask.pocoo.org/), a Python microframework for web. Must be run on a Linux based web server, [Debian](http://www.debian.org/) distro recommended. 
-
-## Summary ##
-Users and developers want to be able to store their files and data on the web. Users typically use services like  Dropbox or Google Drive, while developers typically use services like Amazon S3 or Google Cloud. These services require their users to sign-up, have data storage limits and plans(which can be pricy), don't allow for easy automation, and don't allow direct access to files. BitStratus is just the first part of a decentralized storage network to solve this problem.
-
-BitStratus, a filehost web app, that allows anyone to upload files via a web interface or API. It can be run as a standalone app for personal cloud storage, used in a group setting to provide "Dropbox" like functionality, or connected with the Storj network where it can freely buy and sell bandwidth and storage.
+- Coded in [Python](http://python.org/) and [Flask](http://flask.pocoo.org/), a Python microframework for web.
+- Must be run on a Linux based web server, [Debian](http://www.debian.org/) distro recommended. 
 
 ## Setup ##
-In an effort to be as automated as possible, BitStratus will install all needed dependencies and programs from a bash script. Please try to use [Debian 7.3](http://www.debian.org/distrib/netinst) if would like to take the automated route. If you would like to use another distro, please refer to the bash script for the required dependencies. 
+In an effort to be as automated as possible, BitStratus will install all needed dependencies and programs from a bash script. We use Debian 7.0 x64 droplets on [Digital Ocean](http://digitalocean.com). If you would like to use another distro, please refer to the bash script for the required dependencies. 
 
-1. Setup a Linux VPS with [Debian 7.3](http://www.debian.org/distrib/netinst). We recommend using [Digital Ocean](http://digitalocean.com).
+1. Setup a Linux VPS on [Digital Ocean](http://digitalocean.com). Debian 7.0 x64 recommended. 
 2. After logging in run the following commands:
 
 		sudo apt-get update && sudo apt-get upgrade
