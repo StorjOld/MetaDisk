@@ -23,7 +23,7 @@ STORAGE_SIZE = 20*(2**20) # 20 MiB
 
 app = Flask(__name__)
 app.config['TEMP_FOLDER'] = 'tmp'
-#app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024 Please note this is max upload limit by flask which is 16mb now
+app.config['MAX_CONTENT_LENGTH'] = STORAGE_SIZE # Please note this is max upload limit by flask
 
 
 def get_cloud_manager():
