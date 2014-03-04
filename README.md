@@ -20,6 +20,31 @@ In an effort to be as automated as possible, BitStratus will install all needed 
 		
 3. A web server should be now be running on the VPS's public IP. If you have issues or questions with installation, just open a [Github issue](https://github.com/Storj/BitStratus/issues). 
 
+## Project setup ##
+
+To use this, you must install the [plowshare command line
+tool](https://code.google.com/p/plowshare/). Make sure that both plowup and
+plowdown are in your PATH before continuing.
+
+This project has a pip compatible requirements.txt. You can use virtualenv to
+manage dependencies:
+
+    cd BitCumulus
+    virtualenv .env                  # create a virtual environment for this project
+    source .env/bin/activate         # activate it
+    pip install -r requirements.txt  # install dependencies
+
+Afterwards, you need to set up a cloudmanager database:
+
+    python -mcloudmanager.setup_db database/files.db
+
+To test the installation, use the following command:
+
+    python index.py
+
+BitCumulus will be running on http://localhost:5000
+
+
 ## Sample Interactions ##
 
 ### A. Personal Use ###
