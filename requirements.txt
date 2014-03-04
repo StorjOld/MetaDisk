@@ -1,3 +1,9 @@
-git+https://github.com/super3/plowshare-wrapper.git#egg=plowshare
-git+https://github.com/super3/cloud-manager.git#egg=cloudmanager
-flask
+Flask==0.10.1
+Jinja2==2.7.2
+MarkupSafe==0.18
+Werkzeug==0.9.4
+argparse==1.2.1
+-e git+https://github.com/super3/cloud-manager.git@6d452b40e08d2133a773021735593ff2c5c5b790#egg=cloudmanager-master
+itsdangerous==0.23
+-e git+https://github.com/super3/plowshare-wrapper.git@a1c3ab657b928643d35e2bdac64c8bd3e45f4b67#egg=plowshare-master
+wsgiref==0.1.2
