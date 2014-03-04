@@ -89,9 +89,9 @@ def upload():
         result = get_cloud_manager().upload(temp_name)
 
         if not result:
-            return 'Upload Failed'
+            return 'Upload Failed', 500
         else:
-            return result
+            return result, 201
     finally:
         os.remove(temp_name)
 
@@ -110,7 +110,7 @@ def download(filehash):
 
     full_path = cm.warm_up(filehash)
     if full_path is None:
-        return 'File not found'
+        return 'File not found', 404
 
     return send_file(full_path,
             attachment_filename=os.path.basename(full_path),
