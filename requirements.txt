@@ -1,0 +1,3 @@
+git+https://github.com/super3/plowshare-wrapper.git#egg=plowshare
+git+https://github.com/super3/cloud-manager.git#egg=cloudmanager
+flask
