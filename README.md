@@ -3,12 +3,12 @@ BitStratus
 BitStratus, a filehost web app, that allows anyone to upload files via a web interface or API. It can be run as a standalone app for personal cloud storage or used in a group setting to provide "Dropbox" like functionality. BitStratus also serves as a web node to the Storj network where it can freely buy and sell bandwidth and storage.
 
 - Coded in [Python](http://python.org/) and [Flask](http://flask.pocoo.org/), a Python microframework for web.
-- Must be run on a Linux based web server, [Debian](http://www.debian.org/) distro recommended. 
+- Must be run on a Linux based web server, [Debian](http://www.debian.org/) distro recommended.
 
 ## Setup ##
-In an effort to be as automated as possible, BitStratus will install all needed dependencies and programs from a bash script. We use Debian 7.0 x64 droplets on [Digital Ocean](http://digitalocean.com). If you would like to use another distro, please refer to the bash script for the required dependencies. 
+In an effort to be as automated as possible, BitStratus will install all needed dependencies and programs from a bash script. We use Debian 7.0 x64 droplets on [Digital Ocean](http://digitalocean.com). If you would like to use another distro, please refer to the bash script for the required dependencies.
 
-1. Setup a Linux VPS on [Digital Ocean](http://digitalocean.com). Debian 7.0 x64 recommended. 
+1. Setup a Linux VPS on [Digital Ocean](http://digitalocean.com). Debian 7.0 x64 recommended.
 2. After logging in run the following commands:
 
 		sudo apt-get update && sudo apt-get upgrade
@@ -18,7 +18,7 @@ In an effort to be as automated as possible, BitStratus will install all needed 
 		sh ./autoinstall
 		sh ./autostart
 		
-3. A web server should be now be running on the VPS's public IP. If you have issues or questions with installation, just open a [Github issue](https://github.com/Storj/BitStratus/issues). 
+3. A web server should be now be running on the VPS's public IP. If you have issues or questions with installation, just open a [Github issue](https://github.com/Storj/BitStratus/issues).
 
 ## Project setup ##
 
