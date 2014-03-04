@@ -71,20 +71,24 @@ $(function(){
 
             if(progress == 100){
                 data.context.removeClass('working');
+                data.context.addClass('processing');
+                data.context.find('input').trigger('configure', { 'fgColor': '#FFCC00' });
             }
         },
 
-        fail:function(e, data){
+        fail:function(e, data) {
             // Something has gone wrong!
             data.context.addClass('error');
         },
 
-        complete:function(e)
-        {
-	        if(window.response.responseText!='Upload Failed')
-	           {
-		           tpl.find('a').attr("href", "download/"+window.response.responseText);
-	           }
+        done:function(e, data) {
+            data.context.removeClass('working');
+            data.context.removeClass('processing');
+            data.context.find('input').trigger('configure', { 'fgColor': '#0788a5' });
+
+            if (window.response.responseText!='Upload Failed') {
+                tpl.find('a').attr("href", "download/"+window.response.responseText);
+            }
         }
 
     });

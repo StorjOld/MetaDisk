@@ -130,6 +130,11 @@
     background-position: 0 -12px;
 }
 
+#upload ul li.processing span{
+    height: 16px;
+    background-position: 0 -12px;
+}
+
 #upload ul li.error p{
     color:red;
 }
