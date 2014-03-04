@@ -1,4 +1,26 @@
+// Helper function that formats the file sizes
+function formatFileSize(bytes) {
+    if (typeof bytes !== 'number') {
+        return '';
+    }
+
+    if (bytes >= 1000000000) {
+        return (bytes / 1000000000).toFixed(2) + ' GB';
+    }
+
+    if (bytes >= 1000000) {
+        return (bytes / 1000000).toFixed(2) + ' MB';
+    }
+
+    return (bytes / 1000).toFixed(2) + ' KB';
+}
+
+
 $(function(){
+    var tpl = '<li class="working"><input type="text" value="0" data-width="48" data-height="48"' +
+        ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /><p></p><span></span>'+
+        '<a target="_blank" class="btn btn-warning" id="download-btn"> <i class="icon icon-download"></i> Download</a>'+
+      '</li>';
 
     var ul = $('#upload ul');
 
@@ -17,51 +39,38 @@ $(function(){
         // This function is called when a file is added to the queue;
         // either via the browse button, or via drag/drop:
         add: function (e, data) {
-
-            var tpl = $('<li class="working"><input type="text" value="0" data-width="48" data-height="48"'+
-                ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /><p></p><span></span><a target="_blank" class="btn btn-warning" id="download-btn"> <i class="icon icon-download"></i> Download</a></li>');
-
-             window.tpl=tpl;
+            var row = $(tpl); // Instantiate the template
 
             // Append the file name and file size
-            tpl.find('p').text(data.files[0].name)
+            row.find('p').text(data.files[0].name)
                          .append('<i>' + formatFileSize(data.files[0].size) + '</i>');
 
             // Add the HTML to the UL element
-            data.context = tpl.appendTo(ul);
+            data.context = row.appendTo(ul);
 
             // Initialize the knob plugin
-            tpl.find('input').knob();
+            row.find('input').knob();
 
             // Listen for clicks on the cancel icon
-            tpl.find('span').click(function(){
-
-                if(tpl.hasClass('working')){
+            row.find('span').click(function(){
+                if(row.hasClass('working')){
                     jqXHR.abort();
                 }
 
-                tpl.fadeOut(function(){
-                    tpl.remove();
-                });
-
+                row.fadeOut(function(){ row.remove(); });
             });
 
             // Automatically upload the file once it is added to the queue
-	           var jqXHR = data.submit();
-	           window.response=jqXHR;
-	        //Cancel all Running Uploads
-	        $('#cancel-upload').click(function(){
-		        jqXHR.abort();
-	        });
+            var jqXHR = data.submit();
 
-	        //Deleted all Running Uploads
-	        $('#delete-upload').click(function(){
-                    tpl.remove();
-	        });
+            //Cancel all Running Uploads
+            $('#cancel-upload').click(function(){ jqXHR.abort(); });
+
+            //Deleted all Running Uploads
+            $('#delete-upload').click(function(){ row.remove(); });
         },
 
-        progress: function(e, data){
-
+        progress: function(e, data) {
             // Calculate the completion percentage of the upload
             var progress = parseInt(data.loaded / data.total * 100, 10);
 
@@ -77,7 +86,6 @@ $(function(){
         },
 
         fail:function(e, data) {
-            // Something has gone wrong!
             data.context.addClass('error');
         },
 
@@ -86,34 +94,14 @@ $(function(){
             data.context.removeClass('processing');
             data.context.find('input').trigger('configure', { 'fgColor': '#0788a5' });
 
-            if (window.response.responseText!='Upload Failed') {
-                tpl.find('a').attr("href", "download/"+window.response.responseText);
+            if (data.jqXHR.responseText != 'Upload Failed') {
+                data.context.find('a').attr("href", "download/" + data.jqXHR.responseText);
             }
         }
-
     });
-
 
     // Prevent the default action when a file is dropped on the window
     $(document).on('drop dragover', function (e) {
         e.preventDefault();
     });
-
-    // Helper function that formats the file sizes
-    function formatFileSize(bytes) {
-        if (typeof bytes !== 'number') {
-            return '';
-        }
-
-        if (bytes >= 1000000000) {
-            return (bytes / 1000000000).toFixed(2) + ' GB';
-        }
-
-        if (bytes >= 1000000) {
-            return (bytes / 1000000).toFixed(2) + ' MB';
-        }
-
-        return (bytes / 1000).toFixed(2) + ' KB';
-    }
-
 });
