@@ -88,7 +88,7 @@ def upload():
     try:
         result = get_cloud_manager().upload(temp_name)
 
-        if result is None:
+        if not result:
             return 'Upload Failed'
         else:
             return result
