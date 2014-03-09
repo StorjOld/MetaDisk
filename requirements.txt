@@ -7,3 +7,5 @@ argparse==1.2.1
 itsdangerous==0.23
 -e git+https://github.com/Storj/plowshare-wrapper.git#egg=plowshare-0.3.0
 wsgiref==0.1.2
+requests==2.2.1
+-e git+https://github.com/Storj/metachains-dtc.git#egg=metachains_dtc-0.1.0
