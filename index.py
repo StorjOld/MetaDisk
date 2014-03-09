@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+#
 # Indentation is 4 spaces.
 #
 # Available routes:
