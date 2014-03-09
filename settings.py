@@ -5,3 +5,8 @@ DATABASE     = PROJECT_ROOT + '/database/files.db'
 STORAGE_PATH = PROJECT_ROOT + '/uploads'
 STORAGE_SIZE = 20*(2**20) # 20 MiB
 
+try:
+    from local_settings import *
+except ImportError:
+    pass
+
