@@ -14,7 +14,7 @@ coin = metachains_dtc.Datacoin(
         settings.DATACOIN_PASSWORD)
 
 cloud = cloudmanager.CloudManager(
-        settings.DATABASE
+        settings.DATABASE,
         settings.STORAGE_PATH,
         settings.STORAGE_SIZE)
 
