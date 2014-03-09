@@ -9,30 +9,27 @@
 #   GET  /disk-usage
 
 import os
+
 from flask import Flask, render_template, request, g, jsonify, send_file
 from werkzeug import secure_filename
 
-from cloudmanager import CloudManager
-
-# Cloud manager settings
-PROJECT_ROOT = '.'
-DATABASE     = PROJECT_ROOT + '/database/files.db'
-STORAGE_PATH = PROJECT_ROOT + '/uploads'
-STORAGE_SIZE = 20*(2**20) # 20 MiB
-
+import settings
+import cloudmanager
 
 app = Flask(__name__)
 app.config['TEMP_FOLDER'] = 'tmp'
-app.config['MAX_CONTENT_LENGTH'] = STORAGE_SIZE # Please note this is max upload limit by flask
+app.config['MAX_CONTENT_LENGTH'] = settings.STORAGE_SIZE
 
 
 def get_cloud_manager():
+    """Instantiate a cloudmanager instance, if needed."""
+
     cloud_manager = getattr(g, '_cloud_manager', None)
     if cloud_manager is None:
-        cloud_manager = g._cloud_manager = CloudManager(
-                DATABASE,
-                STORAGE_PATH,
-                STORAGE_SIZE)
+        cloud_manager = g._cloud_manager = cloudmanager.CloudManager(
+                settings.DATABASE,
+                settings.STORAGE_PATH,
+                settings.STORAGE_SIZE)
 
     return cloud_manager
 
