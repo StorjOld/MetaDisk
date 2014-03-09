@@ -59,8 +59,8 @@ Check the [settings.py](settings.py) for examples.
 After configuring the blockchain settings correctly, you can synchronize your
 data by running one of the two following commands:
 
-   ./worker.py download # scans the blockchain for BitCumulus files
-   ./worker.py upload   # exports uploaded files to the blockchain
+    ./worker.py download # scans the blockchain for BitCumulus files
+    ./worker.py upload   # exports uploaded files to the blockchain
 
 You might want to set up a cron job for each, possibly with different
 intervals. Use crontab -e and add something similar to the following lines:
