@@ -3,9 +3,10 @@
 # Warning: This script actually sends data
 # to the blockchain, spending your coins.
 
+import sys
+
 import cloudmanager
 import metachains_dtc
-
 import settings
 
 coin = metachains_dtc.Datacoin(
@@ -24,8 +25,10 @@ worker = metachains_dtc.Synchronizer(
         settings.DATACOIN_START)
 
 
-print "scanning blockchain.."
-worker.scan_blockchain()
+if sys.argv[1] == "download":
+    print "scanning blockchain..."
+    worker.scan_blockchain()
 
-print "scanning database.."
-worker.scan_database()
+if sys.argv[1] == "upload":
+    print "scanning database..."
+    worker.scan_database()
