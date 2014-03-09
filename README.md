@@ -30,8 +30,48 @@ Afterwards, you need to set up a cloudmanager database:
 
     python -mcloudmanager.setup_db database/files.db
 
+## Web application setup ##
+
 To test the installation, use the following command:
 
     python index.py
 
 BitCumulus will be running on http://localhost:5000
+
+## Blockchain synchronization setup ##
+
+To enable blockchain synchronization, you must first configure the blockchain
+settings. Default settings are present in the [settings.py](settings.py) file,
+but you may override them by creating a `local_settings.py` file. You must at
+least specify the blockchain server password:
+
+    DATACOIN_PASSWORD = "my-hidden-password"
+
+You may also override other settings:
+
+    DATACOIN_URL       # URL to the server RPC endpoint.
+    DATACOIN_USERNAME  # RPC username.
+    DATACOIN_PASSWORD  # RPC password.
+    DATACOIN_START     # Block index where to start scanning.
+
+Check the [settings.py](settings.py) for examples.
+
+After configuring the blockchain settings correctly, you can synchronize your
+data by running one of the two following commands:
+
+   ./worker.py download # scans the blockchain for BitCumulus files
+   ./worker.py upload   # exports uploaded files to the blockchain
+
+You might want to set up a cron job for each, possibly with different
+intervals. Use crontab -e and add something similar to the following lines:
+
+    */10 *   * * * /path/to/BitCumulus/worker.py download
+    0    */1 * * * /path/to/BitCumulus/worker.py upload
+
+This will execute `download` every ten minutes, and `upload` every hour.
+
+
+## Synchronization note ##
+
+Keep in mind that the `upload` command spends datacoins, so be careful when
+using it.
