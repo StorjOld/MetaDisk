@@ -3,7 +3,7 @@ Jinja2==2.7.2
 MarkupSafe==0.18
 Werkzeug==0.9.4
 argparse==1.2.1
--e git+https://github.com/Storj/cloud-manager.git#egg=cloudmanager-0.6.1
+-e git+https://github.com/Storj/cloud-manager.git#egg=cloudmanager-0.7.0
 itsdangerous==0.23
 -e git+https://github.com/Storj/plowshare-wrapper.git#egg=plowshare-0.3.0
 wsgiref==0.1.2
