@@ -32,7 +32,7 @@ uploads/downloads, and `metachains-dtc` to enable synchronization of the hosted
 content information between nodes running BitCumulus.
 
 
-#### Instalation
+#### Installation
 
 Check [INSTALL.md](INSTALL.md) for installation instructions.
 
