@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta "http-equiv"="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="/static/css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/jquery.fileupload.css">
+    <link rel="stylesheet" href="/static/css/jquery.fileupload-ui.css">
+    <link rel="stylesheet" href="/static/css/blueimp-gallery.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      @javascript html5shiv respond.min
+    <![endif]-->
+    <title>PyStorage</title>
+  </head>
+  <body>
+    <div class="header-main header-tp" id="anchorHome">
+      <div class="container">
+    <nav class="navbar navbar-default" role="navigation">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button class="navbar-toggle" data-target=".navbar-ex1-collapse" data-toggle="collapse" type="button">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="current navbar-brand" href="/">
+          <h3 style="margin-top:5px;">BitCumulus</h3>
+        </a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <a class="btn btn-default navbar-btn navbar-right" data-toggle="modal" href="upload">
+          Upload
+          <i class="icon-signin"></i>
+        </a>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="current active">
+            <a class="current" href="/">Home</a>
+          </li>
+          <li class="current active">
+            <a class="current" href="/">About</a>
+          </li>
+          <li class="current active">
+            <a class="current" href="/">Contact</a>
+          </li>
+          <li class="current active">
+            <a class="current" href="/">SignIn</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+   </div>
+  <div class="separator-shadow-bottom bottom-margin">
+      <img alt="" src="/static/images/shadow-separator-wide-bottom.png">
+  </div>
+    </div>
+    <div class="upload-container">
+    <h3>Upload Files</h3>
+      <form id="upload" method="post" action="/api/upload" enctype="multipart/form-data">
+        <div id="drop">
+          Drop Files Here or Click Browse <br/>
+          <a class="btn btn-primary btn-lg"> <i class="icon icon-plus"></i> Browse</a>
+          <button type="button" class="btn btn-info" id="cancel-upload">
+                      <i class="icon icon-ban-circle"></i>
+                      Cancel
+                  </button>
+                  <button type="button" class="btn btn-danger" id="delete-upload">
+                      <i class="icon icon-trash"></i>
+                      Delete
+                  </button>
+          <input type="file" name="file" multiple />
+        </div>
+        <ul>
+        </ul>
+      </form>
+    </div>
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/jquery.knob.js"></script>
+    <!-- jQuery File Upload Dependencies -->
+    <script src="/static/js/jquery.ui.widget.js"></script>
+    <script src="/static/js/jquery.iframe-transport.js"></script>
+    <script src="/static/js/jquery.fileupload.js"></script>
+    <!-- Our main JS file -->
+    <script src="/static/js/script.js"></script>
+  </body>
+</html>

@@ -95,7 +95,7 @@ $(function(){
             data.context.find('input').trigger('configure', { 'fgColor': '#0788a5' });
 
             if (data.jqXHR.responseText != 'Upload Failed') {
-                data.context.find('a').attr("href", "download/" + data.jqXHR.responseText);
+                data.context.find('a').attr("href", "/api/download/" + data.jqXHR.responseText);
             }
         }
     });
