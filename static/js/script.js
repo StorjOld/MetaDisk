@@ -46,7 +46,12 @@ $(function(){
                          .append('<i>' + formatFileSize(data.files[0].size) + '</i>');
 
             // Add the HTML to the UL element
-            data.context = row.appendTo(ul);
+            row.appendTo(ul);
+
+            data.context = {
+              element: row
+            }
+
 
             // Initialize the knob plugin
             row.find('input').knob();
@@ -76,27 +81,20 @@ $(function(){
 
             // Update the hidden input field and trigger a change
             // so that the jQuery knob plugin knows to update the dial
-            data.context.find('input').val(progress).change();
-
-            if(progress == 100){
-                data.context.removeClass('working');
-                data.context.addClass('processing');
-                data.context.find('input').trigger('configure', { 'fgColor': '#FFCC00' });
-            }
+            data.context.element.find('input').val(progress).change();
         },
 
         fail:function(e, data) {
-            data.context.addClass('error');
+            data.context.element.addClass('error');
         },
 
         done:function(e, data) {
-            data.context.removeClass('working');
-            data.context.removeClass('processing');
-            data.context.find('input').trigger('configure', { 'fgColor': '#0788a5' });
+            var key = data.result.filehash;
 
-            if (data.jqXHR.responseText != 'Upload Failed') {
-                data.context.find('a').attr("href", "/api/download/" + data.jqXHR.responseText);
-            }
+            data.context.element.removeClass('working');
+            data.context.element.removeClass('processing');
+            data.context.element.find('input').trigger('configure', { 'fgColor': '#0788a5' });
+            data.context.element.find('a').attr("href", "/api/download/" + key);
         }
     });
 
