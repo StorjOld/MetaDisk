@@ -1,7 +1,7 @@
 BitCumulus
 ========
 
-BitCumulus, a filehost web app, that allows anyone to upload files via a web
+BitCumulus is a filehost web app, that allows anyone to upload files via a web
 interface or API. Files are hashed and uploaded to public file hosting. Using
 the hashes a node can look up the information of where that file was stored
 using the [Datacoin](http://datacoin.info/) blockchain. This makes a file
@@ -26,18 +26,15 @@ This project depends on several other projects:
   the Datacoin client, using json RPC. It also contains a synchronization class,
   which allows one to synchronize data from and to the blockchain.
 
-BitCumulus, this project, puts everything together and makes it accessible
-through a web application. It uses `cloudmanager` to manage all
-uploads/downloads, and `metachains-dtc` to enable synchronization of the hosted
-content information between nodes running BitCumulus.
+- [web-core](https://github.com/Storj/web-core) is the backend server that powers
+  BitCumulus. It provides a json API web service, and the daemons to synchronize
+  files to the cloud hosting services and to the blockchain.
+
+BitCumulus, this project, provides a web interface to web-core, allowing you to
+upload files and check the server status regarding bandwidth, disk usage, and
+synchronization state.
 
 
 #### Installation
 
 Check [INSTALL.md](INSTALL.md) for installation instructions.
-
-
-## Synchronization note ##
-
-Keep in mind that the `upload` command spends datacoins, so be careful when
-using it.

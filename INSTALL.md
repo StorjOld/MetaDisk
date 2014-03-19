@@ -1,73 +1,36 @@
 Installation
 ============
 
-#### Dependencies
-
-To use this, you must install the [plowshare command line
-tool](https://code.google.com/p/plowshare/). Make sure that both plowup and
-plowdown are in your PATH before continuing.
-
-If you're running Debian, you can install it using the following commands:
-
-    wget https://plowshare.googlecode.com/files/plowshare4_1~git20140112.7ad41c8-1_all.deb
-    sudo dpkg -i plowshare4_1~git20140112.7ad41c8-1_all.deb
-    sudo apt-get -f install
+This project is just a set of static files. To get it running, just point nginx
+(or your favourite web server) to it, and make sure that you set up
+[web-core](https://github.com/Storj/web-core) correctly and that it is running
+on the domain as BitCumulus.
 
 
-This project has a pip compatible requirements.txt. You can use virtualenv to
-manage dependencies:
+#### Sample nginx site
 
-    cd BitCumulus
-    virtualenv .env                  # create a virtual environment for this project
-    source .env/bin/activate         # activate it
-    pip install -r requirements.txt  # install dependencies
+Suppose that you have a gunicorn instance running web-core on port 5000.
+The following site definition would work:
 
-Afterwards, you need to set up a cloudmanager database:
+```
+server {
+    listen 80;
+    server_name storj.example.com;
+    root /path/to/BitCumulus/static/;
+    client_max_body_size 100M;
 
-    python -mcloudmanager.setup_db database/files.db
+    access_log /var/log/nginx/bitcumulus.access.log;
+    error_log /var/log/nginx/bitcumulus.error.log;
 
+    location / {
+        try_files $uri/index.html $uri $uri.html @webcore;
+    }
 
-#### Web application setup
-
-To test the installation, use the following command:
-
-    python index.py
-
-BitCumulus will be running on http://localhost:5000
-You can use `gunicorn` to run multiple workers.
-
-
-#### Blockchain synchronization setup
-
-To enable blockchain synchronization, you must first configure the
-blockchain settings. Default settings are present in the
-[settings.py](settings.py) file, but you may override them by creating a
-`local_settings.py` file. You must at least specify the blockchain
-server password:
-
-    DATACOIN_PASSWORD = "my-hidden-password"
-
-You may also override other settings:
-
-    DATACOIN_URL       # URL to the server RPC endpoint.
-    DATACOIN_USERNAME  # RPC username.
-    DATACOIN_PASSWORD  # RPC password.
-    DATACOIN_START     # Block index where to start scanning.
-
-Check the [settings.py](settings.py) for examples.
-
-After configuring the blockchain settings correctly, you can synchronize
-your data by running one of the two following commands:
-
-    ./worker.py download # scans the blockchain for BitCumulus files
-    ./worker.py upload   # exports uploaded files to the blockchain
-
-You might want to set up a cron job for each, possibly with different
-intervals. Use crontab -e and add something similar to the following lines:
-
-    */10 *   * * * /path/to/BitCumulus/.env/bin/python worker.py download
-    0    */1 * * * /path/to/BitCumulus/.env/bin/python worker.py upload
-
-This will execute `download` every ten minutes, and `upload` every hour.
-
-
+    location @webcore {
+        proxy_set_header X-Forward-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+        proxy_pass http://127.0.0.1:5000;
+    }
+}
+```
