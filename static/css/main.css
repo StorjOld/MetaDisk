@@ -1,17 +1,37 @@
 @import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400italic,700,700italic,900,900italic);
+.bg {
+  background: linear-gradient(0deg, #aabbcc, #8899bb);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0.6;
+  z-index: -1; }
+
 .logo {
   font-weight: bold; }
 
 .main-container {
   font-family: "Source Sans Pro", sans-serif;
   margin-top: 20px;
-  margin-bottom: 20px; }
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 4px; }
   .main-container h1, .main-container h2, .main-container h3, .main-container h4, .main-container h5, .main-container h6 {
     margin: 0 0 0.8em 0; }
 
+.btn-primary {
+  background-color: #3276b1;
+  border: solid 1px #285e8e; }
+  .btn-primary:hover {
+    background-color: #2c699d; }
+
 .stats {
-  background-color: #e2e8ef;
-  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  padding: 15px;
   border-radius: 4px; }
   .stats hr {
     border-color: #c2c8d2; }
@@ -19,6 +39,8 @@
     font-weight: bold; }
   .stats .text-muted {
     color: lightslategrey; }
+  .stats code {
+    width: 150px; }
   .stats .stats-list .progress {
     margin-top: 0.3em; }
   .stats .caption {
@@ -38,13 +60,26 @@ input[type=file].invis {
   width: 1px;
   height: 1px; }
 
+code {
+  color: #334455;
+  border: solid 1px #aabbcc;
+  display: inline-block;
+  overflow: hidden;
+  cursor: pointer; }
+
 .body {
-  padding: 0 10px 10px 40px; }
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  border-radius: 4px; }
   .body .file-list code {
-    color: #333333;
-    cursor: pointer; }
+    width: 300px; }
+  .body .file-list th {
+    border-bottom: solid 2px rgba(0, 0, 0, 0.1); }
   .body .file-list tr.new {
     background-color: #e2e9ff; }
+  .body .file-list td {
+    border-top: dotted 1px rgba(0, 0, 0, 0.1); }
 
 .small-break {
   line-height: 0.5em; }

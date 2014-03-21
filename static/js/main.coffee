@@ -5,7 +5,7 @@ uploadFile = (cb) ->
 api = (resource) ->
     'http://node2.storj.io/api/' + resource
 
-MEGABYTE = 1024 * 1024
+GIGABYTE = 1024 * 1024 * 1024
 
 Cookies = {
     set: ((k, v, days) ->
@@ -50,34 +50,55 @@ History = {
 
 loadStats = ->
     $.getJSON api('bandwidth/usage'), (usage) ->
-        usage.current.incoming /= MEGABYTE
-        usage.current.outgoing /= MEGABYTE
+        usage.current.incoming /= GIGABYTE
+        usage.current.outgoing /= GIGABYTE
 
         $.getJSON api('bandwidth/limits'), (limits) ->
             if limits.incoming is 0
                 $('#bar-ul-bandwidth').css('width', '0%')
-                $('#cont-ul-bandwidth').html(Math.round(usage.current.incoming) + '/&infin; MB')
+                $('#cont-ul-bandwidth').html(usage.current.incoming.toFixed(2) + '/&infin; GB')
             else
-                limits.incoming /= MEGABYTE
-                $('#bar-ul-bandwidth').css('width', (usage.current.incoming / limits.incoming * 100) + '%') 
-                $('#cont-ul-bandwidth').text(Math.round(usage.current.incoming) + '/' + Math.round(limits.incoming) + ' MB')
+                limits.incoming /= GIGABYTE
+                $('#bar-ul-bandwidth').css('width', (usage.current.incoming / limits.incoming * 100) + '%')
+                $('#cont-ul-bandwidth').text(usage.current.incoming.toFixed(2) + '/' + limits.incoming.toFixed(2) + ' GB')
 
             if limits.outgoing is 0
                 $('#bar-dl-bandwidth').css('width', '0%')
-                $('#cont-dl-bandwidth').html(Math.round(usage.current.outgoing) + '/&infin; MB')
+                $('#cont-dl-bandwidth').html(usage.current.outgoing.toFixed(2) + '/&infin; GB')
             else
-                limits.outgoing /= MEGABYTE
-                $('#bar-dl-bandwidth').css('width', (usage.current.outgoing / limits.outgoing * 100) + '%') 
-                $('#cont-dl-bandwidth').text(Math.round(usage.current.outgoing) + '/' + Math.round(limits.outgoing) + ' MB')
+                limits.outgoing /= GIGABYTE
+                $('#bar-dl-bandwidth').css('width', (usage.current.outgoing / limits.outgoing * 100) + '%')
+                $('#cont-dl-bandwidth').text(usage.current.outgoing.toFixed(2) + '/' + limits.outgoing.toFixed(2) + ' GB')
 
     $.getJSON api('storage/usage'), (usage) ->
-        usage = usage.usage / MEGABYTE
+        usage = usage.usage / GIGABYTE
 
         $.getJSON api('storage/capacity'), (capacity) ->
-            capacity = capacity.capacity / MEGABYTE
+            capacity = capacity.capacity / GIGABYTE
 
             $('#bar-storage').css('width', (usage / capacity * 100) + '%')
-            $('#cont-storage').text(Math.round(usage) + '/' + Math.round(capacity) + ' MB')
+            $('#cont-storage').text(usage.toFixed(2) + '/' + capacity.toFixed(2) + ' GB')
+
+    $.getJSON api('dtc/address'), (addr) ->
+        $('#cont-datacoin-addr')
+            .html('<code>' + addr.address + '</code>')
+            .find('code').click ->
+                selectElementText($(this)[0])
+
+    $.getJSON api('dtc/balance'), (balance) ->
+        $('#cont-datacoin-bal').text(balance.balance + ' DTC')
+
+    $.getJSON api('sync/status'), (data) ->
+        cloudSize = 0
+        for size in [x.filesize for x in data.cloud_queue]
+            cloudSize += size / GIGABYTE
+
+        bcSize = 0
+        for size in (x.filesize for x in data.blockchain_queue)
+            bcSize += size / GIGABYTE
+
+        $('#cont-sync-cloud').text(data.cloud_queue.length + ' (' + cloudSize.toFixed(2) + ' GB)')
+        $('#cont-sync-blockchain').text(data.blockchain_queue.length + ' (' + bcSize.toFixed(2) + ' GB)')
 
 loadStats()
 
@@ -122,8 +143,6 @@ handleFileUploaded = (fname) ->
 $('#cont-file-list tr code').click ->
     selectElementText($(this)[0])
 
-console.log 'are you kidding me'
-
 # when a file is selected
 $('#in-upload').change ->
     console.log 'what f;alskfj fuck'
@@ -146,8 +165,6 @@ $('#in-upload').change ->
         $('#span-up-prog')
             .css('width', perc + '%')
             .text(Math.round(perc) + '%')
-
-    console.log 'what the fuck'
 
     $.ajax {
         url: api('upload'),

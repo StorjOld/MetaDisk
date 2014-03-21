@@ -1,15 +1,33 @@
 @import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400italic,700,700italic,900,900italic)
+.bg
+    background: linear-gradient(0deg, #abc, #89b)
+    position: fixed
+    top: 0
+    bottom: 0
+    left: 0
+    right: 0
+    opacity: 0.6
+    z-index: -1
 .logo
     font-weight: bold
 .main-container
     font-family: 'Source Sans Pro', sans-serif
     margin-top: 20px
+    padding: 20px
     margin-bottom: 20px
+    background-color: rgba(255, 255, 255, 0.4)
+    border-radius: 4px
     h1, h2, h3, h4, h5, h6
         margin: 0 0 0.8em 0
+.btn-primary
+    background-color: #3276b1
+    border: solid 1px #285e8e
+    &:hover
+        background-color: darken(#3276b1, 5%)
 .stats
-    background-color: #e2e8ef
-    padding: 20px
+    background-color: rgba(255, 255, 255, 0.6)
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15)
+    padding: 15px
     border-radius: 4px
     hr
         border-color: #c2c8d2
@@ -17,6 +35,8 @@
         font-weight: bold
     .text-muted
         color: #789
+    code
+        width: 150px
     .stats-list
         .progress
             margin-top: 0.3em
@@ -34,13 +54,25 @@ input[type=file].invis
     overflow: hidden
     width: 1px
     height: 1px
+code
+    color: #345
+    border: solid 1px #abc
+    display: inline-block
+    overflow: hidden
+    cursor: pointer
 .body
-    padding: 0 10px 10px 40px
+    padding: 20px
+    background-color: rgba(255, 255, 255, 0.5)
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15)
+    border-radius: 4px
     .file-list
         code
-            color: #333
-            cursor: pointer
+            width: 300px
+        th
+            border-bottom: solid 2px rgba(0, 0, 0, 0.1)
         tr.new
             background-color: #e2e9ff
+        td
+            border-top: dotted 1px rgba(0, 0, 0, 0.1)
 .small-break
     line-height: 0.5em
