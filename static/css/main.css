@@ -1,0 +1,50 @@
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400italic,700,700italic,900,900italic);
+.logo {
+  font-weight: bold; }
+
+.main-container {
+  font-family: "Source Sans Pro", sans-serif;
+  margin-top: 20px;
+  margin-bottom: 20px; }
+  .main-container h1, .main-container h2, .main-container h3, .main-container h4, .main-container h5, .main-container h6 {
+    margin: 0 0 0.8em 0; }
+
+.stats {
+  background-color: #e2e8ef;
+  padding: 20px;
+  border-radius: 4px; }
+  .stats hr {
+    border-color: #c2c8d2; }
+  .stats h5 {
+    font-weight: bold; }
+  .stats .text-muted {
+    color: lightslategrey; }
+  .stats .stats-list .progress {
+    margin-top: 0.3em; }
+  .stats .caption {
+    font-size: 90%;
+    display: block;
+    color: #7799aa;
+    margin-top: 0.2em; }
+  .stats .progress {
+    border: solid 1px #38849b; }
+
+.invis {
+  display: none; }
+
+input[type=file].invis {
+  visibility: hidden;
+  overflow: hidden;
+  width: 1px;
+  height: 1px; }
+
+.body {
+  padding: 0 10px 10px 40px; }
+  .body .file-list code {
+    color: #333333;
+    cursor: pointer; }
+  .body .file-list tr.new {
+    background-color: #e2e9ff; }
+
+.small-break {
+  line-height: 0.5em; }

@@ -1,0 +1,6 @@
+#!/bin/bash
+killall -9 sass coffee
+kill -9 $(pgrep -f "python ser.py 8080")
+sass --watch static/css &
+coffee -o static/js -cw static/js &
+python ser.py 8080
