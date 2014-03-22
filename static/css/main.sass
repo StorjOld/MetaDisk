@@ -8,6 +8,17 @@
     right: 0
     opacity: 0.6
     z-index: -1
+.cf
+    zoom: 1
+    &:before, &:after
+        content: ' '
+        display: table
+    &:after
+        clear: both
+.left
+    float: left
+.right
+    float: right
 .logo
     font-weight: bold
 .main-container
@@ -24,6 +35,34 @@
     border: solid 1px #285e8e
     &:hover
         background-color: darken(#3276b1, 5%)
+.searchbox
+    border: solid 1px #abc
+    padding: 8px
+    background-color: white
+    border-radius: 4px
+    position: relative
+    font-size: 18px
+    i.fa
+        color: #89a
+        position: absolute
+        top: 10px
+        bottom: 10px
+        left: 10px
+        line-height: 100%
+        width: 1.0em
+        text-align: center
+    input
+        position: absolute
+        top: 8px
+        right: 8px
+        left: 34px
+        bottom: 8px
+        font-size: inherit
+        background: none
+        width: 100%
+        border-style: none
+        margin: 0
+        padding: none
 .stats
     background-color: rgba(255, 255, 255, 0.6)
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.15)
@@ -65,14 +104,40 @@ code
     background-color: rgba(255, 255, 255, 0.5)
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.15)
     border-radius: 4px
+    h3
+        font-weight: bold
+        letter-spacing: -1px
     .file-list
         code
-            width: 300px
-        th
-            border-bottom: solid 2px rgba(0, 0, 0, 0.1)
-        tr.new
+            width: 395px
+        .new
             background-color: #e2e9ff
-        td
+        .file-row
             border-top: dotted 1px rgba(0, 0, 0, 0.1)
+            padding: 10px 0
+            &:last-of-type
+                border-bottom: dotted 1px rgba(0, 0, 0, 0.1)
+            .name
+                font-weight: bold
+                font-size: 120%
+                color: #55626f
+                .text-muted
+                    color: rgba(110, 130, 150, 0.8)
+                    font-weight: normal
+            .hash
+                margin-top: 0.2em
+                font-size: 80%
+                padding: 2px
+            .btn-dl
+                background-color: #8ad
+                font-weight: bold
+                font-size: 100%
+                color: white
+                text-shadow: 0 1px 0 #579
+                border: solid 1px #79c
+                i.fa
+                    position: relative
+                    top: 1px
+                    margin-right: 0.3em
 .small-break
     line-height: 0.5em

@@ -9,6 +9,20 @@
   opacity: 0.6;
   z-index: -1; }
 
+.cf {
+  zoom: 1; }
+  .cf:before, .cf:after {
+    content: " ";
+    display: table; }
+  .cf:after {
+    clear: both; }
+
+.left {
+  float: left; }
+
+.right {
+  float: right; }
+
 .logo {
   font-weight: bold; }
 
@@ -27,6 +41,35 @@
   border: solid 1px #285e8e; }
   .btn-primary:hover {
     background-color: #2c699d; }
+
+.searchbox {
+  border: solid 1px #aabbcc;
+  padding: 8px;
+  background-color: white;
+  border-radius: 4px;
+  position: relative;
+  font-size: 18px; }
+  .searchbox i.fa {
+    color: #8899aa;
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: 10px;
+    line-height: 100%;
+    width: 1em;
+    text-align: center; }
+  .searchbox input {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    left: 34px;
+    bottom: 8px;
+    font-size: inherit;
+    background: none;
+    width: 100%;
+    border-style: none;
+    margin: 0;
+    padding: none; }
 
 .stats {
   background-color: rgba(255, 255, 255, 0.6);
@@ -72,14 +115,40 @@ code {
   background-color: rgba(255, 255, 255, 0.5);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
   border-radius: 4px; }
+  .body h3 {
+    font-weight: bold;
+    letter-spacing: -1px; }
   .body .file-list code {
-    width: 300px; }
-  .body .file-list th {
-    border-bottom: solid 2px rgba(0, 0, 0, 0.1); }
-  .body .file-list tr.new {
+    width: 395px; }
+  .body .file-list .new {
     background-color: #e2e9ff; }
-  .body .file-list td {
-    border-top: dotted 1px rgba(0, 0, 0, 0.1); }
+  .body .file-list .file-row {
+    border-top: dotted 1px rgba(0, 0, 0, 0.1);
+    padding: 10px 0; }
+    .body .file-list .file-row:last-of-type {
+      border-bottom: dotted 1px rgba(0, 0, 0, 0.1); }
+    .body .file-list .file-row .name {
+      font-weight: bold;
+      font-size: 120%;
+      color: #55626f; }
+      .body .file-list .file-row .name .text-muted {
+        color: rgba(110, 130, 150, 0.8);
+        font-weight: normal; }
+    .body .file-list .file-row .hash {
+      margin-top: 0.2em;
+      font-size: 80%;
+      padding: 2px; }
+    .body .file-list .file-row .btn-dl {
+      background-color: #88aadd;
+      font-weight: bold;
+      font-size: 100%;
+      color: white;
+      text-shadow: 0 1px 0 #557799;
+      border: solid 1px #7799cc; }
+      .body .file-list .file-row .btn-dl i.fa {
+        position: relative;
+        top: 1px;
+        margin-right: 0.3em; }
 
 .small-break {
   line-height: 0.5em; }

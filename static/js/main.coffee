@@ -40,11 +40,11 @@ Cookies = {
 
 History = {
     add: ((file) ->
-        stuff = JSON.parse(Cookies.get('history'))
+        stuff = JSON.parse(Cookies.get('history')) or []
         stuff.push(file)
         Cookies.set('history', JSON.stringify(stuff))
     ),
-    get: (-> Cookies.get('history')),
+    get: (-> JSON.parse(Cookies.get('history'))),
     kill: (-> Cookies.kill('history'))
 }
 
@@ -127,38 +127,61 @@ selectElementText = (el, win) ->
         range.moveToElementText(el)
         range.select()
 
-handleFileUploaded = (fname) ->
-    showUploadStage('uploaded')
-    $row = $('<tr/>')
-        .addClass('new')
-        .append($('<td/>').text(fname))
-        .append($('<td/>').html('<code>8c530825981d6f3240a2fcecbafa94859684e3a49c6a1d3205b51154de3f3547</code>'))
-        .append($('<td/>').html('<button class="btn btn-sm btn-primary">Download</button>'))
+addFile = (file) ->
+    $file = $('<div/>')
+        .addClass('file-row cf')
+        .append(
+            $('<div/>')
+                .addClass('left')
+                .append('<div class="name">' + file.fname + '</div>')
+                .append('<div class="hash"><code>' + file.fhash + '</code></div>')
+        )
+        .append(
+            $('<div/>')
+                .addClass('right')
+                .append('<button class="btn btn-dl"><i class="fa fa-download"></i> Download</button>')
+        )
+        .prependTo($('#cont-file-list'))
 
-    $row.find('code').click ->
+    $file.find('button').click ->
+        window.location.href = api('download/' + file.fhash)
+
+    $file.find('code').click ->
         selectElementText($(this)[0])
 
-    $('#cont-file-list').prepend($row).find('tr').last().remove()
+makeHandler = (fname) ->
+    (fhash) ->
+        fhash = fhash.filehash
 
-$('#cont-file-list tr code').click ->
-    selectElementText($(this)[0])
+        History.add({fname: fname, fhash: fhash})
+
+        name = fname
+        ext = null
+        console.log fname
+        if fname.indexOf('.') isnt -1
+            console.log 'wut?'
+            splitted = name.split('.')
+            name = splitted[0...-1]
+            ext = splitted[splitted.length - 1]
+
+        if ext isnt null
+            console.log 'not null'
+            name += '<span class="text-muted">.' + ext + '</span>'
+
+        showUploadStage('uploaded')
+        $('#span-dl-link').val(api('download/' + fhash))
+        addFile(name, fhash)
+        loadStats()
 
 # when a file is selected
 $('#in-upload').change ->
-    console.log 'what f;alskfj fuck'
     showUploadStage('uploading')
-    console.log 'wsdjf;adlksjf'
     fname = $(this).val().split('\\').pop()
-    console.log 'a298taioj'
     formData = new FormData($('#form-file-upload')[0])
-
-    console.log 'what theas;dlkjf;alskfj fuck'
 
     $('#span-up-prog')
         .css('width', '0%')
         .text('0%')
-
-    console.log 'asdfwhat the fuck'
 
     progressHandler = (e) ->
         perc = (e.loaded / e.total * 100)
@@ -179,10 +202,7 @@ $('#in-upload').change ->
         cache: false,
         contentType: false,
         processData: false,
-        success: ((data) ->
-            console.log data
-            handleFileUploaded(fname)
-        )
+        success: makeHandler(fname),
     }
 
 # select the link when the user focuses or clicks
@@ -191,3 +211,40 @@ $('#span-dl-link').click -> $(this).select()
 
 $('#btn-upload-another').click ->
     showUploadStage('upload')
+
+# load history
+
+files = History.get()
+
+pickPagination = (page) ->
+    $('#cont-pagination button').each ->
+        found = false
+        if not isNaN($(this).attr('data-id'))
+            if parseInt($(this).attr('data-id')) is page
+                found = true
+
+        $(this).prop('disabled', found)
+
+pickFilePage = (page) ->
+    for file in History.get()[page * 10...(page + 1) * 10]
+        addFile(file)
+    pickPagination(page)
+
+initFilePages = ->
+    count = History.get().length
+
+    $cont = $('#cont-pagination')
+    $cont.empty()
+
+    $cont.append('<button data-id="prev" type="button" class="btn btn-default"><i class="fa fa-arrow-circle-left"></i></button>')
+
+    for i in [0...Math.max(parseInt(count/10), 1)]
+        $cont.append('<button data-id="' + i + '" type="button" class="btn btn-default">' + (i + 1) + '</button>')
+
+    $cont.append('<button data-id="next" type="button" class="btn btn-default"><i class="fa fa-arrow-circle-right"></i></button>')
+
+    $cont.find('button').click ->
+        pickFilePage($(this).attr('data-id'))
+    pickFilePage(0)
+
+initFilePages()
