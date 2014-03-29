@@ -157,20 +157,17 @@ makeHandler = (fname) ->
 
         name = fname
         ext = null
-        console.log fname
         if fname.indexOf('.') isnt -1
-            console.log 'wut?'
             splitted = name.split('.')
             name = splitted[0...-1]
             ext = splitted[splitted.length - 1]
 
         if ext isnt null
-            console.log 'not null'
             name += '<span class="text-muted">.' + ext + '</span>'
 
         showUploadStage('uploaded')
         $('#span-dl-link').val(api('download/' + fhash))
-        addFile(name, fhash)
+        pickFilePage(currentPage())
         loadStats()
 
 # when a file is selected
@@ -216,7 +213,14 @@ $('#btn-upload-another').click ->
 
 files = History.get()
 
+currentPage = ->
+    return parseInt($('#cont-pagination').attr('data-current'))
+
+pageCount = ->
+    return parseInt((History.get().length + 9) / 10)
+
 pickPagination = (page) ->
+    $('#cont-pagination').attr('data-current', page)
     $('#cont-pagination button').each ->
         found = false
         if not isNaN($(this).attr('data-id'))
@@ -226,19 +230,24 @@ pickPagination = (page) ->
         $(this).prop('disabled', found)
 
 pickFilePage = (page) ->
+    if page is "next"
+        page = Math.min(currentPage() + 1, pageCount()-1)
+
+    if page is "prev"
+        page = Math.max(0, currentPage() - 1)
+
+    $('#cont-file-list').empty()
     for file in History.get()[page * 10...(page + 1) * 10]
         addFile(file)
     pickPagination(page)
 
 initFilePages = ->
-    count = History.get().length
-
     $cont = $('#cont-pagination')
     $cont.empty()
 
     $cont.append('<button data-id="prev" type="button" class="btn btn-default"><i class="fa fa-arrow-circle-left"></i></button>')
 
-    for i in [0...Math.max(parseInt(count/10), 1)]
+    for i in [0...pageCount()]
         $cont.append('<button data-id="' + i + '" type="button" class="btn btn-default">' + (i + 1) + '</button>')
 
     $cont.append('<button data-id="next" type="button" class="btn btn-default"><i class="fa fa-arrow-circle-right"></i></button>')
