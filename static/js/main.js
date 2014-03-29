@@ -246,17 +246,17 @@
     });
   };
 
-  $('document').on('dragenter', (function(e) {
+  $('body').on('dragenter', (function(e) {
     e.preventDefault();
     return e.stopPropagation();
   }));
 
-  $('document').on('dragover', (function(e) {
+  $('body').on('dragover', (function(e) {
     e.preventDefault();
     return e.stopPropagation();
   }));
 
-  $('document').on('drop', (function(e) {
+  $('body').on('drop', (function(e) {
     var file, formData;
     file = e.originalEvent.dataTransfer.files[0];
     formData = new FormData();

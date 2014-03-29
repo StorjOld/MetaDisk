@@ -225,17 +225,17 @@ uploadFile = (fname, formData) ->
     }
 
 # Drag and drop support
-$('document').on('dragenter',
+$('body').on('dragenter',
   ((e) ->
     e.preventDefault()
     e.stopPropagation()))
 
-$('document').on('dragover',
+$('body').on('dragover',
   ((e) ->
     e.preventDefault()
     e.stopPropagation()))
 
-$('document').on('drop',
+$('body').on('drop',
   ((e) ->
     file = e.originalEvent.dataTransfer.files[0]
     formData = new FormData()
