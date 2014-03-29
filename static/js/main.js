@@ -215,10 +215,12 @@
   };
 
   $('#in-upload').change(function() {
-    var fname, formData, progressHandler;
+    return uploadFile($(this).val().split('\\').pop(), new FormData($('#form-file-upload')[0]));
+  });
+
+  uploadFile = function(fname, formData) {
+    var progressHandler;
     showUploadStage('uploading');
-    fname = $(this).val().split('\\').pop();
-    formData = new FormData($('#form-file-upload')[0]);
     $('#span-up-prog').css('width', '0%').text('0%');
     progressHandler = function(e) {
       var perc;
@@ -242,7 +244,27 @@
       processData: false,
       success: makeHandler(fname)
     });
-  });
+  };
+
+  $('document').on('dragenter', (function(e) {
+    e.preventDefault();
+    return e.stopPropagation();
+  }));
+
+  $('document').on('dragover', (function(e) {
+    e.preventDefault();
+    return e.stopPropagation();
+  }));
+
+  $('document').on('drop', (function(e) {
+    var file, formData;
+    file = e.originalEvent.dataTransfer.files[0];
+    formData = new FormData();
+    formData.append('file', file);
+    uploadFile(file.name, formData);
+    e.preventDefault();
+    return e.stopPropagation();
+  }));
 
   $('#span-dl-link').focus(function() {
     return $(this).select();

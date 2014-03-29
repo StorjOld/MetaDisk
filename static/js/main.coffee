@@ -191,9 +191,12 @@ makeHandler = (fname) ->
 
 # when a file is selected
 $('#in-upload').change ->
+    uploadFile(
+      $(this).val().split('\\').pop(),
+      new FormData($('#form-file-upload')[0]))
+
+uploadFile = (fname, formData) ->
     showUploadStage('uploading')
-    fname = $(this).val().split('\\').pop()
-    formData = new FormData($('#form-file-upload')[0])
 
     $('#span-up-prog')
         .css('width', '0%')
@@ -220,6 +223,27 @@ $('#in-upload').change ->
         processData: false,
         success: makeHandler(fname),
     }
+
+# Drag and drop support
+$('document').on('dragenter',
+  ((e) ->
+    e.preventDefault()
+    e.stopPropagation()))
+
+$('document').on('dragover',
+  ((e) ->
+    e.preventDefault()
+    e.stopPropagation()))
+
+$('document').on('drop',
+  ((e) ->
+    file = e.originalEvent.dataTransfer.files[0]
+    formData = new FormData()
+    formData.append('file', file)
+    uploadFile(file.name, formData)
+
+    e.preventDefault()
+    e.stopPropagation()))
 
 # select the link when the user focuses or clicks
 $('#span-dl-link').focus -> $(this).select()
