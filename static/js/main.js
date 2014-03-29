@@ -189,7 +189,7 @@
 
   makeHandler = function(fname) {
     return function(fhash) {
-      var ext, name, splitted;
+      var ext, name, page, splitted;
       fhash = fhash.filehash;
       History.add({
         fname: fname,
@@ -207,7 +207,9 @@
       }
       showUploadStage('uploaded');
       $('#span-dl-link').val(api('download/' + fhash));
-      pickFilePage(currentPage());
+      page = currentPage();
+      initFilePages();
+      pickFilePage(page);
       return loadStats();
     };
   };

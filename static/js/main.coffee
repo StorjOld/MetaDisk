@@ -184,7 +184,9 @@ makeHandler = (fname) ->
         showUploadStage('uploaded')
         $('#span-dl-link').val(api('download/' + fhash))
 
-        pickFilePage(currentPage())
+        page = currentPage()
+        initFilePages()
+        pickFilePage(page)
         loadStats()
 
 # when a file is selected
