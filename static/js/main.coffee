@@ -94,7 +94,7 @@ loadStats = ->
 
     $.getJSON api('sync/status'), (data) ->
         cloudSize = 0
-        for size in [x.filesize for x in data.cloud_queue]
+        for size in (x.filesize for x in data.cloud_queue)
             cloudSize += size / GIGABYTE
 
         bcSize = 0
@@ -278,6 +278,8 @@ pickFilePage = (page) ->
 
     if page is "prev"
         page = Math.max(0, currentPage() - 1)
+
+    page = parseInt(page)
 
     $('#cont-file-list').empty()
     for file in History.get()[page * 10...(page + 1) * 10]

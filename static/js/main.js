@@ -105,18 +105,16 @@
     return $.getJSON(api('sync/status'), function(data) {
       var bcSize, cloudSize, size, x, _i, _j, _len, _len1, _ref, _ref1;
       cloudSize = 0;
-      _ref = [
-        (function() {
-          var _j, _len, _ref, _results;
-          _ref = data.cloud_queue;
-          _results = [];
-          for (_j = 0, _len = _ref.length; _j < _len; _j++) {
-            x = _ref[_j];
-            _results.push(x.filesize);
-          }
-          return _results;
-        })()
-      ];
+      _ref = (function() {
+        var _j, _len, _ref, _results;
+        _ref = data.cloud_queue;
+        _results = [];
+        for (_j = 0, _len = _ref.length; _j < _len; _j++) {
+          x = _ref[_j];
+          _results.push(x.filesize);
+        }
+        return _results;
+      })();
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         size = _ref[_i];
         cloudSize += size / GIGABYTE;
@@ -310,6 +308,7 @@
     if (page === "prev") {
       page = Math.max(0, currentPage() - 1);
     }
+    page = parseInt(page);
     $('#cont-file-list').empty();
     _ref = History.get().slice(page * 10, (page + 1) * 10);
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
