@@ -169,12 +169,21 @@
 
   addFile = function(file) {
     var $file;
-    $file = $('<div/>').addClass('file-row cf').append($('<div/>').addClass('left').append('<div class="name">' + file.fname + '</div>').append('<div class="hash"><code>' + file.fhash + '</code></div>')).append($('<div/>').addClass('right').append('<button class="btn btn-dl"><i class="fa fa-download"></i> Download</button>')).prependTo($('#cont-file-list'));
-    $file.find('button').click(function() {
+    $file = $('<div/>').addClass('file-row cf').append($('<div/>').addClass('left').append('<div class="name">' + file.fname + '</div>').append('<div class="hash"><code>' + file.fhash + '</code></div>')).append($('<div/>').addClass('right').append('<button class="btn btn-dl"><i class="fa fa-download"></i>Download</button>')).append($('<div/>').addClass('right').append('<button class="btn btn-copy-url"><i class="fa fa-clipboard"></i>Copy URL</button>')).prependTo($('#cont-file-list'));
+    $file.find('button.btn-dl').click(function() {
       return window.location.href = api('download/' + file.fhash);
     });
-    return $file.find('code').click(function() {
-      return selectElementText($(this)[0]);
+    $file.find('button.btn-copy-url').zclip({
+      path: '/static/js/ZeroClipboard.swf',
+      copy: function() {
+        return api('download/' + file.fhash);
+      }
+    });
+    return $file.find('code').zclip({
+      path: '/static/js/ZeroClipboard.swf',
+      copy: function() {
+        return $(this).html();
+      }
     });
   };
 

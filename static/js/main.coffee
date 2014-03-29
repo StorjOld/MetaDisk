@@ -143,15 +143,27 @@ addFile = (file) ->
         .append(
             $('<div/>')
                 .addClass('right')
-                .append('<button class="btn btn-dl"><i class="fa fa-download"></i> Download</button>')
+                .append('<button class="btn btn-dl"><i class="fa fa-download"></i>Download</button>')
+        )
+        .append(
+            $('<div/>')
+                .addClass('right')
+                .append('<button class="btn btn-copy-url"><i class="fa fa-clipboard"></i>Copy URL</button>')
         )
         .prependTo($('#cont-file-list'))
 
-    $file.find('button').click ->
+    $file.find('button.btn-dl').click ->
         window.location.href = api('download/' + file.fhash)
 
-    $file.find('code').click ->
-        selectElementText($(this)[0])
+    $file.find('button.btn-copy-url').zclip(
+      path: '/static/js/ZeroClipboard.swf',
+      copy: -> return api('download/' + file.fhash)
+    )
+
+    $file.find('code').zclip(
+      path: '/static/js/ZeroClipboard.swf',
+      copy: -> return $(this).html()
+    )
 
 makeHandler = (fname) ->
     (fhash) ->
@@ -171,6 +183,7 @@ makeHandler = (fname) ->
 
         showUploadStage('uploaded')
         $('#span-dl-link').val(api('download/' + fhash))
+
         pickFilePage(currentPage())
         loadStats()
 
@@ -243,6 +256,7 @@ pickFilePage = (page) ->
     $('#cont-file-list').empty()
     for file in History.get()[page * 10...(page + 1) * 10]
         addFile(file)
+
     pickPagination(page)
 
 initFilePages = ->

@@ -138,15 +138,16 @@ code {
       margin-top: 0.2em;
       font-size: 80%;
       padding: 2px; }
-    .body .file-list .file-row .btn-dl {
+    .body .file-list .file-row .btn {
       background-color: #88aadd;
       font-weight: bold;
       font-size: 100%;
       color: white;
       text-shadow: 0 1px 0 #557799;
       border: solid 1px #7799cc;
-      margin-top: 10px; }
-      .body .file-list .file-row .btn-dl i.fa {
+      margin-top: 10px;
+      margin-left: 10px; }
+      .body .file-list .file-row .btn i.fa {
         position: relative;
         top: 1px;
         margin-right: 0.3em; }
