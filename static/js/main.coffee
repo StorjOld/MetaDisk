@@ -49,6 +49,10 @@ History = {
 }
 
 loadStats = ->
+    $.getJSON api('storage/size-limit'), (file_limit) ->
+        file_limit.size /= GIGABYTE
+        $('#cont-file-size-limit').html(file_limit.size.toFixed(2) + ' GB')
+
     $.getJSON api('bandwidth/usage'), (usage) ->
         usage.current.incoming /= GIGABYTE
         usage.current.outgoing /= GIGABYTE

@@ -60,6 +60,10 @@
   };
 
   loadStats = function() {
+    $.getJSON(api('storage/size-limit'), function(file_limit) {
+      file_limit.size /= GIGABYTE;
+      return $('#cont-file-size-limit').html(file_limit.size.toFixed(2) + ' GB');
+    });
     $.getJSON(api('bandwidth/usage'), function(usage) {
       usage.current.incoming /= GIGABYTE;
       usage.current.outgoing /= GIGABYTE;
