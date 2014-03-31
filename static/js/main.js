@@ -168,13 +168,13 @@
       return window.location.href = api('download/' + file.fhash);
     });
     $file.find('button.btn-copy-url').zclip({
-      path: '/static/js/ZeroClipboard.swf',
+      path: '/js/ZeroClipboard.swf',
       copy: function() {
         return api('download/' + file.fhash);
       }
     });
     return $file.find('code').zclip({
-      path: '/static/js/ZeroClipboard.swf',
+      path: '/js/ZeroClipboard.swf',
       copy: function() {
         return $(this).html();
       }

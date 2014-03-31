@@ -153,12 +153,12 @@ addFile = (file) ->
         window.location.href = api('download/' + file.fhash)
 
     $file.find('button.btn-copy-url').zclip(
-      path: '/static/js/ZeroClipboard.swf',
+      path: '/js/ZeroClipboard.swf',
       copy: -> return api('download/' + file.fhash)
     )
 
     $file.find('code').zclip(
-      path: '/static/js/ZeroClipboard.swf',
+      path: '/js/ZeroClipboard.swf',
       copy: -> return $(this).html()
     )
 
