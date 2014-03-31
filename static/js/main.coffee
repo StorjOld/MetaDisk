@@ -236,6 +236,11 @@ $('body').on('drop',
       e.preventDefault()
       e.stopPropagation()))
 
+# Searching
+$('.searchbox input[name=search]').keypress (e) ->
+    if e.which == 13
+        window.location.href = api('download/' + $(e.target).val())
+
 # select the link when the user focuses or clicks
 $('#span-dl-link').focus -> $(this).select()
 $('#span-dl-link').click -> $(this).select()

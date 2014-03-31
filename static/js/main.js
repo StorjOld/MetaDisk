@@ -259,6 +259,12 @@
     return e.stopPropagation();
   }));
 
+  $('.searchbox input[name=search]').keypress(function(e) {
+    if (e.which === 13) {
+      return window.location.href = api('download/' + $(e.target).val());
+    }
+  });
+
   $('#span-dl-link').focus(function() {
     return $(this).select();
   });
