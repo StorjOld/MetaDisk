@@ -1,0 +1,145 @@
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400italic,700,700italic,900,900italic)
+.bg
+    background: linear-gradient(0deg, #abc, #89b)
+    position: fixed
+    top: 0
+    bottom: 0
+    left: 0
+    right: 0
+    opacity: 0.6
+    z-index: -1
+.cf
+    zoom: 1
+    &:before, &:after
+        content: ' '
+        display: table
+    &:after
+        clear: both
+.left
+    float: left
+.right
+    float: right
+.logo
+    font-weight: bold
+.main-container
+    font-family: 'Source Sans Pro', sans-serif
+    margin-top: 20px
+    padding: 20px
+    margin-bottom: 20px
+    background-color: rgba(255, 255, 255, 0.4)
+    border-radius: 4px
+    h1, h2, h3, h4, h5, h6
+        margin: 0 0 0.8em 0
+.btn-primary
+    background-color: #3276b1
+    border: solid 1px #285e8e
+    &:hover
+        background-color: darken(#3276b1, 5%)
+.searchbox
+    border: solid 1px #abc
+    padding: 8px
+    background-color: white
+    border-radius: 4px
+    position: relative
+    font-size: 18px
+    i.fa
+        color: #89a
+        position: absolute
+        top: 10px
+        bottom: 10px
+        left: 10px
+        line-height: 100%
+        width: 1.0em
+        text-align: center
+    input
+        position: absolute
+        top: 8px
+        right: 8px
+        left: 34px
+        bottom: 8px
+        font-size: inherit
+        background: none
+        width: 100%
+        border-style: none
+        margin: 0
+        padding: none
+.stats
+    background-color: rgba(255, 255, 255, 0.6)
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15)
+    padding: 15px
+    border-radius: 4px
+    hr
+        border-color: #c2c8d2
+    h5
+        font-weight: bold
+    .text-muted
+        color: #789
+    code
+        width: 150px
+    .stats-list
+        .progress
+            margin-top: 0.3em
+    .caption
+        font-size: 90%
+        display: block
+        color: #79a
+        margin-top: 0.2em
+    .progress
+        border: solid 1px desaturate(darken(#5BC0DE, 20%), 20%)
+.invis
+    display: none
+input[type=file].invis
+    visibility: hidden
+    overflow: hidden
+    width: 1px
+    height: 1px
+code
+    color: #345
+    border: solid 1px #abc
+    display: inline-block
+    overflow: hidden
+    cursor: pointer
+.body
+    padding: 20px
+    background-color: rgba(255, 255, 255, 0.5)
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15)
+    border-radius: 4px
+    h3
+        font-weight: bold
+        letter-spacing: -1px
+    .file-list
+        code
+            width: 395px
+        .new
+            background-color: #e2e9ff
+        .file-row
+            border-top: dotted 1px rgba(0, 0, 0, 0.1)
+            padding: 10px 0
+            &:last-of-type
+                border-bottom: dotted 1px rgba(0, 0, 0, 0.1)
+            .name
+                font-weight: bold
+                font-size: 120%
+                color: #55626f
+                .text-muted
+                    color: rgba(110, 130, 150, 0.8)
+                    font-weight: normal
+            .hash
+                margin-top: 0.2em
+                font-size: 80%
+                padding: 2px
+            .btn
+                background-color: #8ad
+                font-weight: bold
+                font-size: 100%
+                color: white
+                text-shadow: 0 1px 0 #579
+                border: solid 1px #79c
+                margin-top: 10px
+                margin-left: 10px
+                i.fa
+                    position: relative
+                    top: 1px
+                    margin-right: 0.3em
+.small-break
+    line-height: 0.5em

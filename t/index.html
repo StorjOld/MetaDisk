@@ -30,7 +30,7 @@
                     <div class='stats'>
                         <div id='cont-upload' class=''>
                             <form method='post' id='form-file-upload' class='invis'>
-                                <input type='file' name='file' id='in-upload' multiple class='invis'>
+                                <input type='file' name='file' id='in-upload' class='invis'>
                             </form>
                             <label for='in-upload' class='btn btn-block btn-primary btn-lg'>
                                 <i class='fa fa-cloud-upload'></i> Upload a File
@@ -53,11 +53,11 @@
                     <br>
                     <div class='stats'>
                         <div class='stats-list text-muted'>
-                            <div class='cf'>
-                                <b class='pull-left'>File Size Limit</b>
-                                <span id='cont-file-size-limit' class='pull-right'></span>
+                            <!--<div class='cf'>
+                                <b class='pull-left'>Upload Limit</b>
+                                <span id='cont-ul-limit' class='pull-right'></span>
                             </div>
-                            <br>
+                            <br>-->
                             <div class='cf'>
                                 <b class='pull-left'>Upload Bandwidth</b>
                                 <span class='pull-right' id='cont-ul-bandwidth'></span>
@@ -73,6 +73,9 @@
                                 <span class='pull-right' id='cont-storage'></span>
                             </div>
                             <div class='progress progress-striped'><div id='bar-storage' class='progress-bar progress-bar-info' role='progressbar'></div></div>
+                            <div class='cf'>
+                                <b class='pull-left'>File size limit</b>
+                            </div>
                         </div>
                     </div>
                     <br>
@@ -139,8 +142,7 @@
             </div>
         </div>
         <script src='/js/jquery.js'></script>
-        <script src='/js/jquery.zclip.js'></script>
         <script src='/js/bootstrap.min.js'></script>
         <script src='/js/main.js'></script>
-   </body>
+    </body>
 </html>
