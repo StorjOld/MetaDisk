@@ -1,6 +1,3 @@
-# todo: upload the file; for now, just call cb
-uploadFile = (cb) ->
-    cb()
 
 api = (resource) ->
     'http://node2.storj.io/api/' + resource
@@ -171,16 +168,6 @@ makeHandler = (fname) ->
 
         History.add({fname: fname, fhash: fhash})
 
-        name = fname
-        ext = null
-        if fname.indexOf('.') isnt -1
-            splitted = name.split('.')
-            name = splitted[0...-1]
-            ext = splitted[splitted.length - 1]
-
-        if ext isnt null
-            name += '<span class="text-muted">.' + ext + '</span>'
-
         showUploadStage('uploaded')
         $('#span-dl-link').val(api('download/' + fhash))
 
@@ -191,11 +178,18 @@ makeHandler = (fname) ->
 
 # when a file is selected
 $('#in-upload').change ->
-    uploadFile(
-      $(this).val().split('\\').pop(),
-      new FormData($('#form-file-upload')[0]))
+    uploadFiles(this.files)
 
-uploadFile = (fname, formData) ->
+uploadFiles = (files) ->
+    for file in files
+        uploadFile(file)
+
+uploadFile = (file) ->
+    fname = file.name
+
+    formData = new FormData()
+    formData.append('file', file)
+
     showUploadStage('uploading')
 
     $('#span-up-prog')
@@ -227,23 +221,20 @@ uploadFile = (fname, formData) ->
 # Drag and drop support
 $('body').on('dragenter',
   ((e) ->
-    e.preventDefault()
-    e.stopPropagation()))
+      e.preventDefault()
+      e.stopPropagation()))
 
 $('body').on('dragover',
   ((e) ->
-    e.preventDefault()
-    e.stopPropagation()))
+      e.preventDefault()
+      e.stopPropagation()))
 
 $('body').on('drop',
   ((e) ->
-    file = e.originalEvent.dataTransfer.files[0]
-    formData = new FormData()
-    formData.append('file', file)
-    uploadFile(file.name, formData)
+      uploadFiles(e.originalEvent.dataTransfer.files)
 
-    e.preventDefault()
-    e.stopPropagation()))
+      e.preventDefault()
+      e.stopPropagation()))
 
 # select the link when the user focuses or clicks
 $('#span-dl-link').focus -> $(this).select()
