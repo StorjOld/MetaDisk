@@ -253,7 +253,7 @@ $('#btn-upload-another').click ->
 files = History.get()
 
 currentPage = ->
-    return parseInt($('#cont-pagination').attr('data-current'))
+    return parseInt($('#cont-pagination').attr('data-current')) | 0
 
 pageCount = ->
     return parseInt((History.get().length + 9) / 10)

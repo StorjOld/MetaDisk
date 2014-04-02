@@ -280,7 +280,7 @@
   files = History.get();
 
   currentPage = function() {
-    return parseInt($('#cont-pagination').attr('data-current'));
+    return parseInt($('#cont-pagination').attr('data-current')) | 0;
   };
 
   pageCount = function() {
