@@ -44,7 +44,7 @@
     add: (function(file) {
       var stuff;
       stuff = JSON.parse(Cookies.get('history')) || [];
-      stuff.push(file);
+      stuff.unshift(file);
       return Cookies.set('history', JSON.stringify(stuff));
     }),
     get: (function() {
@@ -163,7 +163,7 @@
 
   addFile = function(file) {
     var $file;
-    $file = $('<div/>').addClass('file-row cf').append($('<div/>').addClass('left').append('<div class="name">' + file.fname + '</div>').append('<div class="hash"><code>' + file.fhash + '</code></div>')).append($('<div/>').addClass('right').append('<button class="btn btn-dl"><i class="fa fa-download"></i>Download</button>')).append($('<div/>').addClass('right').append('<button class="btn btn-copy-url"><i class="fa fa-clipboard"></i>Copy URL</button>')).prependTo($('#cont-file-list'));
+    $file = $('<div/>').addClass('file-row cf').append($('<div/>').addClass('left').append('<div class="name">' + file.fname + '</div>').append('<div class="hash"><code>' + file.fhash + '</code></div>')).append($('<div/>').addClass('right').append('<button class="btn btn-dl"><i class="fa fa-download"></i>Download</button>')).append($('<div/>').addClass('right').append('<button class="btn btn-copy-url"><i class="fa fa-clipboard"></i>Copy URL</button>')).appendTo($('#cont-file-list'));
     $file.find('button.btn-dl').click(function() {
       return window.location.href = api('download/' + file.fhash);
     });

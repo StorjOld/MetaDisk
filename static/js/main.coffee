@@ -38,7 +38,7 @@ Cookies = {
 History = {
     add: ((file) ->
         stuff = JSON.parse(Cookies.get('history')) or []
-        stuff.push(file)
+        stuff.unshift(file)
         Cookies.set('history', JSON.stringify(stuff))
     ),
     get: (-> JSON.parse(Cookies.get('history'))),
@@ -147,7 +147,7 @@ addFile = (file) ->
                 .addClass('right')
                 .append('<button class="btn btn-copy-url"><i class="fa fa-clipboard"></i>Copy URL</button>')
         )
-        .prependTo($('#cont-file-list'))
+        .appendTo($('#cont-file-list'))
 
     $file.find('button.btn-dl').click ->
         window.location.href = api('download/' + file.fhash)
