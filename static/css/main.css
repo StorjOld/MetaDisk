@@ -170,6 +170,7 @@ code {
       margin-top: 10px;
       margin-left: 20px; }
       .body .file-list .file-row .btn:hover {
+        color: white;
         background: #5f81e3; }
       .body .file-list .file-row .btn i.fa {
         position: relative;
