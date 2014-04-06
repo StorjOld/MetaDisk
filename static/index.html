@@ -8,23 +8,26 @@
         <link rel='stylesheet' href='/css/bootstrap.min.css' type='text/css'>
         <link rel='stylesheet' href='/css/main.css'>
         <link href='//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css' rel='stylesheet'>
-        <title>BitCumulus</title>
+        <title>Storj</title>
     </head>
     <body>
-        <div class='bg'></div>
-        <div class='container main-container'>
-            <div class='row heading'>
-                <div class='col-md-4'>
-                    <h1 class='logo'>BitCumulus</h1>
-                </div>
-                <div class='col-md-push-2 col-md-6'>
-                    <div class='searchbox'>
-                        <i class='fa fa-search'></i>
-                        <input name='search' type='text' placeholder='Search file hash&hellip;'>
-                        &nbsp;
+        <div class="container-fluid header">
+            <div class="container">
+                <div class='row heading'>
+                    <div class='col-md-4'>
+                        <h1 class='logo'></h1>
+                    </div>
+                    <div class='col-md-8'>
+                        <div class='searchbox'>
+                            <i class='fa fa-search'></i>
+                            <input name='search' type='text' placeholder='Search file hash&hellip;'>
+                            &nbsp;
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class='container main-container'>
             <div class='row'>
                 <div class='col-md-4'>
                     <div class='stats upload-files'>
@@ -33,9 +36,9 @@
                                 <input type='file' name='file' id='in-upload' multiple class='invis'>
                             </form>
                             <label for='in-upload' class='btn btn-block btn-primary btn-lg'>
-                                <i class='fa fa-cloud-upload'></i> Upload a File
+                                <i class='fa fa-cloud-upload'></i> Upload
                             </label>
-                            <span class='caption text-center'>(or drag-and-drop)</span>
+                            <span class='caption text-center'>or use drag-and-drop</span>
                         </div>
                         <div id='cont-uploading' class='invis'>
                             <p class='text-muted'><i class='fa fa-cloud-upload'></i> Uploading to the cloud&hellip;</p>
@@ -49,27 +52,27 @@
                             <p><input id='span-dl-link' class='form-control' type='text'></p>
                             <p><button id='btn-upload-another' class='btn btn-default'><i class='fa fa-arrow-circle-left'></i> Upload another file</button></p>
                         </div>
+                        <hr>
+                        <div class='cf'>
+                            <p class='pull-left'>File Size Limit</p>
+                            <span id='cont-file-size-limit' class='pull-right'></span>
+                        </div>
                     </div>
                     <br>
                     <div class='stats'>
                         <div class='stats-list text-muted'>
                             <div class='cf'>
-                                <b class='pull-left'>File Size Limit</b>
-                                <span id='cont-file-size-limit' class='pull-right'></span>
-                            </div>
-                            <br>
-                            <div class='cf'>
-                                <b class='pull-left'>Upload Bandwidth</b>
+                                <p class='pull-left'>Upload Bandwidth</p>
                                 <span class='pull-right' id='cont-ul-bandwidth'></span>
                             </div>
                             <div class='progress progress-striped'><div id='bar-ul-bandwidth' class='progress-bar progress-bar-info' role='progressbar'></div></div>
                             <div class='cf'>
-                                <b class='pull-left'>Download Bandwidth</b>
+                                <p class='pull-left'>Download Bandwidth</p>
                                 <span class='pull-right' id='cont-dl-bandwidth'></span>
                             </div>
                             <div class='progress progress-striped'><div id='bar-dl-bandwidth' class='progress-bar progress-bar-info' role='progressbar'></div></div>
                             <div class='cf'>
-                                <b class='pull-left'>Cache Used</b>
+                                <p class='pull-left'>Cache Used</p>
                                 <span class='pull-right' id='cont-storage'></span>
                             </div>
                             <div class='progress progress-striped'><div id='bar-storage' class='progress-bar progress-bar-info' role='progressbar'></div></div>
@@ -79,13 +82,13 @@
                     <div class='stats'>
                         <div class='stats-list text-muted'>
                             <div class='cf'>
-                                <b class='pull-left'>Files syncing to cloud</b>
+                                <p class='pull-left'>Files syncing to cloud</p>
                                 <span class='pull-right' id='cont-sync-cloud'></span>
                             </div>
                         </div>
                         <div class='stats-list text-muted'>
                             <div class='cf'>
-                                <b class='pull-left'>Files syncing to blockchain</b>
+                                <p class='pull-left'>Files syncing to blockchain</p>
                                 <span class='pull-right' id='cont-sync-blockchain'></span>
                             </div>
                         </div>
@@ -94,13 +97,13 @@
                     <div class='stats'>
                         <div class='stats-list text-muted'>
                             <div class='cf'>
-                                <b class='pull-left'>Datacoin Address</b>
+                                <p class='pull-left'>Datacoin Address</p>
                                 <span class='pull-right' id='cont-datacoin-addr'></span>
                             </div>
                         </div>
                         <div class='stats-list text-muted'>
                             <div class='cf'>
-                                <b class='pull-left'>Datacoin Balance</b>
+                                <p class='pull-left'>Datacoin Balance</p>
                                 <span class='pull-right' id='cont-datacoin-bal'></span>
                             </div>
                         </div>

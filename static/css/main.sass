@@ -1,13 +1,12 @@
-@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400italic,700,700italic,900,900italic)
-.bg
-    background: linear-gradient(0deg, #abc, #89b)
-    position: fixed
-    top: 0
-    bottom: 0
-    left: 0
-    right: 0
-    opacity: 0.6
-    z-index: -1
+@import url(http://fonts.googleapis.com/css?family=Exo+2:400,300,800,600,700)
+$color-primary: #5f81e3
+$color-text: #324040
+$color-text-light: #777777
+$border-color: #e7e7e7
+body
+    background: #F8F8F8
+p
+    color: $color-text
 .cf
     zoom: 1
     &:before, &:after
@@ -20,72 +19,85 @@
 .right
     float: right
 .logo
-    font-weight: bold
+    background-image: url("../images/logo.png")
+    background-size: 148px 56px
+    background-repeat: no-repeat
+    height: 56px
+    width: 148px
+    margin: 0
+.header
+    background: $color-primary
+    padding: 30px 0
+.heading
+    margin-left: -7px
+    margin-right: -7px
 .main-container
-    font-family: 'Source Sans Pro', sans-serif
+    font-family: 'Exo 2', sans-serif
     margin-top: 20px
     padding: 20px
     margin-bottom: 20px
-    background-color: rgba(255, 255, 255, 0.4)
-    border-radius: 4px
     h1, h2, h3, h4, h5, h6
         margin: 0 0 0.8em 0
 .btn-primary
-    background-color: #3276b1
-    border: solid 1px #285e8e
+    background-color: $color-primary
+    font-weight: 700
+    border: 0
     &:hover
-        background-color: darken(#3276b1, 5%)
+        background-color: darken($color-primary, 5%)
 .searchbox
-    border: solid 1px #abc
     padding: 8px
+    margin-top: 8px
     background-color: white
-    border-radius: 4px
     position: relative
-    font-size: 18px
+    font-size: 16px
+    font-weight: 300
     i.fa
-        color: #89a
+        color: $color-primary
         position: absolute
-        top: 10px
-        bottom: 10px
+        top: 11px
         left: 10px
         line-height: 100%
         width: 1.0em
         text-align: center
     input
+        font-family: 'Exo 2', sans-serif
+        font-weight: 300
         position: absolute
         top: 8px
         right: 8px
         left: 34px
         bottom: 8px
         font-size: inherit
+        outline: 0
         background: none
         width: calc(100% - 1em - 28px)
         border-style: none
         margin: 0
         padding: none
 .stats
-    background-color: rgba(255, 255, 255, 0.6)
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15)
-    padding: 15px
-    border-radius: 4px
+    padding: 25px 25px 15px
+    background: white
+    border: 1px solid rgb(231, 231, 231)
+    p
+        font-weight: 600
     hr
-        border-color: #c2c8d2
+        border-color: $border-color
     h5
         font-weight: bold
     .text-muted
-        color: #789
+        color: $color-text-light
     code
         width: 150px
     .stats-list
         .progress
             margin-top: 0.3em
     .caption
-        font-size: 90%
+        font-size: 10px
         display: block
-        color: #79a
-        margin-top: 0.2em
-    .progress
-        border: solid 1px desaturate(darken(#5BC0DE, 20%), 20%)
+        font-weight: 300
+        color: rgb(128, 127, 127)
+        text-transform: uppercase
+        margin-top: 15px
 .invis
     display: none
 input[type=file].invis
@@ -100,50 +112,62 @@ code
     overflow: hidden
     cursor: pointer
 .body
-    padding: 20px
-    background-color: rgba(255, 255, 255, 0.5)
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15)
-    border-radius: 4px
+    padding: 25px
+    background: white
+    border: 1px solid rgb(231, 231, 231)
     h3
-        font-weight: bold
-        letter-spacing: -1px
+        font-weight: 600
+        color: #555
+        padding-bottom: 15px
+        padding-top: 5px
     .file-list
         code
             width: 395px
+            background: none
+            border: 0
+            padding: 5px 0
+            color: #b7c8da
+            font-size: 10px
+            margin-top: 3px
+            letter-spacing: 1px
         .new
             background-color: #e2e9ff
         .file-row
             border-top: dotted 1px rgba(0, 0, 0, 0.1)
-            padding: 10px 0
+            padding: 20px 0
             &:last-of-type
                 border-bottom: dotted 1px rgba(0, 0, 0, 0.1)
             .name
-                font-weight: bold
-                font-size: 120%
-                color: #55626f
+                font-weight: 400
+                font-size: 18px
+                color: $color-primary
                 .text-muted
-                    color: rgba(110, 130, 150, 0.8)
+                    color: $color-text-light
                     font-weight: normal
-            .hash
-                margin-top: 0.2em
-                font-size: 80%
-                padding: 2px
             .btn
-                background-color: #8ad
-                font-weight: bold
-                font-size: 100%
-                color: white
-                text-shadow: 0 1px 0 #579
-                border: solid 1px #79c
+                background-color: white
+                font-weight: 600
+                font-size: 13px
+                padding: 8px 18px
+                color: #5f81e3
+                border: solid 2px #5f81e3
                 margin-top: 10px
-                margin-left: 10px
+                margin-left: 20px
+                &:hover
+                    color:white
+                    background: $color-primary
                 i.fa
                     position: relative
                     top: 1px
-                    margin-right: 0.3em
+                    margin-right: 10px
+                    font-weight: normal
 .small-break
     line-height: 0.5em
-
+.progress-bar
+    background-color: $color-primary
+.btn-toolbar
+    margin-left: -5px
+    margin-top: 25px
 .upload-files, .uploaded-files
     @media (max-width: 991px)
         margin-top: 20px
