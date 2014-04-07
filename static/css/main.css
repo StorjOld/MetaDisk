@@ -172,14 +172,14 @@ code {
       .body .file-list .file-row .btn:hover {
         color: white;
         background: #5f81e3; }
-      .body .file-list .file-row .btn .hover {
-        color: white;
-        background: #5f81e3; }
       .body .file-list .file-row .btn i.fa {
         position: relative;
         top: 1px;
         margin-right: 10px;
         font-weight: normal; }
+    .body .file-list .file-row .hover {
+      color: white;
+      background: #5f81e3; }
 
 .small-break {
   line-height: 0.5em; }
