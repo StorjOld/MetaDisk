@@ -18,7 +18,7 @@ This project depends on several other projects:
   python interface to upload and download files from popular file hosting
   sites. It is a python wrapper of the plowshare tool.
 
-- [cloudmanager](https://github.com/Storj/cloud-manager) contains most of the
+- [cloud-manager](https://github.com/Storj/cloud-manager) contains most of the
   file handling logic. It keeps track of all the uploaded files, keeps track of
   the files present in local cache, and handles database serialization.
 
@@ -27,7 +27,7 @@ This project depends on several other projects:
   which allows one to synchronize data from and to the blockchain.
 
 - [web-core](https://github.com/Storj/web-core) is the backend server that powers
-  BitCumulus. It provides a json API web service, and the daemons to synchronize
+  BitCumulus. It provides a JSON API web service, and the daemons to synchronize
   files to the cloud hosting services and to the blockchain.
 
 BitCumulus, this project, provides a web interface to web-core, allowing you to
