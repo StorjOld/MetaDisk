@@ -29,7 +29,7 @@
         </div>
         <div class='container main-container'>
             <div class='row'>
-                <div class='col-md-4'>
+                <div class='col-md-4 sidebar'>
                     <div class='stats upload-files'>
                         <div id='cont-upload' class=''>
                             <form method='post' id='form-file-upload' class='invis'>
@@ -62,27 +62,31 @@
 
                     <div class="panel-group" id="accordion">
                       <div class="panel panel-default">
-                        <div class="panel-heading">
-                          <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#node-info">
-                              Node Information
-                            </a>
-                          </h4>
-                        </div>
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#node-info">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    Node Information
+                                </h4>
+                            </div>
+                        </a>
                         <div id="node-info" class="panel-collapse collapse ">
                           <div class="panel-body">
 
-                            <div class='stats-list text-muted'>
+                            <hr class="panel-heading-hr">
+
+                            <div class='panel-progress'>
                                 <div class='cf'>
                                     <p class='stats-label pull-left'>Upload Bandwidth</p>
                                     <span class='pull-right' id='cont-ul-bandwidth'></span>
                                 </div>
                                 <div class='progress progress-striped'><div id='bar-ul-bandwidth' class='progress-bar progress-bar-info' role='progressbar'></div></div>
+                                <hr>
                                 <div class='cf'>
                                     <p class='stats-label pull-left'>Download Bandwidth</p>
                                     <span class='pull-right' id='cont-dl-bandwidth'></span>
                                 </div>
                                 <div class='progress progress-striped'><div id='bar-dl-bandwidth' class='progress-bar progress-bar-info' role='progressbar'></div></div>
+                                <hr>
                                 <div class='cf'>
                                     <p class='stats-label pull-left'>Cache Used</p>
                                     <span class='pull-right' id='cont-storage'></span>
@@ -92,32 +96,26 @@
 
                             <hr>
 
-                            <div class='stats-list text-muted'>
-                                <div class='cf'>
-                                    <p class='stats-label pull-left'>Files syncing to cloud</p>
-                                    <span class='pull-right' id='cont-sync-cloud'></span>
-                                </div>
+                            <div class='cf'>
+                                <p class='stats-label pull-left'>Files syncing to cloud</p>
+                                <span class='pull-right' id='cont-sync-cloud'></span>
                             </div>
-                            <div class='stats-list text-muted'>
-                                <div class='cf'>
-                                    <p class='stats-label pull-left'>Files syncing to blockchain</p>
-                                    <span class='pull-right' id='cont-sync-blockchain'></span>
-                                </div>
+                            <hr>
+                            <div class='cf'>
+                                <p class='stats-label pull-left'>Files syncing to blockchain</p>
+                                <span class='pull-right' id='cont-sync-blockchain'></span>
                             </div>
 
                             <hr>
 
-                            <div class='stats-list text-muted'>
-                                <div class='cf'>
-                                    <p class='stats-label pull-left'>Datacoin Address</p>
-                                    <span class='pull-right' id='cont-datacoin-addr'></span>
-                                </div>
+                            <div class='cf'>
+                                <p class='stats-label pull-left'>Datacoin Address</p>
+                                <span class='pull-right' id='cont-datacoin-addr'></span>
                             </div>
-                            <div class='stats-list text-muted'>
-                                <div class='cf'>
-                                    <p class='stats-label pull-left'>Datacoin Balance</p>
-                                    <span class='pull-right' id='cont-datacoin-bal'></span>
-                                </div>
+                            <hr>
+                            <div class='cf'>
+                                <p class='stats-label pull-left'>Datacoin Balance</p>
+                                <span class='pull-right' id='cont-datacoin-bal'></span>
                             </div>
 
                           </div>

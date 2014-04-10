@@ -105,7 +105,7 @@ p
         font-weight: 300
         color: rgb(128, 127, 127)
         text-transform: uppercase
-        margin-top: 15px
+        margin: 15px 0
 .invis
     display: none
 input[type=file].invis
@@ -177,9 +177,9 @@ code
 .progress-bar
     background-color: $color-primary
 .btn-toolbar
-    margin-left: -5px
-    margin-top: 25px
+    margin: 25px 0 15px -5px
 .upload-files, .uploaded-files
+    padding-bottom: 10px
     @media (max-width: 991px)
         margin-top: 20px
 .btn:hover, .btn:focus, .btn:active, .btn.active, .open .dropdown-toggle.btn
@@ -189,6 +189,8 @@ code
 .stats-label
     font-weight: 600
     margin: 0.6em 0 0.6em
+.sidebar hr
+    margin: 10px -25px
 .panel
     border-radius: 0!important
     box-shadow: none
@@ -196,9 +198,19 @@ code
     margin-top: 20px
 .panel-heading
     padding: 20px 25px
+hr.panel-heading-hr
+    margin: 0 -25px 15px
 .panel-body
-    padding: 20px 25px 25px
+    padding: 0px 25px 15px
 .panel-title
     margin: 0!important
     color: #5f81e3
     font-weight: 700
+.panel.progress
+    margin-bottom: 25px
+.accordion-toggle:hover
+    text-decoration: none
+.accordion-toggle .panel-title:after
+    font-family: 'Glyphicons Halflings'
+    content: "\e114"
+    float: right
