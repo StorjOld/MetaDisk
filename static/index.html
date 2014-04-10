@@ -5,8 +5,8 @@
         <meta charset='utf-8'>
         <meta name='viewport' content='width=device-width, initial-scale=1'>
         <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-        <link rel='stylesheet' href='/css/bootstrap.min.css' type='text/css'>
-        <link rel='stylesheet' href='/css/main.css'>
+        <link rel='stylesheet' href='css/bootstrap.min.css' type='text/css'>
+        <link rel='stylesheet' href='css/main.css'>
         <link href='//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css' rel='stylesheet'>
         <title>Storj</title>
     </head>
@@ -54,62 +54,79 @@
                         </div>
                         <hr>
                         <div class='cf'>
-                            <p class='pull-left'>File Size Limit</p>
+                            <p class='stats-label pull-left'>File Size Limit</p>
                             <span id='cont-file-size-limit' class='pull-right text-muted'></span>
                         </div>
                     </div>
-                    <br>
-                    <div class='stats'>
-                        <div class='stats-list text-muted'>
-                            <div class='cf'>
-                                <p class='pull-left'>Upload Bandwidth</p>
-                                <span class='pull-right' id='cont-ul-bandwidth'></span>
-                            </div>
-                            <div class='progress progress-striped'><div id='bar-ul-bandwidth' class='progress-bar progress-bar-info' role='progressbar'></div></div>
-                            <div class='cf'>
-                                <p class='pull-left'>Download Bandwidth</p>
-                                <span class='pull-right' id='cont-dl-bandwidth'></span>
-                            </div>
-                            <div class='progress progress-striped'><div id='bar-dl-bandwidth' class='progress-bar progress-bar-info' role='progressbar'></div></div>
-                            <div class='cf'>
-                                <p class='pull-left'>Cache Used</p>
-                                <span class='pull-right' id='cont-storage'></span>
-                            </div>
-                            <div class='progress progress-striped'><div id='bar-storage' class='progress-bar progress-bar-info' role='progressbar'></div></div>
+
+
+                    <div class="panel-group" id="accordion">
+                      <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#node-info">
+                              Node Information
+                            </a>
+                          </h4>
                         </div>
-                    </div>
-                    <br>
-                    <div class='stats'>
-                        <div class='stats-list text-muted'>
-                            <div class='cf'>
-                                <p class='pull-left'>Files syncing to cloud</p>
-                                <span class='pull-right' id='cont-sync-cloud'></span>
+                        <div id="node-info" class="panel-collapse collapse ">
+                          <div class="panel-body">
+
+                            <div class='stats-list text-muted'>
+                                <div class='cf'>
+                                    <p class='stats-label pull-left'>Upload Bandwidth</p>
+                                    <span class='pull-right' id='cont-ul-bandwidth'></span>
+                                </div>
+                                <div class='progress progress-striped'><div id='bar-ul-bandwidth' class='progress-bar progress-bar-info' role='progressbar'></div></div>
+                                <div class='cf'>
+                                    <p class='stats-label pull-left'>Download Bandwidth</p>
+                                    <span class='pull-right' id='cont-dl-bandwidth'></span>
+                                </div>
+                                <div class='progress progress-striped'><div id='bar-dl-bandwidth' class='progress-bar progress-bar-info' role='progressbar'></div></div>
+                                <div class='cf'>
+                                    <p class='stats-label pull-left'>Cache Used</p>
+                                    <span class='pull-right' id='cont-storage'></span>
+                                </div>
+                                <div class='progress progress-striped'><div id='bar-storage' class='progress-bar progress-bar-info' role='progressbar'></div></div>
                             </div>
-                        </div>
-                        <div class='stats-list text-muted'>
-                            <div class='cf'>
-                                <p class='pull-left'>Files syncing to blockchain</p>
-                                <span class='pull-right' id='cont-sync-blockchain'></span>
+
+                            <hr>
+
+                            <div class='stats-list text-muted'>
+                                <div class='cf'>
+                                    <p class='stats-label pull-left'>Files syncing to cloud</p>
+                                    <span class='pull-right' id='cont-sync-cloud'></span>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <br>
-                    <div class='stats'>
-                        <div class='stats-list text-muted'>
-                            <div class='cf'>
-                                <p class='pull-left'>Datacoin Address</p>
-                                <span class='pull-right' id='cont-datacoin-addr'></span>
+                            <div class='stats-list text-muted'>
+                                <div class='cf'>
+                                    <p class='stats-label pull-left'>Files syncing to blockchain</p>
+                                    <span class='pull-right' id='cont-sync-blockchain'></span>
+                                </div>
                             </div>
-                        </div>
-                        <div class='stats-list text-muted'>
-                            <div class='cf'>
-                                <p class='pull-left'>Datacoin Balance</p>
-                                <span class='pull-right' id='cont-datacoin-bal'></span>
+
+                            <hr>
+
+                            <div class='stats-list text-muted'>
+                                <div class='cf'>
+                                    <p class='stats-label pull-left'>Datacoin Address</p>
+                                    <span class='pull-right' id='cont-datacoin-addr'></span>
+                                </div>
                             </div>
+                            <div class='stats-list text-muted'>
+                                <div class='cf'>
+                                    <p class='stats-label pull-left'>Datacoin Balance</p>
+                                    <span class='pull-right' id='cont-datacoin-bal'></span>
+                                </div>
+                            </div>
+
+                          </div>
                         </div>
+                      </div>
                     </div>
 
                 </div>
+
                 <div class='col-md-8'>
                     <div class='body uploaded-files'>
                         <h3>Uploaded Files</h3>
@@ -151,8 +168,8 @@
                     </div>
                     <div class="col-md-6">
                         <p class="pull-right">
-                            <a href="https://github.com/Storj/BitCumulus/">GitHub</a>
-                            <a href="https://github.com/Storj/BitCumulus/issues">Report a bug</a>
+                            <a class="footer-link" href="https://github.com/Storj/BitCumulus/">GitHub</a>
+                            <a class="footer-link" href="https://github.com/Storj/BitCumulus/issues">Report a bug</a>
                         </p>                       
                     </div>
                 </div>

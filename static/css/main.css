@@ -42,6 +42,9 @@ p {
   padding: 25px 0 12px;
   font-family: "Exo 2", sans-serif; }
 
+.footer-link {
+  margin-left: 1em; }
+
 .main-container {
   font-family: "Exo 2", sans-serif;
   margin-top: 20px;
@@ -194,3 +197,31 @@ code {
 @media (max-width: 991px) {
   .upload-files, .uploaded-files {
     margin-top: 20px; } }
+
+.btn:hover, .btn:focus, .btn:active, .btn.active, .open .dropdown-toggle.btn {
+  outline: 0; }
+
+.btn:focus, .btn:active:focus, .btn.active:focus {
+  outline: 0; }
+
+.stats-label {
+  font-weight: 600;
+  margin: 0.6em 0 0.6em; }
+
+.panel {
+  border-radius: 0 !important;
+  box-shadow: none; }
+
+.panel-group {
+  margin-top: 20px; }
+
+.panel-heading {
+  padding: 20px 25px; }
+
+.panel-body {
+  padding: 20px 25px 25px; }
+
+.panel-title {
+  margin: 0 !important;
+  color: #5f81e3;
+  font-weight: 700; }
