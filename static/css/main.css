@@ -1,6 +1,15 @@
 @import url(http://fonts.googleapis.com/css?family=Exo+2:400,300,800,600,700);
+html {
+  height: 100%; }
+
 body {
+  height: 100%;
   background: #f8f8f8; }
+
+.wrapper {
+  min-height: 100%;
+  height: 100%;
+  margin: 0 auto -67px; }
 
 p {
   color: #324040; }
@@ -35,8 +44,12 @@ p {
   margin-left: -7px;
   margin-right: -7px; }
 
+.push {
+  height: 67px; }
+
 .footer {
   bottom: 0;
+  height: 67px;
   background: white;
   width: 100%;
   padding: 25px 0 12px;
@@ -59,6 +72,10 @@ p {
   border: 0; }
   .btn-primary:hover {
     background-color: #4970df; }
+
+#btn-upload-another {
+  width: 100%;
+  height: 34px; }
 
 .searchbox {
   padding: 8px;
@@ -188,7 +205,9 @@ code {
   line-height: 0.5em; }
 
 .progress-bar {
-  background-color: #5f81e3; }
+  background-color: #5f81e3;
+  font-weight: 300;
+  font-size: 14px; }
 
 .btn-toolbar {
   margin: 25px 0 15px -5px; }
@@ -243,3 +262,16 @@ hr.panel-heading-hr {
   font-family: "Glyphicons Halflings";
   content: "\e114";
   float: right; }
+
+.upload-files-top {
+  height: 80px; }
+
+#cont-uploading {
+  text-align: center;
+  padding-top: 5px; }
+  #cont-uploading p {
+    font-weight: 300; }
+
+#span-dl-link {
+  font-size: 12px;
+  font-weight: 300; }

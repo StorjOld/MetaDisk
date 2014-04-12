@@ -7,155 +7,160 @@
         <meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <link rel='stylesheet' href='css/bootstrap.min.css' type='text/css'>
         <link rel='stylesheet' href='css/main.css'>
-        <link href='//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css' rel='stylesheet'>
+        <link href='http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css' rel='stylesheet'>
         <title>Storj</title>
     </head>
     <body>
-        <div class="container-fluid header">
-            <div class="container">
-                <div class='row heading'>
-                    <div class='col-md-4'>
-                        <h1 class='logo'></h1>
-                    </div>
-                    <div class='col-md-8'>
-                        <div class='searchbox'>
-                            <i class='fa fa-search'></i>
-                            <input name='search' type='text' placeholder='Search file hash&hellip;'>
-                            &nbsp;
+        <div class="wrapper">
+            <div class="container-fluid header">
+                <div class="container">
+                    <div class='row heading'>
+                        <div class='col-md-4'>
+                            <h1 class='logo'></h1>
+                        </div>
+                        <div class='col-md-8'>
+                            <div class='searchbox'>
+                                <i class='fa fa-search'></i>
+                                <input name='search' type='text' placeholder='Search file hash&hellip;'>
+                                &nbsp;
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class='container main-container'>
-            <div class='row'>
-                <div class='col-md-4 sidebar'>
-                    <div class='stats upload-files'>
-                        <div id='cont-upload' class=''>
-                            <form method='post' id='form-file-upload' class='invis'>
-                                <input type='file' name='file' id='in-upload' multiple class='invis'>
-                            </form>
-                            <label for='in-upload' class='btn btn-block btn-primary btn-lg'>
-                                <i class='fa fa-cloud-upload'></i> Upload
-                            </label>
-                            <span class='caption text-center'>or use drag-and-drop</span>
-                        </div>
-                        <div id='cont-uploading' class='invis'>
-                            <p class='text-muted'><i class='fa fa-cloud-upload'></i> Uploading to the node&hellip;</p>
-                            <div class='progress'>
-                                <div id='span-up-prog' class='progress-bar progress-bar-info' role='progressbar' style='width: 0%;'>
-                                    8%
+            <div class='container main-container'>
+                <div class='row'>
+                    <div class='col-md-4 sidebar'>
+                        <div class='stats upload-files'>
+                            <div class="upload-files-top">
+                                <div id='cont-upload' class=''>
+                                    <form method='post' id='form-file-upload' class='invis'>
+                                        <input type='file' name='file' id='in-upload' multiple class='invis'>
+                                    </form>
+                                    <label for='in-upload' class='btn btn-block btn-primary btn-lg'>
+                                        <i class='fa fa-cloud-upload'></i> Upload
+                                    </label>
+                                    <span class='caption text-center'>or use drag-and-drop</span>
+                                </div>
+                                <div id='cont-uploading' class='invis'>
+                                    <p><i class='fa fa-cloud-upload'></i> Uploading to the node&hellip;</p>
+                                    <div class='progress progress-striped'>
+                                        <div id='span-up-prog' class='progress-bar progress-bar-info' role='progressbar' style='width: 0%;'>
+                                            0%
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id='cont-uploaded' class='invis'>
+                                    <input id='span-dl-link' class='form-control col-sm-6 col-xs-12 col-md-12' type='text'>
+                                    <button id='btn-upload-another' class='btn btn-primary col-sm-6 col-xs-12 col-md-12'><i class='fa fa-arrow-circle-left'></i> Back to Upload</button>
                                 </div>
                             </div>
-                        </div>
-                        <div id='cont-uploaded' class='invis'>
-                            <p><input id='span-dl-link' class='form-control' type='text'></p>
-                            <p><button id='btn-upload-another' class='btn btn-default'><i class='fa fa-arrow-circle-left'></i> Upload another file</button></p>
-                        </div>
-                        <hr>
-                        <div class='cf'>
-                            <p class='stats-label pull-left'>File Size Limit</p>
-                            <span id='cont-file-size-limit' class='pull-right text-muted'></span>
-                        </div>
-                    </div>
-
-
-                    <div class="panel-group" id="accordion">
-                      <div class="panel panel-default">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#node-info">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    Node Information
-                                </h4>
+                            <hr>
+                            <div class='cf'>
+                                <p class='stats-label pull-left'>File Size Limit</p>
+                                <span id='cont-file-size-limit' class='pull-right text-muted'></span>
                             </div>
-                        </a>
-                        <div id="node-info" class="panel-collapse collapse ">
-                          <div class="panel-body">
+                        </div>
 
-                            <hr class="panel-heading-hr">
 
-                            <div class='panel-progress'>
+                        <div class="panel-group" id="accordion">
+                          <div class="panel panel-default">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#node-info">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        Node Information
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="node-info" class="panel-collapse collapse ">
+                              <div class="panel-body">
+
+                                <hr class="panel-heading-hr">
+
+                                <div class='panel-progress'>
+                                    <div class='cf'>
+                                        <p class='stats-label pull-left'>Upload Bandwidth</p>
+                                        <span class='pull-right' id='cont-ul-bandwidth'></span>
+                                    </div>
+                                    <div class='progress progress-striped'><div id='bar-ul-bandwidth' class='progress-bar progress-bar-info' role='progressbar'></div></div>
+                                    <hr>
+                                    <div class='cf'>
+                                        <p class='stats-label pull-left'>Download Bandwidth</p>
+                                        <span class='pull-right' id='cont-dl-bandwidth'></span>
+                                    </div>
+                                    <div class='progress progress-striped'><div id='bar-dl-bandwidth' class='progress-bar progress-bar-info' role='progressbar'></div></div>
+                                    <hr>
+                                    <div class='cf'>
+                                        <p class='stats-label pull-left'>Cache Used</p>
+                                        <span class='pull-right' id='cont-storage'></span>
+                                    </div>
+                                    <div class='progress progress-striped'><div id='bar-storage' class='progress-bar progress-bar-info' role='progressbar'></div></div>
+                                </div>
+
+                                <hr>
+
                                 <div class='cf'>
-                                    <p class='stats-label pull-left'>Upload Bandwidth</p>
-                                    <span class='pull-right' id='cont-ul-bandwidth'></span>
+                                    <p class='stats-label pull-left'>Files syncing to cloud</p>
+                                    <span class='pull-right' id='cont-sync-cloud'></span>
                                 </div>
-                                <div class='progress progress-striped'><div id='bar-ul-bandwidth' class='progress-bar progress-bar-info' role='progressbar'></div></div>
                                 <hr>
                                 <div class='cf'>
-                                    <p class='stats-label pull-left'>Download Bandwidth</p>
-                                    <span class='pull-right' id='cont-dl-bandwidth'></span>
+                                    <p class='stats-label pull-left'>Files syncing to blockchain</p>
+                                    <span class='pull-right' id='cont-sync-blockchain'></span>
                                 </div>
-                                <div class='progress progress-striped'><div id='bar-dl-bandwidth' class='progress-bar progress-bar-info' role='progressbar'></div></div>
+
+                                <hr>
+
+                                <div class='cf'>
+                                    <p class='stats-label pull-left'>Datacoin Address</p>
+                                    <span class='pull-right' id='cont-datacoin-addr'></span>
+                                </div>
                                 <hr>
                                 <div class='cf'>
-                                    <p class='stats-label pull-left'>Cache Used</p>
-                                    <span class='pull-right' id='cont-storage'></span>
+                                    <p class='stats-label pull-left'>Datacoin Balance</p>
+                                    <span class='pull-right' id='cont-datacoin-bal'></span>
                                 </div>
-                                <div class='progress progress-striped'><div id='bar-storage' class='progress-bar progress-bar-info' role='progressbar'></div></div>
-                            </div>
 
-                            <hr>
-
-                            <div class='cf'>
-                                <p class='stats-label pull-left'>Files syncing to cloud</p>
-                                <span class='pull-right' id='cont-sync-cloud'></span>
+                              </div>
                             </div>
-                            <hr>
-                            <div class='cf'>
-                                <p class='stats-label pull-left'>Files syncing to blockchain</p>
-                                <span class='pull-right' id='cont-sync-blockchain'></span>
-                            </div>
-
-                            <hr>
-
-                            <div class='cf'>
-                                <p class='stats-label pull-left'>Datacoin Address</p>
-                                <span class='pull-right' id='cont-datacoin-addr'></span>
-                            </div>
-                            <hr>
-                            <div class='cf'>
-                                <p class='stats-label pull-left'>Datacoin Balance</p>
-                                <span class='pull-right' id='cont-datacoin-bal'></span>
-                            </div>
-
                           </div>
                         </div>
-                      </div>
+
                     </div>
 
-                </div>
-
-                <div class='col-md-8'>
-                    <div class='body uploaded-files'>
-                        <h3>Uploaded Files</h3>
-                        <div class='file-list' id='cont-file-list'>
-                            <!--
-                            $for name in '011927_1280x800_scrot.png 134801_1280x800_scrot.png 012038_1280x800_scrot.png 011749_1280x800_scrot.png ies4linux-latest.tar.gz thoughts.txt -11-033326_1280x800_scrot.png 143159_1280x800_scrot.png imgur-screenshot Tiffany.class 190712_1280x800_scrot.png 121345_1280x800_scrot.png index.html Tiffany.java 210853_1280x800_scrot.png 160657_1280x800_scrot.png lighttpd.conf untitled-link.txt'.split(' ')
-                                <div class='file-row cf'>
-                                    <div class='left'>
-                                        <div class='name'>
-                                            $if '.' in name:
-                                                $ splitted = name.split('.')
-                                                $ fname, ext = '.'.join(splitted[:-1]), splitted[-1]
-                                                $fname<span class='text-muted'>.$ext</span>
-                                            $else:
-                                                $name
+                    <div class='col-md-8'>
+                        <div class='body uploaded-files'>
+                            <h3>Uploaded Files</h3>
+                            <div class='file-list' id='cont-file-list'>
+                                <!--
+                                $for name in '011927_1280x800_scrot.png 134801_1280x800_scrot.png 012038_1280x800_scrot.png 011749_1280x800_scrot.png ies4linux-latest.tar.gz thoughts.txt -11-033326_1280x800_scrot.png 143159_1280x800_scrot.png imgur-screenshot Tiffany.class 190712_1280x800_scrot.png 121345_1280x800_scrot.png index.html Tiffany.java 210853_1280x800_scrot.png 160657_1280x800_scrot.png lighttpd.conf untitled-link.txt'.split(' ')
+                                    <div class='file-row cf'>
+                                        <div class='left'>
+                                            <div class='name'>
+                                                $if '.' in name:
+                                                    $ splitted = name.split('.')
+                                                    $ fname, ext = '.'.join(splitted[:-1]), splitted[-1]
+                                                    $fname<span class='text-muted'>.$ext</span>
+                                                $else:
+                                                    $name
+                                            </div>
+                                            <div class='hash'><code>$sha256(name)</code></div>
                                         </div>
-                                        <div class='hash'><code>$sha256(name)</code></div>
+                                        <div class='right'>
+                                            <button data-url='download url' class='btn btn-dl'><i class='fa fa-download'></i> Download</button>
+                                        </div>
                                     </div>
-                                    <div class='right'>
-                                        <button data-url='download url' class='btn btn-dl'><i class='fa fa-download'></i> Download</button>
-                                    </div>
-                                </div>
-                            -->
-                        </div>
-                        <div class='btn-toolbar' role='toolbar'>
-                            <div class='btn-group' id='cont-pagination'></div>
+                                -->
+                            </div>
+                            <div class='btn-toolbar' role='toolbar'>
+                                <div class='btn-group' id='cont-pagination'></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="push">
         <div class="footer">
             <div class="container">
                 <div class="row heading">
