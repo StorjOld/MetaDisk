@@ -17,7 +17,7 @@ server {
     listen 80;
     server_name storj.example.com;
     root /path/to/BitCumulus/static/;
-    client_max_body_size 400M;
+    client_max_body_size 500M;
 
     access_log /var/log/nginx/bitcumulus.access.log;
     error_log /var/log/nginx/bitcumulus.error.log;
