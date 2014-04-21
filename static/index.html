@@ -9,30 +9,6 @@
         <link rel='stylesheet' href='css/main.css'>
         <link href='http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css' rel='stylesheet'>
         <title>Storj</title>
-
-        <!-- Favicons -->
-        <link rel="shortcut icon" href="favicon/favicon.ico">
-        <link rel="apple-touch-icon" sizes="57x57" href="favicon/apple-touch-icon-57x57.png">
-        <link rel="apple-touch-icon" sizes="114x114" href="favicon/apple-touch-icon-114x114.png">
-        <link rel="apple-touch-icon" sizes="72x72" href="favicon/apple-touch-icon-72x72.png">
-        <link rel="apple-touch-icon" sizes="144x144" href="favicon/apple-touch-icon-144x144.png">
-        <link rel="apple-touch-icon" sizes="60x60" href="favicon/apple-touch-icon-60x60.png">
-        <link rel="apple-touch-icon" sizes="120x120" href="favicon/apple-touch-icon-120x120.png">
-        <link rel="apple-touch-icon" sizes="76x76" href="favicon/apple-touch-icon-76x76.png">
-        <link rel="apple-touch-icon" sizes="152x152" href="assets/favicon/apple-touch-icon-152x152.png">
-        <link rel="icon" type="image/png" href="favicon/favicon-196x196.png" sizes="196x196">
-        <link rel="icon" type="image/png" href="favicon/favicon-160x160.png" sizes="160x160">
-        <link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96">
-        <link rel="icon" type="image/png" href="favicon/favicon-16x16.png" sizes="16x16">
-        <link rel="icon" type="image/png" href="favicon/favicon-32x32.png" sizes="32x32">
-        <meta name="msapplication-TileColor" content="#ffffff">
-        <meta name="msapplication-TileImage" content="favicon/mstile-144x144.png">
-        <meta name="msapplication-square70x70logo" content="favicon/mstile-70x70.png">
-        <meta name="msapplication-square144x144logo" content="favicon/mstile-144x144.png">
-        <meta name="msapplication-square150x150logo" content="favicon/mstile-150x150.png">
-        <meta name="msapplication-square310x310logo" content="favicon/mstile-310x310.png">
-        <meta name="msapplication-wide310x150logo" content="favicon/mstile-310x150.png">
-
     </head>
     <body>
         <div class="wrapper">
@@ -61,7 +37,7 @@
                                     <form method='post' id='form-file-upload' class='invis'>
                                         <input type='file' name='file' id='in-upload' multiple class='invis'>
                                     </form>
-                                    <label for='in-upload' class='btn btn-block btn-primary btn-lg'>
+                                    <label for='in-upload' class='btn btn-block btn-upload btn-lg'>
                                         <i class='fa fa-cloud-upload'></i> Upload
                                     </label>
                                     <span class='caption text-center'>or use drag-and-drop</span>
@@ -86,6 +62,72 @@
                             </div>
                         </div>
 
+                        <div class="panel-group" id="accordion">
+                          <div class="panel panel-default">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#user-info">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        Your Account
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="user-info" class="panel-collapse collapse in">
+                              <div class="panel-body">
+
+                                <hr class="panel-heading-hr">
+
+                                <div class='panel-progress'>
+                                    <div class='cf'>
+                                        <p class='stats-label pull-left'>Your Bandwidth</p>
+                                    </div>
+                                    <div class='progress progress-striped'><div id='bar-ul-bandwidth' class='progress-bar progress-bar-info' role='progressbar' style="width:37%;"></div></div>
+                                    <div class='cf progress-stats'>
+                                        <p class='pull-left'>5,892.36 GB</p>
+                                        <span class='pull-right text-muted'>15,000.00 GB</span>
+                                    </div>
+                                    <hr>
+                                    <div class='cf'>
+                                        <p class='stats-label pull-left'>Access Token <i class='fa fa-question-circle tooltip-icon' data-toggle="tooltip" data-placement="top" title="This is your private access key for your bandwidth. Please don't lose it or share it with anyone."></i></p>
+                                    </div>
+                                    <div class="input-group access-token-input">
+                                      <input type="text" class="form-control" placeholder="b5c9t6Ds312Xc56s87v72q3z9j4ASqQ">
+                                      <div class="input-group-btn">
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+                                        <ul class="dropdown-menu pull-right" role="menu">
+                                          <li><a href="#">Edit</a></li>
+                                          <li class="divider"></li>
+                                          <li><a href="#">Delete</a></li>
+                                          <li class="divider"></li>
+                                          <li><a href="#">Send by e-mail</a></li>
+                                        </ul>
+                                      </div><!-- /btn-group -->
+                                    </div>
+                                    <hr>
+                                    <div class='cf'>
+                                        <p class='stats-label pull-left'>Estimated Storage <i class='fa fa-question-circle tooltip-icon' data-toggle="tooltip" data-placement="top" title="Bandwidth is consumed when uploading or downloading files based on the size of files transferred."></i></p>
+                                    </div>
+                                    <div class='progress progress-striped'><div id='bar-ul-bandwidth' class='progress-bar progress-bar-info' role='progressbar' style="width:26%;"></div></div>
+                                    <div class='cf progress-stats'>
+                                        <p class='pull-left'>161.37 GB</p>
+                                        <span class='pull-right text-muted'>700.00 GB</span>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-12 col-xs-12 col-sm-6">
+                                            <button class='btn btn-orange btn-account' data-toggle="modal" data-target="#modalFree">Get Free</button>
+                                        </div>
+                                        <div class="col-lg-6 col-md-12 col-xs-12 col-sm-6">
+                                            <button class='btn btn-green btn-account' data-toggle="modal" data-target="#modalBuy">Buy More</button>
+                                        </div>                                       
+                                    </div>
+                                
+                                </div>
+
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
 
                         <div class="panel-group" id="accordion">
                           <div class="panel panel-default">
@@ -104,19 +146,19 @@
                                 <div class='panel-progress'>
                                     <div class='cf'>
                                         <p class='stats-label pull-left'>Upload Bandwidth</p>
-                                        <span class='pull-right' id='cont-ul-bandwidth'></span>
+                                        <span class='pull-right text-muted' id='cont-ul-bandwidth'></span>
                                     </div>
                                     <div class='progress progress-striped'><div id='bar-ul-bandwidth' class='progress-bar progress-bar-info' role='progressbar'></div></div>
                                     <hr>
                                     <div class='cf'>
                                         <p class='stats-label pull-left'>Download Bandwidth</p>
-                                        <span class='pull-right' id='cont-dl-bandwidth'></span>
+                                        <span class='pull-right text-muted' id='cont-dl-bandwidth'></span>
                                     </div>
                                     <div class='progress progress-striped'><div id='bar-dl-bandwidth' class='progress-bar progress-bar-info' role='progressbar'></div></div>
                                     <hr>
                                     <div class='cf'>
                                         <p class='stats-label pull-left'>Cache Used</p>
-                                        <span class='pull-right' id='cont-storage'></span>
+                                        <span class='pull-right text-muted' id='cont-storage'></span>
                                     </div>
                                     <div class='progress progress-striped'><div id='bar-storage' class='progress-bar progress-bar-info' role='progressbar'></div></div>
                                 </div>
@@ -125,27 +167,26 @@
 
                                 <div class='cf'>
                                     <p class='stats-label pull-left'>Files syncing to cloud</p>
-                                    <span class='pull-right' id='cont-sync-cloud'></span>
+                                    <span class='pull-right text-muted' id='cont-sync-cloud'></span>
                                 </div>
                                 <hr>
                                 <div class='cf'>
                                     <p class='stats-label pull-left'>Files syncing to blockchain</p>
-                                    <span class='pull-right' id='cont-sync-blockchain'></span>
+                                    <span class='pull-right text-muted' id='cont-sync-blockchain'></span>
                                 </div>
 
                                 <hr>
 
                                 <div class='cf'>
                                     <p class='stats-label pull-left'>Datacoin Address</p>
-                                    <span class='pull-right' id='cont-datacoin-addr'></span>
+                                    <span class='pull-right text-muted' id='cont-datacoin-bal'></span>
                                 </div>
-                                <hr>
-                                <div class='cf'>
-                                    <p class='stats-label pull-left'>Datacoin Balance</p>
-                                    <span class='pull-right' id='cont-datacoin-bal'></span>
+                                <div class="cf">
+                                    <span class='pull-left' id='cont-datacoin-addr'></span>
                                 </div>
 
                               </div>
+
                             </div>
                           </div>
                         </div>
@@ -154,7 +195,11 @@
 
                     <div class='col-md-8'>
                         <div class='body uploaded-files'>
-                            <h3>Uploaded Files</h3>
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    Uploaded Files
+                                </h3>
+                            </div>
                             <div class='file-list' id='cont-file-list'>
                                 <!--
                                 $for name in '011927_1280x800_scrot.png 134801_1280x800_scrot.png 012038_1280x800_scrot.png 011749_1280x800_scrot.png ies4linux-latest.tar.gz thoughts.txt -11-033326_1280x800_scrot.png 143159_1280x800_scrot.png imgur-screenshot Tiffany.class 190712_1280x800_scrot.png 121345_1280x800_scrot.png index.html Tiffany.java 210853_1280x800_scrot.png 160657_1280x800_scrot.png lighttpd.conf untitled-link.txt'.split(' ')
@@ -201,9 +246,93 @@
                 </div>
             </div>
         </div>
+        <!-- Modal - Get More Free -->
+        <div class="modal fade" id="modalFree" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title panel-title" id="myModalLabel">Bandwidth</h4>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-8 col-sm-6 col-xs-12">
+                        <h4>Say Please for 100 MB</h4>
+                        <p class="text-muted">Just say please and get 100 MB free.</p>
+                    </div> 
+                    <div class="col-md-4 col-sm-6 col-xs-12 modal-right">
+                        <a href="" class="btn btn-primary btn-block"><i class="fa fa-star-o"></i> Please</a>
+                    </div>    
+                </div>
+                <hr class="modal-hr">
+                <div class="row">
+                    <div class="col-md-8 col-sm-6 col-xs-12">
+                        <h4>16GB Free for a Tweet</h4>
+                        <p class="text-muted">Tweet about Storj and get 16 GB free.</p>
+                    </div> 
+                    <div class="col-md-4 col-sm-6 col-xs-12 modal-right">
+                        <a href="" class="btn btn-primary btn-block"><i class="fa fa-twitter"></i> Tweet</a>
+                    </div>    
+                </div>
+                <hr class="modal-hr">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                        <h4>Redemption Code</h4>
+                        <p class="text-muted">Enter the code and receive your bonus.</p>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 modal-right">
+                        <div class="input-group">
+                          <input type="text" class="form-control">
+                          <span class="input-group-btn">
+                            <button class="btn btn-primary btn-lg" type="button">Go</button>
+                          </span>
+                        </div>
+                    </div>    
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Modal - Buy More -->
+        <div class="modal fade" id="modalBuy" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title panel-title" id="myModalLabel">Bandwidth</h4>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-8 col-sm-6 col-xs-12">
+                        <h4>100 GB for $5</h4>
+                        <p class="text-muted">Use bitcoin to buy additional 100 GB for only $5.</p>
+                    </div> 
+                    <div class="col-md-4 col-sm-6 col-xs-12 modal-right">
+                        <a href="" class="btn btn-primary btn-block">Buy Now</a>
+                    </div> 
+                </div>
+                <hr class="modal-hr">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <h4>Estimated Storage <i class='fa fa-question-circle tooltip-icon' data-toggle="tooltip" data-placement="top" title="Bandwidth is consumed when uploading or downloading files based on the size of files transferred."></i></h4>
+                        <div class='progress progress-striped'><div id='bar-ul-bandwidth' class='progress-bar progress-bar-info' role='progressbar' style="width:26%;"></div></div>
+                        <div class='cf progress-stats'>
+                            <p class='pull-left'>161.37 GB</p>
+                            <span class='pull-right text-muted'>700.00 GB</span>
+                        </div>
+                    </div> 
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <script src='/js/jquery.js'></script>
         <script src='/js/jquery.zclip.js'></script>
         <script src='/js/bootstrap.min.js'></script>
         <script src='/js/main.js'></script>
+        <script>
+            // Tooltips
+            $('.tooltip-icon').tooltip({ placement: 'top'});
+        </script>
    </body>
 </html>

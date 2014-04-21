@@ -1,8 +1,13 @@
-@import url(http://fonts.googleapis.com/css?family=Exo+2:400,300,800,600,700)
+@import url(http://fonts.googleapis.com/css?family=Exo+2:400,300,500)
+@import url(http://fonts.googleapis.com/css?family=Montserrat:700)
 $color-primary: #5f81e3
 $color-text: #324040
 $color-text-light: #777777
-$border-color: #e7e7e7
+$btn-orange: #f39c12
+$btn-green: #97bf04
+$hr-color: #fafafa
+$font-exo: 'Exo 2', sans-serif
+$font-mont: 'Montserrat', sans-serif
 html
     height: 100%
 body
@@ -14,6 +19,12 @@ body
     padding-bottom: 67px
 p
     color: $color-text
+    font-family: $font-exo
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6
+    font-family: $font-exo
+    color: #555
+hr
+    border-top: 2px solid $hr-color
 .cf
     zoom: 1
     &:before, &:after
@@ -35,6 +46,7 @@ p
 .header
     background: $color-primary
     padding: 30px 0
+    border-bottom: 3px solid #E7E7E7
 .heading
     margin-left: -7px
     margin-right: -7px
@@ -46,25 +58,145 @@ p
     background: white
     width: 100%
     padding: 25px 0 12px
-    font-family: 'Exo 2', sans-serif
+    font-family: $font-exo
+    border-top: 1px solid #F0F0F0
 .footer-link
     margin-left: 1em
+    font-weight: 400
 .main-container
-    font-family: 'Exo 2', sans-serif
+    font-family: $font-exo
     margin-top: 20px
     padding: 20px
     margin-bottom: 20px
     h1, h2, h3, h4, h5, h6
         margin: 0 0 0.8em 0
-.btn-primary
+.btn-upload
     background-color: $color-primary
+    color: #fff
     font-weight: 700
     border: 0
-    &:hover
+    border-bottom: 3px solid darken($color-primary, 10%)
+    font-family: $font-mont
+    text-transform: uppercase
+    font-size: 18px
+    padding-bottom: 7px
+    padding-top: 12px
+    &:hover,&:active
         background-color: darken($color-primary, 5%)
+        color: #fff
+        border-bottom: 3px solid darken($color-primary, 10%)
+    &:active
+        -webkit-box-shadow: none
+        -moz-box-shadow: none
+        box-shadow: none
+        border-bottom: 3px solid darken($color-primary, 5%)
+    &:focus
+        color: $color-primary
+    &:active:focus
+        color: #fff
+    &:hover:focus
+        color: #fff
+.btn-default
+    border-bottom: 2px solid #ccc
+    font-size: 13px
+    padding: 8px 18px
+    font-family: $font-mont
+.btn-primary
+    background-color: $color-primary
+    font-size: 13px
+    padding: 8px 18px
+    font-family: $font-mont
+    text-transform: uppercase
+    letter-spacing: 1px
+    border: 0
+    border-bottom: 3px solid darken($color-primary, 5%)
+    &:hover,&:active
+        background-color: darken($color-primary, 5%)
+        color: #fff
+        border-bottom: 3px solid darken($color-primary, 15%)
+    &:active
+        -webkit-box-shadow: none
+        -moz-box-shadow: none
+        box-shadow: none
+        border-bottom: 3px solid darken($color-primary, 5%)
+    &:focus
+        color: $color-primary
+    &:active:focus
+        color: #fff
+    &:hover:focus
+        color: #fff
+.btn-secondary
+    background-color: white
+    font-size: 13px
+    font-family: $font-mont
+    padding: 8px 18px
+    color: $color-primary 
+    border: solid 2px $color-primary 
+    &:hover,&:active
+        background-color: $color-primary 
+        color: #fff
+        border-bottom: 3px solid darken($color-primary, 5%)
+    &:active
+        -webkit-box-shadow: none
+        -moz-box-shadow: none
+        box-shadow: none
+        border-bottom: 3px solid $color-primary
+    &:focus
+        color: $color-primary
+    &:active:focus
+        color: #fff
+    &:hover:focus
+        color: #fff
+.btn-green
+    background: white
+    font-size: 13px
+    padding: 8px 18px
+    color: $btn-green
+    border: 2px solid $btn-green
+    border-bottom: 3px solid $btn-green
+    letter-spacing: 0.5px
+    &:hover,&:active
+        background-color: $btn-green
+        color: #fff
+        border-bottom: 3px solid darken($btn-green, 5%)
+    &:active
+        -webkit-box-shadow: none
+        -moz-box-shadow: none
+        box-shadow: none
+        border-bottom: 3px solid $btn-green
+    &:focus
+        color: $btn-green
+    &:active:focus
+        color: #fff
+    &:hover:focus
+        color: #fff
+.btn-orange
+    background-color: #FFFFFF
+    font-size: 13px
+    padding: 8px 18px
+    color: $btn-orange
+    border: solid 2px $btn-orange
+    border-bottom: 3px solid $btn-orange
+    letter-spacing: 0.5px
+    &:hover,&:active
+        background-color: $btn-orange
+        color: #fff
+        border-bottom: 3px solid darken($btn-orange, 5%)
+    &:active
+        -webkit-box-shadow: none
+        -moz-box-shadow: none
+        box-shadow: none
+        border-bottom: 3px solid $btn-orange
+    &:focus
+        color: $btn-orange
+    &:active:focus
+        color: #fff
+    &:hover:focus
+        color: #fff
 #btn-upload-another
     width: 100%
     height: 34px
+    margin-top: 9px
 .searchbox
     padding: 8px
     margin-top: 8px
@@ -81,7 +213,7 @@ p
         width: 1.0em
         text-align: center
     input
-        font-family: 'Exo 2', sans-serif
+        font-family: $font-exo
         font-weight: 300
         position: absolute
         top: 8px
@@ -99,16 +231,15 @@ p
     padding: 25px 25px 15px
     background: white
     border: 1px solid rgb(231, 231, 231)
+    border-bottom: 3px solid #e7e7e7
     p
-        font-weight: 600
-    hr
-        border-color: $border-color
+        font-weight: 400
     h5
         font-weight: bold
     .text-muted
         color: $color-text-light
-    code
-        width: 150px
+        font-weight: 300
+        margin-top: 0.6em
     .stats-list
         .progress
             margin-top: 0.3em
@@ -127,20 +258,31 @@ input[type=file].invis
     width: 1px
     height: 1px
 code
-    color: #345
-    border: solid 1px #abc
-    display: inline-block
+    width: 100%
+    font-size: 12px
+    font-weight: 300
+    font-family: $font-exo
+    letter-spacing: 1px
+    border: solid 1px #E9E9E9
     overflow: hidden
     cursor: pointer
+    background: none
+    padding: 8px 5px
+    color: #A7A7A7
+    margin-top: 3px
 .body
-    padding: 25px
     background: white
     border: 1px solid rgb(231, 231, 231)
+    border-bottom: 3px solid #e7e7e7
+    .panel-heading
     h3
-        font-weight: 600
-        color: #555
+        color: $color-primary
         padding-bottom: 15px
-        padding-top: 5px
+        padding-top: 15px
+        font-family: $font-mont
+        text-transform: uppercase
+        letter-spacing: 0.5px
+        font-size: 18px
     .file-list
         code
             width: 395px
@@ -148,16 +290,16 @@ code
             border: 0
             padding: 5px 0
             color: #b7c8da
-            font-size: 10px
+            font-size: 9px
             margin-top: 3px
             letter-spacing: 1px
         .new
             background-color: #e2e9ff
         .file-row
-            border-top: dotted 1px rgba(0, 0, 0, 0.1)
-            padding: 20px 0
+            border-top: 2px solid #fafafa
+            padding: 30px 25px
             &:last-of-type
-                border-bottom: dotted 1px rgba(0, 0, 0, 0.1)
+                border-bottom: 2px solid #fafafa
             .name
                 font-weight: 400
                 font-size: 18px
@@ -167,24 +309,40 @@ code
                     font-weight: normal
             .btn
                 background-color: white
-                font-weight: 600
-                font-size: 13px
                 padding: 8px 18px
-                color: #5f81e3
-                border: solid 2px #5f81e3
-                margin-top: 10px
+                color: $color-primary
+                border: solid 2px $color-primary
+                margin-top: 5px
                 margin-left: 20px
-                &:hover
+                border-bottom: 3px solid $color-primary
+                font-family: $font-mont
+                text-transform: uppercase
+                font-size: 11px
+                letter-spacing: 0px
+                &:hover,&:active
+                    background-color: $color-primary 
                     color: #fff
-                    background: $color-primary  
+                    border-bottom: 3px solid darken($color-primary, 10%)
+                &:active
+                    -webkit-box-shadow: none
+                    -moz-box-shadow: none
+                    box-shadow: none
+                    border-bottom: 3px solid $color-primary
+                &:focus
+                    color: $color-primary
+                &:active:focus
+                    color: #fff
+                &:hover:focus
+                    color: #fff
                 i.fa
                     position: relative
                     top: 1px
-                    margin-right: 10px
+                    margin-right: 7px
                     font-weight: normal
             .hover
                 color: #fff
                 background: $color-primary
+                border-bottom: 3px solid darken($color-primary, 10%)
 .small-break
     line-height: 0.5em
 .progress-bar
@@ -192,35 +350,53 @@ code
     font-weight: 300
     font-size: 14px
 .btn-toolbar
-    margin: 25px 0 15px -5px
+    margin: 25px 20px
 .upload-files, .uploaded-files
-    padding-bottom: 10px
     @media (max-width: 991px)
         margin-top: 20px
+.btn
+    -webkit-transition: all 120ms
+    -moz-transition: all 120ms
+    -ms-transition: all 120ms
+    -o-transition: all 120ms
+    transition: all 120ms
 .btn:hover, .btn:focus, .btn:active, .btn.active, .open .dropdown-toggle.btn
     outline: 0
 .btn:focus, .btn:active:focus, .btn.active:focus
     outline: 0
 .stats-label
-    font-weight: 600
+    font-weight: 400
     margin: 0.6em 0 0.6em
 .sidebar hr
     margin: 10px -25px
+.sidebar .text-muted
+    color: $color-text-light
+    font-weight: 300
 .panel
     border-radius: 0!important
     box-shadow: none
+    border: 1px solid #e7e7e7
 .panel-group
     margin-top: 20px
+    border-bottom: 2px solid #E7E7E7
+.panel-group .pull-right
+    margin-top: 0.6em
+    font-weight: 300
 .panel-heading
-    padding: 20px 25px
+    padding: 25px
+    background: rgba(98, 128, 206, 0.03)
 hr.panel-heading-hr
     margin: 0 -25px 15px
 .panel-body
     padding: 0px 25px 15px
 .panel-title
     margin: 0!important
-    color: #5f81e3
+    color: $color-primary
     font-weight: 700
+    text-transform: uppercase
+    font-size: 14px
+    font-family: $font-mont
+    letter-spacing: 0.5px
 .panel.progress
     margin-bottom: 25px
 .accordion-toggle:hover
@@ -251,3 +427,83 @@ hr.panel-heading-hr
 #span-dl-link
     font-size: 12px
     font-weight: 300
+.tooltip-icon
+    color: $color-primary
+    margin-left: 5px
+    width: 15px
+    cursor: pointer
+.access-token-input
+    margin-bottom: 25px
+.access-token-input input
+    border-right: none
+#user-info .access-token-input .btn
+    margin: 0
+    padding: 5px 15px 8px
+.btn-account
+    margin: 15px 0 10px
+    width: 100%
+    font-family: $font-mont
+    text-transform: uppercase
+    letter-spacing: 1px
+    font-size: 12px
+.text-muted
+    font-weight: 300
+    font-family: $font-exo
+#user-info .progress
+    margin-bottom: 10px
+.progress-stats .pull-right
+    margin-top: 0
+.progress-stats .pull-left
+    font-weight: 300
+#cont-datacoin-addr
+    width: 100%
+    margin-bottom: 10px
+.tooltip
+    margin-left: -3px
+.tooltip-inner
+    padding: 18px
+    font-size: 13px
+    background: $color-primary
+.tooltip.top .tooltip-arrow
+    border-top-color: $color-primary
+.modal-header
+    padding: 25px
+    background: #fafbfd
+    border-bottom: none
+.modal-header .close
+    margin-top: -4px
+    font-size: 32px
+    outline: 0
+.modal-dialog
+    margin: 12% auto
+.modal-body
+    padding: 25px
+.modal-hr
+    margin-left: -20px
+    margin-right: -20px
+    border-top: 2px solid $hr-color
+.modal-content
+    border-radius: 0
+    box-shadow: none
+    border: none
+    border-bottom: 2px solid lightgrey
+.modal-backdrop
+    background: #000
+    background: rgba(0,0,0,0.8)
+    background: -webkit-radial-gradient(50% 50%,ellipse closest-corner,rgba(0,0,0,0.45) 1%,rgba(0,0,0,0.8) 100%)
+    background: -moz-radial-gradient(50% 50%,ellipse closest-corner,rgba(0,0,0,0.45) 1%,rgba(0,0,0,0.8) 100%)
+    background: -ms-radial-gradient(50% 50%,ellipse closest-corner,rgba(0,0,0,0.45) 1%,rgba(0,0,0,0.8) 100%)
+    background: radial-gradient(50% 50%,ellipse closest-corner,rgba(0,0,0,0.45) 1%,rgba(0,0,0,0.8) 100%)
+    filter: alpha(opacity=80)
+    opacity: 0
+    -webkit-transition: 200ms opacity ease
+    -moz-transition: 200ms opacity ease
+    transition: 200ms opacity ease
+.modal-right
+    margin-top: 15px
+.modal-title
+    font-size: 16px
+#modalBuy .progress
+    margin-top: 20px
+.input-group-btn .btn
+    padding: 7px 35px
