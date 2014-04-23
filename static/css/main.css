@@ -277,6 +277,7 @@ input[type=file].invis {
 
 code {
   width: 100%;
+  display: block;
   font-size: 12px;
   font-weight: 300;
   font-family: "Exo 2", sans-serif;
