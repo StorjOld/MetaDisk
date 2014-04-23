@@ -45,61 +45,42 @@ History = {
     kill: (-> Cookies.kill('history'))
 }
 
+gigabytes = (bytes) ->
+    (bytes / GIGABYTE).toFixed(2) + ' GB'
+
+gigabytes_ratio = (bytes, total) ->
+    if total is 0
+        (bytes / GIGABYTE).toFixed(2) + '/&infin; GB'
+    else
+        (bytes / GIGABYTE).toFixed(2) + '/' + gigabytes(total)
+
+percentage = (bytes, total) ->
+    if total is 0
+        '0%'
+    else
+        (100 * bytes / total) + '%'
+
 loadStats = ->
-    $.getJSON api('storage/size-limit'), (file_limit) ->
-        file_limit.size /= GIGABYTE
-        $('#cont-file-size-limit').html(file_limit.size.toFixed(2) + ' GB')
+    $.getJSON api('status'), (info) ->
+        $('#cont-file-size-limit').html(gigabytes(info.storage.max_file_size))
 
-    $.getJSON api('bandwidth/usage'), (usage) ->
-        usage.current.incoming /= GIGABYTE
-        usage.current.outgoing /= GIGABYTE
+        $('#bar-ul-bandwidth').css('width', percentage(info.bandwidth.current.incoming, info.bandwidth.limits.incoming))
+        $('#cont-ul-bandwidth').html(gigabytes_ratio(info.bandwidth.current.incoming, info.bandwidth.limits.incoming))
 
-        $.getJSON api('bandwidth/limits'), (limits) ->
-            if limits.incoming is 0
-                $('#bar-ul-bandwidth').css('width', '0%')
-                $('#cont-ul-bandwidth').html(usage.current.incoming.toFixed(2) + '/&infin; GB')
-            else
-                limits.incoming /= GIGABYTE
-                $('#bar-ul-bandwidth').css('width', (usage.current.incoming / limits.incoming * 100) + '%')
-                $('#cont-ul-bandwidth').text(usage.current.incoming.toFixed(2) + '/' + limits.incoming.toFixed(2) + ' GB')
+        $('#bar-dl-bandwidth').css('width', percentage(info.bandwidth.current.outgoing, info.bandwidth.limits.outgoing))
+        $('#cont-dl-bandwidth').html(gigabytes_ratio(info.bandwidth.current.outgoing, info.bandwidth.limits.outgoing))
 
-            if limits.outgoing is 0
-                $('#bar-dl-bandwidth').css('width', '0%')
-                $('#cont-dl-bandwidth').html(usage.current.outgoing.toFixed(2) + '/&infin; GB')
-            else
-                limits.outgoing /= GIGABYTE
-                $('#bar-dl-bandwidth').css('width', (usage.current.outgoing / limits.outgoing * 100) + '%')
-                $('#cont-dl-bandwidth').text(usage.current.outgoing.toFixed(2) + '/' + limits.outgoing.toFixed(2) + ' GB')
+        $('#bar-storage').css('width', percentage(info.storage.used, info.storage.capacity))
+        $('#cont-storage').text(gigabytes_ratio(info.storage.used, info.storage.capacity))
 
-    $.getJSON api('storage/usage'), (usage) ->
-        usage = usage.usage / GIGABYTE
-
-        $.getJSON api('storage/capacity'), (capacity) ->
-            capacity = capacity.capacity / GIGABYTE
-
-            $('#bar-storage').css('width', (usage / capacity * 100) + '%')
-            $('#cont-storage').text(usage.toFixed(2) + '/' + capacity.toFixed(2) + ' GB')
-
-    $.getJSON api('dtc/address'), (addr) ->
+        $('#cont-datacoin-bal').text(info.datacoin.balance + ' DTC')
         $('#cont-datacoin-addr')
-            .html('<code>' + addr.address + '</code>')
+            .html('<code>' + info.datacoin.address + '</code>')
             .find('code').click ->
                 selectElementText($(this)[0])
 
-    $.getJSON api('dtc/balance'), (balance) ->
-        $('#cont-datacoin-bal').text(balance.balance + ' DTC')
-
-    $.getJSON api('sync/status'), (data) ->
-        cloudSize = 0
-        for size in (x.filesize for x in data.cloud_queue)
-            cloudSize += size / GIGABYTE
-
-        bcSize = 0
-        for size in (x.filesize for x in data.blockchain_queue)
-            bcSize += size / GIGABYTE
-
-        $('#cont-sync-cloud').text(data.cloud_queue.length + ' (' + cloudSize.toFixed(2) + ' GB)')
-        $('#cont-sync-blockchain').text(data.blockchain_queue.length + ' (' + bcSize.toFixed(2) + ' GB)')
+        $('#cont-sync-cloud').text(info.sync.cloud_queue.count + ' (' + gigabytes(info.sync.cloud_queue.size) + ')')
+        $('#cont-sync-blockchain').text(info.sync.blockchain_queue.count + ' (' + gigabytes(info.sync.blockchain_queue.size) + ')')
 
 loadStats()
 
