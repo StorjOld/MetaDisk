@@ -573,6 +573,10 @@ hr.panel-heading-hr {
 #modalBuy .progress {
   margin-top: 20px; }
 
+#modalBuy span.pull-right {
+  margin: 7px 0;
+  font-size: 18px; }
+
 .input-group-btn .btn {
   padding: 7px 35px; }
 
