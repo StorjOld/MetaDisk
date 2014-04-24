@@ -281,12 +281,12 @@ code {
   font-size: 12px;
   font-weight: 300;
   font-family: "Exo 2", sans-serif;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
   border: solid 1px #e9e9e9;
   overflow: hidden;
   cursor: pointer;
   background: none;
-  padding: 8px 5px;
+  padding: 8px;
   color: #a7a7a7;
   margin-top: 3px; }
 
@@ -573,3 +573,6 @@ hr.panel-heading-hr {
 
 .input-group-btn .btn {
   padding: 7px 35px; }
+
+.data-address {
+  margin-bottom: 20px; }
