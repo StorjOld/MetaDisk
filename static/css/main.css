@@ -330,7 +330,7 @@ code {
       padding: 8px 18px;
       color: #5f81e3;
       border: solid 2px #5f81e3;
-      margin-top: 5px;
+      margin-top: 6px;
       margin-left: 20px;
       border-bottom: 3px solid #5f81e3;
       font-family: "Montserrat", sans-serif;
@@ -357,10 +357,12 @@ code {
         top: 1px;
         margin-right: 7px;
         font-weight: normal; }
-    .body .file-list .file-row .hover {
+    .body .file-list .file-row button.hover {
       color: white;
       background: #5f81e3;
       border-bottom: 3px solid #345fdb; }
+    .body .file-list .file-row code.hover {
+      color: #788592; }
 
 .small-break {
   line-height: 0.5em; }
