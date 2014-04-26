@@ -46,7 +46,7 @@ hr {
   margin: 0; }
 
 .header {
-  background: #5f81e3;
+  background: #107fc9;
   padding: 30px 0;
   border-bottom: 3px solid #e7e7e7; }
 
@@ -79,27 +79,27 @@ hr {
     margin: 0 0 0.8em 0; }
 
 .btn-upload {
-  background-color: #5f81e3;
+  background-color: #f39c12;
   color: white;
   font-weight: 700;
   border: 0;
-  border-bottom: 3px solid #345fdb;
+  border-bottom: 3px solid #e08e0b;
   font-family: "Montserrat", sans-serif;
   text-transform: uppercase;
   font-size: 18px;
   padding-bottom: 7px;
   padding-top: 12px; }
   .btn-upload:hover, .btn-upload:active {
-    background-color: #4970df;
+    background-color: #f4a62a;
     color: white;
-    border-bottom: 3px solid #345fdb; }
+    border-bottom: 3px solid #e08e0b; }
   .btn-upload:active {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
-    border-bottom: 3px solid #4970df; }
+    border-bottom: 3px solid #f4a62a; }
   .btn-upload:focus {
-    color: #5f81e3; }
+    color: #f39c12; }
   .btn-upload:active:focus {
     color: white; }
   .btn-upload:hover:focus {
@@ -112,25 +112,25 @@ hr {
   font-family: "Montserrat", sans-serif; }
 
 .btn-primary {
-  background-color: #5f81e3;
+  background-color: #107fc9;
   font-size: 13px;
   padding: 8px 18px;
   font-family: "Montserrat", sans-serif;
   text-transform: uppercase;
   letter-spacing: 1px;
   border: 0;
-  border-bottom: 3px solid #4970df; }
+  border-bottom: 3px solid #0e70b1; }
   .btn-primary:hover, .btn-primary:active {
-    background-color: #4970df;
+    background-color: #0e70b1;
     color: white;
-    border-bottom: 3px solid #2551d1; }
+    border-bottom: 3px solid #0a5282; }
   .btn-primary:active {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
-    border-bottom: 3px solid #4970df; }
+    border-bottom: 3px solid #0e70b1; }
   .btn-primary:focus {
-    color: #5f81e3; }
+    color: #107fc9; }
   .btn-primary:active:focus {
     color: white; }
   .btn-primary:hover:focus {
@@ -141,19 +141,19 @@ hr {
   font-size: 13px;
   font-family: "Montserrat", sans-serif;
   padding: 8px 18px;
-  color: #5f81e3;
-  border: solid 2px #5f81e3; }
+  color: #107fc9;
+  border: solid 2px #107fc9; }
   .btn-secondary:hover, .btn-secondary:active {
-    background-color: #5f81e3;
+    background-color: #107fc9;
     color: white;
-    border-bottom: 3px solid #4970df; }
+    border-bottom: 3px solid #0e70b1; }
   .btn-secondary:active {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
-    border-bottom: 3px solid #5f81e3; }
+    border-bottom: 3px solid #107fc9; }
   .btn-secondary:focus {
-    color: #5f81e3; }
+    color: #107fc9; }
   .btn-secondary:active:focus {
     color: white; }
   .btn-secondary:hover:focus {
@@ -163,21 +163,21 @@ hr {
   background: white;
   font-size: 13px;
   padding: 8px 18px;
-  color: #97bf04;
-  border: 2px solid #97bf04;
-  border-bottom: 3px solid #97bf04;
+  color: #88c425;
+  border: 2px solid #88c425;
+  border-bottom: 3px solid #88c425;
   letter-spacing: 0.5px; }
   .btn-green:hover, .btn-green:active {
-    background-color: #97bf04;
+    background-color: #88c425;
     color: white;
-    border-bottom: 3px solid #83a603; }
+    border-bottom: 3px solid #79af21; }
   .btn-green:active {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
-    border-bottom: 3px solid #97bf04; }
+    border-bottom: 3px solid #88c425; }
   .btn-green:focus {
-    color: #97bf04; }
+    color: #88c425; }
   .btn-green:active:focus {
     color: white; }
   .btn-green:hover:focus {
@@ -220,7 +220,7 @@ hr {
   font-size: 16px;
   font-weight: 300; }
   .searchbox i.fa {
-    color: #5f81e3;
+    color: #107fc9;
     position: absolute;
     top: 11px;
     left: 10px;
@@ -295,7 +295,7 @@ code {
   border: 1px solid #e7e7e7;
   border-bottom: 3px solid #e7e7e7; }
   .body h3 {
-    color: #5f81e3;
+    color: #107fc9;
     padding-bottom: 15px;
     padding-top: 15px;
     font-family: "Montserrat", sans-serif;
@@ -321,33 +321,33 @@ code {
     .body .file-list .file-row .name {
       font-weight: 400;
       font-size: 18px;
-      color: #5f81e3; }
+      color: #107fc9; }
       .body .file-list .file-row .name .text-muted {
         color: #777777;
         font-weight: normal; }
     .body .file-list .file-row .btn {
       background-color: white;
       padding: 8px 18px;
-      color: #5f81e3;
-      border: solid 2px #5f81e3;
+      color: #107fc9;
+      border: solid 2px #107fc9;
       margin-top: 6px;
       margin-left: 20px;
-      border-bottom: 3px solid #5f81e3;
+      border-bottom: 3px solid #107fc9;
       font-family: "Montserrat", sans-serif;
       text-transform: uppercase;
       font-size: 11px;
       letter-spacing: 0px; }
       .body .file-list .file-row .btn:hover, .body .file-list .file-row .btn:active {
-        background-color: #5f81e3;
+        background-color: #107fc9;
         color: white;
-        border-bottom: 3px solid #345fdb; }
+        border-bottom: 3px solid #0c619a; }
       .body .file-list .file-row .btn:active {
         -webkit-box-shadow: none;
         -moz-box-shadow: none;
         box-shadow: none;
-        border-bottom: 3px solid #5f81e3; }
+        border-bottom: 3px solid #107fc9; }
       .body .file-list .file-row .btn:focus {
-        color: #5f81e3; }
+        color: #107fc9; }
       .body .file-list .file-row .btn:active:focus {
         color: white; }
       .body .file-list .file-row .btn:hover:focus {
@@ -359,8 +359,8 @@ code {
         font-weight: normal; }
     .body .file-list .file-row button.hover {
       color: white;
-      background: #5f81e3;
-      border-bottom: 3px solid #345fdb; }
+      background: #107fc9;
+      border-bottom: 3px solid #0c619a; }
     .body .file-list .file-row code.hover {
       color: #788592; }
 
@@ -368,7 +368,7 @@ code {
   line-height: 0.5em; }
 
 .progress-bar {
-  background-color: #5f81e3;
+  background-color: #107fc9;
   font-weight: 300;
   font-size: 14px; }
 
@@ -428,7 +428,7 @@ hr.panel-heading-hr {
 
 .panel-title {
   margin: 0 !important;
-  color: #5f81e3;
+  color: #107fc9;
   font-weight: 700;
   text-transform: uppercase;
   font-size: 14px;
@@ -473,7 +473,7 @@ hr.panel-heading-hr {
   font-weight: 300; }
 
 .tooltip-icon {
-  color: #5f81e3;
+  color: #107fc9;
   margin-left: 5px;
   width: 15px;
   cursor: pointer; }
@@ -519,10 +519,10 @@ hr.panel-heading-hr {
 .tooltip-inner {
   padding: 18px;
   font-size: 13px;
-  background: #5f81e3; }
+  background: #107fc9; }
 
 .tooltip.top .tooltip-arrow {
-  border-top-color: #5f81e3; }
+  border-top-color: #107fc9; }
 
 .modal-header {
   padding: 25px;

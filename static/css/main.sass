@@ -1,11 +1,11 @@
 @import url(http://fonts.googleapis.com/css?family=Exo+2:400,300,500)
 @import url(http://fonts.googleapis.com/css?family=Montserrat:700)
-$color-primary: #5f81e3
-$color-text: #324040
-$color-text-light: #777777
-$btn-orange: #f39c12
-$btn-green: #97bf04
-$hr-color: #fafafa
+$blue: #107FC9
+$orange: #f39c12
+$green: #88C425
+$text: #324040
+$text-light: #777777
+$hr: #fafafa
 $font-exo: 'Exo 2', sans-serif
 $font-mont: 'Montserrat', sans-serif
 html
@@ -18,13 +18,13 @@ body
     margin: 0 auto -67px
     padding-bottom: 67px
 p
-    color: $color-text
+    color: $text
     font-family: $font-exo
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6
     font-family: $font-exo
     color: #555
 hr
-    border-top: 2px solid $hr-color
+    border-top: 2px solid $hr
 .cf
     zoom: 1
     &:before, &:after
@@ -44,7 +44,7 @@ hr
     width: 148px
     margin: 0
 .header
-    background: $color-primary
+    background: $blue
     padding: 30px 0
     border-bottom: 3px solid #E7E7E7
 .heading
@@ -71,27 +71,27 @@ hr
     h1, h2, h3, h4, h5, h6
         margin: 0 0 0.8em 0
 .btn-upload
-    background-color: $color-primary
+    background-color: $orange
     color: #fff
     font-weight: 700
     border: 0
-    border-bottom: 3px solid darken($color-primary, 10%)
+    border-bottom: 3px solid darken($orange, 5%)
     font-family: $font-mont
     text-transform: uppercase
     font-size: 18px
     padding-bottom: 7px
     padding-top: 12px
     &:hover,&:active
-        background-color: darken($color-primary, 5%)
+        background-color: lighten($orange, 5%)
         color: #fff
-        border-bottom: 3px solid darken($color-primary, 10%)
+        border-bottom: 3px solid darken($orange, 5%)
     &:active
         -webkit-box-shadow: none
         -moz-box-shadow: none
         box-shadow: none
-        border-bottom: 3px solid darken($color-primary, 5%)
+        border-bottom: 3px solid lighten($orange, 5%)
     &:focus
-        color: $color-primary
+        color: $orange
     &:active:focus
         color: #fff
     &:hover:focus
@@ -102,25 +102,25 @@ hr
     padding: 8px 18px
     font-family: $font-mont
 .btn-primary
-    background-color: $color-primary
+    background-color: $blue
     font-size: 13px
     padding: 8px 18px
     font-family: $font-mont
     text-transform: uppercase
     letter-spacing: 1px
     border: 0
-    border-bottom: 3px solid darken($color-primary, 5%)
+    border-bottom: 3px solid darken($blue, 5%)
     &:hover,&:active
-        background-color: darken($color-primary, 5%)
+        background-color: darken($blue, 5%)
         color: #fff
-        border-bottom: 3px solid darken($color-primary, 15%)
+        border-bottom: 3px solid darken($blue, 15%)
     &:active
         -webkit-box-shadow: none
         -moz-box-shadow: none
         box-shadow: none
-        border-bottom: 3px solid darken($color-primary, 5%)
+        border-bottom: 3px solid darken($blue, 5%)
     &:focus
-        color: $color-primary
+        color: $blue
     &:active:focus
         color: #fff
     &:hover:focus
@@ -130,19 +130,19 @@ hr
     font-size: 13px
     font-family: $font-mont
     padding: 8px 18px
-    color: $color-primary 
-    border: solid 2px $color-primary 
+    color: $blue 
+    border: solid 2px $blue 
     &:hover,&:active
-        background-color: $color-primary 
+        background-color: $blue 
         color: #fff
-        border-bottom: 3px solid darken($color-primary, 5%)
+        border-bottom: 3px solid darken($blue, 5%)
     &:active
         -webkit-box-shadow: none
         -moz-box-shadow: none
         box-shadow: none
-        border-bottom: 3px solid $color-primary
+        border-bottom: 3px solid $blue
     &:focus
-        color: $color-primary
+        color: $blue
     &:active:focus
         color: #fff
     &:hover:focus
@@ -151,21 +151,21 @@ hr
     background: white
     font-size: 13px
     padding: 8px 18px
-    color: $btn-green
-    border: 2px solid $btn-green
-    border-bottom: 3px solid $btn-green
+    color: $green
+    border: 2px solid $green
+    border-bottom: 3px solid $green
     letter-spacing: 0.5px
     &:hover,&:active
-        background-color: $btn-green
+        background-color: $green
         color: #fff
-        border-bottom: 3px solid darken($btn-green, 5%)
+        border-bottom: 3px solid darken($green, 5%)
     &:active
         -webkit-box-shadow: none
         -moz-box-shadow: none
         box-shadow: none
-        border-bottom: 3px solid $btn-green
+        border-bottom: 3px solid $green
     &:focus
-        color: $btn-green
+        color: $green
     &:active:focus
         color: #fff
     &:hover:focus
@@ -174,21 +174,21 @@ hr
     background-color: #FFFFFF
     font-size: 13px
     padding: 8px 18px
-    color: $btn-orange
-    border: solid 2px $btn-orange
-    border-bottom: 3px solid $btn-orange
+    color: $orange
+    border: solid 2px $orange
+    border-bottom: 3px solid $orange
     letter-spacing: 0.5px
     &:hover,&:active
-        background-color: $btn-orange
+        background-color: $orange
         color: #fff
-        border-bottom: 3px solid darken($btn-orange, 5%)
+        border-bottom: 3px solid darken($orange, 5%)
     &:active
         -webkit-box-shadow: none
         -moz-box-shadow: none
         box-shadow: none
-        border-bottom: 3px solid $btn-orange
+        border-bottom: 3px solid $orange
     &:focus
-        color: $btn-orange
+        color: $orange
     &:active:focus
         color: #fff
     &:hover:focus
@@ -205,7 +205,7 @@ hr
     font-size: 16px
     font-weight: 300
     i.fa
-        color: $color-primary
+        color: $blue
         position: absolute
         top: 11px
         left: 10px
@@ -237,7 +237,7 @@ hr
     h5
         font-weight: bold
     .text-muted
-        color: $color-text-light
+        color: $text-light
         font-weight: 300
         margin-top: 0.6em
     .stats-list
@@ -277,7 +277,7 @@ code
     border-bottom: 3px solid #e7e7e7
     .panel-heading
     h3
-        color: $color-primary
+        color: $blue
         padding-bottom: 15px
         padding-top: 15px
         font-family: $font-mont
@@ -304,33 +304,33 @@ code
             .name
                 font-weight: 400
                 font-size: 18px
-                color: $color-primary
+                color: $blue
                 .text-muted
-                    color: $color-text-light
+                    color: $text-light
                     font-weight: normal
             .btn
                 background-color: white
                 padding: 8px 18px
-                color: $color-primary
-                border: solid 2px $color-primary
+                color: $blue
+                border: solid 2px $blue
                 margin-top: 6px
                 margin-left: 20px
-                border-bottom: 3px solid $color-primary
+                border-bottom: 3px solid $blue
                 font-family: $font-mont
                 text-transform: uppercase
                 font-size: 11px
                 letter-spacing: 0px
                 &:hover,&:active
-                    background-color: $color-primary 
+                    background-color: $blue 
                     color: #fff
-                    border-bottom: 3px solid darken($color-primary, 10%)
+                    border-bottom: 3px solid darken($blue, 10%)
                 &:active
                     -webkit-box-shadow: none
                     -moz-box-shadow: none
                     box-shadow: none
-                    border-bottom: 3px solid $color-primary
+                    border-bottom: 3px solid $blue
                 &:focus
-                    color: $color-primary
+                    color: $blue
                 &:active:focus
                     color: #fff
                 &:hover:focus
@@ -342,14 +342,14 @@ code
                     font-weight: normal
             button.hover
                 color: #fff
-                background: $color-primary
-                border-bottom: 3px solid darken($color-primary, 10%)
+                background: $blue
+                border-bottom: 3px solid darken($blue, 10%)
             code.hover
                 color: #788592
 .small-break
     line-height: 0.5em
 .progress-bar
-    background-color: $color-primary
+    background-color: $blue
     font-weight: 300
     font-size: 14px
 .btn-toolbar
@@ -373,7 +373,7 @@ code
 .sidebar hr
     margin: 10px -25px
 .sidebar .text-muted
-    color: $color-text-light
+    color: $text-light
     font-weight: 300
 .panel
     border-radius: 0!important
@@ -394,7 +394,7 @@ hr.panel-heading-hr
     padding: 0px 25px 15px
 .panel-title
     margin: 0!important
-    color: $color-primary
+    color: $blue
     font-weight: 700
     text-transform: uppercase
     font-size: 14px
@@ -431,7 +431,7 @@ hr.panel-heading-hr
     font-size: 12px
     font-weight: 300
 .tooltip-icon
-    color: $color-primary
+    color: $blue
     margin-left: 5px
     width: 15px
     cursor: pointer
@@ -466,9 +466,9 @@ hr.panel-heading-hr
 .tooltip-inner
     padding: 18px
     font-size: 13px
-    background: $color-primary
+    background: $blue
 .tooltip.top .tooltip-arrow
-    border-top-color: $color-primary
+    border-top-color: $blue
 .modal-header
     padding: 25px
     background: #fafbfd
@@ -484,7 +484,7 @@ hr.panel-heading-hr
 .modal-hr
     margin-left: -20px
     margin-right: -20px
-    border-top: 2px solid $hr-color
+    border-top: 2px solid $hr
 .modal-content
     border-radius: 0
     box-shadow: none
