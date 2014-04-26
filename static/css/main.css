@@ -582,3 +582,6 @@ hr.panel-heading-hr {
 
 .data-address {
   margin-bottom: 20px; }
+
+.data-address code {
+  letter-spacing: 1px; }
