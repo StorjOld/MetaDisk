@@ -153,7 +153,7 @@
       file = {
         fname: fname,
         fhash: response.filehash,
-        key: key
+        key: response.key
       };
       History.add(file);
       showUploadStage('uploaded');

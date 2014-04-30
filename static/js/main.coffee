@@ -153,7 +153,7 @@ addFile = (file) ->
 
 makeHandler = (fname) ->
     (response) ->
-        file = {fname: fname, fhash: response.filehash, key: key}
+        file = {fname: fname, fhash: response.filehash, key: response.key}
         History.add(file)
 
         showUploadStage('uploaded')
