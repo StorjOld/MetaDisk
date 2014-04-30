@@ -120,7 +120,7 @@
   };
 
   downloadUrl = function(file) {
-    return api('download/' + file.hash);
+    return api('download/' + file.fhash);
   };
 
   addFile = function(file) {

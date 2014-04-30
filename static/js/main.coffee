@@ -110,7 +110,7 @@ selectElementText = (el, win) ->
         range.select()
 
 downloadUrl = (file) ->
-    api('download/' + file.hash)
+    api('download/' + file.fhash)
 
 
 addFile = (file) ->
