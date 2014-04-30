@@ -109,8 +109,12 @@ selectElementText = (el, win) ->
         range.moveToElementText(el)
         range.select()
 
+
 downloadUrl = (file) ->
-    api('download/' + file.fhash)
+    if file.key
+        api('download/' + file.fhash + "?key=" + file.key)
+    else
+        api('download/' + file.fhash)
 
 
 addFile = (file) ->
@@ -149,7 +153,7 @@ addFile = (file) ->
 
 makeHandler = (fname) ->
     (response) ->
-        file = {fname: fname, fhash: response.filehash}
+        file = {fname: fname, fhash: response.filehash, key: key}
         History.add(file)
 
         showUploadStage('uploaded')

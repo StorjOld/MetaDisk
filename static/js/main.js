@@ -120,7 +120,11 @@
   };
 
   downloadUrl = function(file) {
-    return api('download/' + file.fhash);
+    if (file.key) {
+      return api('download/' + file.fhash + "?key=" + file.key);
+    } else {
+      return api('download/' + file.fhash);
+    }
   };
 
   addFile = function(file) {
@@ -148,7 +152,8 @@
       var file, page;
       file = {
         fname: fname,
-        fhash: response.filehash
+        fhash: response.filehash,
+        key: key
       };
       History.add(file);
       showUploadStage('uploaded');
