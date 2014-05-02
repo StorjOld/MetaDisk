@@ -252,9 +252,12 @@ $('body').on('drop',
 $('#redeem-promocode').click ->
   AccessToken.get (token) ->
     promocode = $('#promocode').val()
-    $.post(
-      api('token/redeem/' + token),
-      JSON.stringify({ token: token }))
+    $.ajax({
+      type:        'POST',
+      url:         api('token/redeem/' + token),
+      data:        JSON.stringify({ promocode: promocode }),
+      contentType: 'application/json; charset=utf-8'
+    })
 
 
 # Searching

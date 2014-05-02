@@ -261,9 +261,14 @@
     return AccessToken.get(function(token) {
       var promocode;
       promocode = $('#promocode').val();
-      return $.post(api('token/redeem/' + token), JSON.stringify({
-        token: token
-      }));
+      return $.ajax({
+        type: 'POST',
+        url: api('token/redeem/' + token),
+        data: JSON.stringify({
+          promocode: promocode
+        }),
+        contentType: 'application/json; charset=utf-8'
+      });
     });
   });
 
