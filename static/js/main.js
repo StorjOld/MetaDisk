@@ -156,7 +156,7 @@
     if (token) {
       queryString['token'] = token;
     }
-    return api('download/' + file.fhash + "?" + $.params(queryString));
+    return api('download/' + file.fhash + "?" + $.param(queryString));
   };
 
   addFile = function(file) {

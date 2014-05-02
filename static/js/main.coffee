@@ -141,7 +141,7 @@ downloadUrl = (file, token) ->
     if token
         queryString['token'] = token
 
-    api('download/' + file.fhash + "?" + $.params(queryString))
+    api('download/' + file.fhash + "?" + $.param(queryString))
 
 
 addFile = (file) ->
