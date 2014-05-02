@@ -81,7 +81,7 @@
                                         <p class='stats-label pull-left'>Access Token <i class='fa fa-question-circle tooltip-icon' data-toggle="tooltip" data-placement="top" title="This is your private access key for your bandwidth. Please don't lose it or share it with anyone."></i></p>
                                     </div>
                                     <div class="input-group access-token-input">
-                                      <input type="text" class="form-control" placeholder="c083b42dd17ced49">
+                                      <input id='access-token' type="text" class="form-control" placeholder="c083b42dd17ced49">
                                       <div class="input-group-btn">
                                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
                                         <ul class="dropdown-menu pull-right" role="menu">
@@ -96,12 +96,12 @@
                                     <hr>
                                     <div class='cf'>
                                         <p class='stats-label pull-left'>Your Bandwidth <i class='fa fa-question-circle tooltip-icon' data-toggle="tooltip" data-placement="top" title="Bandwidth is consumed when uploading or downloading files based on the size of files transferred."></i></p>
-                                        <span class='pull-right text-muted'>100.00 GB</span>
+                                        <span id='token-balance' class='pull-right text-muted'>100.00 GB</span>
                                     </div>
                                     <hr>
                                     <div class='cf'>
                                         <p class='stats-label pull-left'>Estimated Storage<i class='fa fa-question-circle tooltip-icon' data-toggle="tooltip" data-placement="top" title="Your storage capacity is based on the bandwidth you use. On upload the file will use 3x the filesize. Downloads will also spend bandwidth."></i></p>
-                                        <span class='pull-right text-muted'>33.00 GB</span>
+                                        <span id='token-estimated-storage' class='pull-right text-muted'>33.00 GB</span>
                                     </div>
                                     <hr>
                                     <div class="row">

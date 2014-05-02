@@ -15,6 +15,7 @@ Cookies = {
             expires = ''
 
         document.cookie = k + '=' + v + expires + '; path=/'
+        v
     ),
 
     get: ((k) ->
@@ -41,8 +42,20 @@ History = {
         stuff.unshift(file)
         Cookies.set('history', JSON.stringify(stuff))
     ),
-    get: (-> JSON.parse(Cookies.get('history'))),
+    get: (-> JSON.parse(Cookies.get('history')) || []),
     kill: (-> Cookies.kill('history'))
+}
+
+AccessToken = {
+  get: ((callback) ->
+    token = Cookies.get('access-token')
+    if token
+      callback(token)
+    else
+      $.post api('token/new'), (data) ->
+        token = Cookies.set('access-token', data['token'])
+        callback(token)
+  )
 }
 
 gigabytes = (bytes) ->
@@ -59,6 +72,14 @@ percentage = (bytes, total) ->
         '0%'
     else
         (100 * bytes / total) + '%'
+
+loadPersonal = ->
+    AccessToken.get (token) ->
+        $('#access-token').val(token)
+
+        $.getJSON api('token/balance/' + token), (data) ->
+          $('#token-balance').html(gigabytes(data['balance']))
+          $('#token-estimated-storage').html(gigabytes(data['balance'] / 3.0))
 
 loadStats = ->
     $.getJSON api('status'), (info) ->
@@ -82,6 +103,7 @@ loadStats = ->
         $('#cont-sync-cloud').text(info.sync.cloud_queue.count + ' (' + gigabytes(info.sync.cloud_queue.size) + ')')
         $('#cont-sync-blockchain').text(info.sync.blockchain_queue.count + ' (' + gigabytes(info.sync.blockchain_queue.size) + ')')
 
+loadPersonal()
 loadStats()
 
 showUploadStage = (stage) ->
