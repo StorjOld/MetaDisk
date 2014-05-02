@@ -36,24 +36,42 @@ Cookies = {
     )
 }
 
+LocalStorage = {
+    set: ((k, v) ->
+        localStorage.setItem(k, v)
+        v
+    ),
+
+    get:  ((k) ->
+        localStorage.getItem(k)
+    ),
+
+    kill: ((k) ->
+        localStorage.removeItem(k)
+    )
+}
+
+KeyValueStore = LocalStorage
+
+
 History = {
     add: ((file) ->
-        stuff = JSON.parse(Cookies.get('history')) or []
+        stuff = this.get()
         stuff.unshift(file)
-        Cookies.set('history', JSON.stringify(stuff))
+        KeyValueStore.set('history', JSON.stringify(stuff))
     ),
-    get: (-> JSON.parse(Cookies.get('history')) || []),
-    kill: (-> Cookies.kill('history'))
+    get: (-> JSON.parse(KeyValueStore.get('history')) or []),
+    kill: (-> KeyValueStore.kill('history'))
 }
 
 AccessToken = {
   get: ((callback) ->
-    token = Cookies.get('access-token')
+    token = KeyValueStore.get('access-token')
     if token
       callback(token)
     else
       $.post api('token/new'), (data) ->
-        token = Cookies.set('access-token', data['token'])
+        token = KeyValueStore.set('access-token', data['token'])
         callback(token)
   )
 }
