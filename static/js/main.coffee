@@ -254,7 +254,7 @@ $('#redeem-promocode').click ->
     promocode = $('#promocode').val()
     $.post(
       api('token/redeem/' + token),
-      { token: token })
+      JSON.stringify({ token: token }))
 
 
 # Searching
