@@ -257,6 +257,16 @@
     return e.stopPropagation();
   }));
 
+  $('#redeem-promocode').click(function() {
+    return AccessToken.get(function(token) {
+      var promocode;
+      promocode = $('#promocode').val();
+      return $.post(api('/api/token/redeem/' + token), {
+        token: token
+      });
+    });
+  });
+
   $('.searchbox input[name=search]').keypress(function(e) {
     if (e.which === 13) {
       return window.location.href = api('download/' + $(e.target).val());

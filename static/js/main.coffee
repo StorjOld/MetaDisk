@@ -248,6 +248,15 @@ $('body').on('drop',
       e.preventDefault()
       e.stopPropagation()))
 
+# Redeeming
+$('#redeem-promocode').click ->
+  AccessToken.get (token) ->
+    promocode = $('#promocode').val()
+    $.post(
+      api('/api/token/redeem/' + token),
+      { token: token })
+
+
 # Searching
 $('.searchbox input[name=search]').keypress (e) ->
     if e.which == 13
