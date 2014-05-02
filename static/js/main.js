@@ -198,19 +198,22 @@
   });
 
   uploadFiles = function(files) {
-    var file, _i, _len, _results;
-    _results = [];
-    for (_i = 0, _len = files.length; _i < _len; _i++) {
-      file = files[_i];
-      _results.push(uploadFile(file));
-    }
-    return _results;
+    return AccessToken.get(function(token) {
+      var file, _i, _len, _results;
+      _results = [];
+      for (_i = 0, _len = files.length; _i < _len; _i++) {
+        file = files[_i];
+        _results.push(uploadFile(token, file));
+      }
+      return _results;
+    });
   };
 
-  uploadFile = function(file) {
+  uploadFile = function(token, file) {
     var fname, formData, progressHandler;
     fname = file.name;
     formData = new FormData();
+    formData.append('token', token);
     formData.append('file', file);
     showUploadStage('uploading');
     $('#span-up-prog').css('width', '0%').text('0%');

@@ -191,13 +191,15 @@ $('#in-upload').change ->
     uploadFiles(this.files)
 
 uploadFiles = (files) ->
-    for file in files
-        uploadFile(file)
+    AccessToken.get (token) ->
+        for file in files
+            uploadFile(token, file)
 
-uploadFile = (file) ->
+uploadFile = (token, file) ->
     fname = file.name
 
     formData = new FormData()
+    formData.append('token', token)
     formData.append('file', file)
 
     showUploadStage('uploading')
