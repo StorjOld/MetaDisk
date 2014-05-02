@@ -201,6 +201,7 @@
   makeHandler = function(fname) {
     return function(response) {
       var file, page;
+      loadPersonal();
       file = {
         fname: fname,
         fhash: response.filehash,
@@ -292,7 +293,10 @@
         data: JSON.stringify({
           promocode: promocode
         }),
-        contentType: 'application/json; charset=utf-8'
+        contentType: 'application/json; charset=utf-8',
+        success: (function() {
+          return loadPersonal();
+        })
       });
     });
   });

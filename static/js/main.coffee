@@ -199,6 +199,8 @@ addFile = (file) ->
 
 makeHandler = (fname) ->
     (response) ->
+        loadPersonal()
+
         file = {fname: fname, fhash: response.filehash, key: response.key}
         History.add(file)
 
@@ -281,6 +283,7 @@ $('#redeem-promocode').click ->
       url:         api('token/redeem/' + token),
       data:        JSON.stringify({ promocode: promocode }),
       contentType: 'application/json; charset=utf-8'
+      success:     (-> loadPersonal())
     })
 
 
