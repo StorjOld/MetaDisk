@@ -274,10 +274,7 @@ $('body').on('drop',
       e.preventDefault()
       e.stopPropagation()))
 
-# Redeeming
-$('#redeem-promocode').click ->
-  AccessToken.get (token) ->
-    promocode = $('#promocode').val()
+redeem = (promocode, token) ->
     $.ajax({
       type:        'POST',
       url:         api('token/redeem/' + token),
@@ -286,6 +283,15 @@ $('#redeem-promocode').click ->
       success:     (-> loadPersonal())
     })
 
+
+# Redeeming
+$('#redeem-promocode').click ->
+    AccessToken.get (token) ->
+        redeem($('#promocode').val(), token)
+
+$('#say-please').click ->
+    AccessToken.get (token) ->
+        redeem('PLEASE', token)
 
 # Searching
 $('.searchbox input[name=search]').keypress (e) ->
