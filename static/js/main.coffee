@@ -253,7 +253,7 @@ $('#redeem-promocode').click ->
   AccessToken.get (token) ->
     promocode = $('#promocode').val()
     $.post(
-      api('/api/token/redeem/' + token),
+      api('token/redeem/' + token),
       { token: token })
 
 

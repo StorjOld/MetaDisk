@@ -261,7 +261,7 @@
     return AccessToken.get(function(token) {
       var promocode;
       promocode = $('#promocode').val();
-      return $.post(api('/api/token/redeem/' + token), {
+      return $.post(api('token/redeem/' + token), {
         token: token
       });
     });
