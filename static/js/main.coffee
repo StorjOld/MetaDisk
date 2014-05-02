@@ -132,11 +132,16 @@ selectElementText = (el, win) ->
         range.select()
 
 
-downloadUrl = (file) ->
+downloadUrl = (file, token) ->
+    queryString = {}
+
     if file.key
-        api('download/' + file.fhash + "?key=" + file.key)
-    else
-        api('download/' + file.fhash)
+        queryString['key'] = file.key
+
+    if token
+        queryString['token'] = token
+
+    api('download/' + file.fhash + "?" + $.params(queryString))
 
 
 addFile = (file) ->
@@ -161,11 +166,12 @@ addFile = (file) ->
         .appendTo($('#cont-file-list'))
 
     $file.find('button.btn-dl').click ->
-        window.location.href = downloadUrl(file)
+        AccessToken.get (token) ->
+          window.location.href = downloadUrl(file, token)
 
     $file.find('button.btn-copy-url').zclip(
       path: '/js/ZeroClipboard.swf',
-      copy: -> return downloadUrl(file)
+      copy: -> (AccessToken.get (token) -> return downloadUrl(file, token))
     )
 
     $file.find('code').zclip(
@@ -179,7 +185,7 @@ makeHandler = (fname) ->
         History.add(file)
 
         showUploadStage('uploaded')
-        $('#span-dl-link').val(downloadUrl(file))
+        AccessToken.get (token) -> $('#span-dl-link').val(downloadUrl(file, token))
 
         page = currentPage()
         initFilePages()

@@ -147,24 +147,32 @@
     }
   };
 
-  downloadUrl = function(file) {
+  downloadUrl = function(file, token) {
+    var queryString;
+    queryString = {};
     if (file.key) {
-      return api('download/' + file.fhash + "?key=" + file.key);
-    } else {
-      return api('download/' + file.fhash);
+      queryString['key'] = file.key;
     }
+    if (token) {
+      queryString['token'] = token;
+    }
+    return api('download/' + file.fhash + "?" + $.params(queryString));
   };
 
   addFile = function(file) {
     var $file;
     $file = $('<div/>').addClass('file-row cf').append($('<div/>').addClass('left').append('<div class="name">' + file.fname + '</div>').append('<div class="hash"><code>' + file.fhash + '</code></div>')).append($('<div/>').addClass('right').append('<button class="btn btn-dl"><i class="fa fa-download"></i>Download</button>')).append($('<div/>').addClass('right').append('<button class="btn btn-copy-url"><i class="fa fa-clipboard"></i>Copy URL</button>')).appendTo($('#cont-file-list'));
     $file.find('button.btn-dl').click(function() {
-      return window.location.href = downloadUrl(file);
+      return AccessToken.get(function(token) {
+        return window.location.href = downloadUrl(file, token);
+      });
     });
     $file.find('button.btn-copy-url').zclip({
       path: '/js/ZeroClipboard.swf',
       copy: function() {
-        return downloadUrl(file);
+        return AccessToken.get(function(token) {
+          return downloadUrl(file, token);
+        });
       }
     });
     return $file.find('code').zclip({
@@ -185,7 +193,9 @@
       };
       History.add(file);
       showUploadStage('uploaded');
-      $('#span-dl-link').val(downloadUrl(file));
+      AccessToken.get(function(token) {
+        return $('#span-dl-link').val(downloadUrl(file, token));
+      });
       page = currentPage();
       initFilePages();
       pickFilePage(page);
