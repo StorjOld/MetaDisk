@@ -41,4 +41,4 @@ synchronization state.
 Check [INSTALL.md](INSTALL.md) for installation instructions.
 
 #### API 
-All API documentation is contained in Metadisk's [web-core](https://github.com/Storj/web-core) repo.
+All API documentation is contained in Metadisk's [web-core](https://github.com/Storj/web-core#api-documentation) repo.
