@@ -30,6 +30,9 @@ This project depends on several other projects:
   Metadisk. It provides a JSON API web service, and the daemons to synchronize
   files to the cloud hosting services and to the blockchain.
 
+- [file-encryptor](https://github.com/Storj/file-encryptor) is an encryption
+  package that implements convergent encryption using HMAC-SHA256 and AES128-CTR.
+
 Metadisk, this project, provides a web interface to web-core, allowing you to
 upload files and check the server status regarding bandwidth, disk usage, and
 synchronization state.
