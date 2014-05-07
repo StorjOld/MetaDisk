@@ -20,7 +20,7 @@ This project depends on several other projects:
   package that implements convergent encryption using HMAC-SHA256 and AES128-CTR.
 
 - [metachains-dtc](https://github.com/Storj/metachains-dtc) is a wrapper for
-  the Datacoin client, using json RPC. It also contains a synchronization class,
+  the Datacoin client, using JSON RPC. It also contains a synchronization class,
   which allows one to synchronize data from and to the blockchain.
 
 - [plowshare-wrapper](https://github.com/Storj/plowshare-wrapper) provides a
