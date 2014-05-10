@@ -309,6 +309,17 @@
     });
   });
 
+  $('#tweet').click(function() {
+    // TODO: integrate/memake me prettier
+    return AccessToken.get(function(token) {
+      $.post('http://localhost:8000/twitter/get-space', {'token': token}, function(data) {
+        window.open(data.url, 'twitter', 'height=550, width=550, top=' + ($(window).height() / 2 - 225) + ', left=' + $(window).width() / 2 + ', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
+      }).fail(function() {
+        alert("Unable to add space at this time. Please try again later or contact Storj support.");
+      });
+    });
+  });
+
   $('.searchbox input[name=search]').keypress(function(e) {
     if (e.which === 13) {
       return window.location.href = api('download/' + $(e.target).val());
