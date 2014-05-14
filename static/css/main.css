@@ -66,13 +66,12 @@ hr {
   font-family: "Exo 2", sans-serif;
   border-top: 1px solid #f0f0f0; }
 
-.footer-link {
-  font-weight: 400; 
-}
+.footer .container {
+  background: white; }
 
-.footer-space {
-  margin: 10px;
-}
+.footer-link {
+  margin-left: 1em;
+  font-weight: 400; }
 
 .main-container {
   font-family: "Exo 2", sans-serif;
