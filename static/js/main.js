@@ -214,7 +214,7 @@
         return $.growl({
           title: 'Done!',
           icon: 'glyphicon glyphicon-ok',
-          message: 'Successfully copied the download URL.'
+          message: 'Successfully copied the file hash.'
         }, {
           template: {
             icon_type: 'class',
