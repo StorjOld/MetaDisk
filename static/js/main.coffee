@@ -209,7 +209,22 @@ addFile = (file) ->
 
     $file.find('code').zclip(
       path: '/js/ZeroClipboard.swf',
-      copy: -> return $(this).html()
+      copy: -> return $(this).html(),
+      afterCopy: -> $.growl({
+            title: 'Done!',
+            icon: 'glyphicon glyphicon-ok',
+            message: 'Successfully copied the download URL.',
+          }, {
+            template: {
+              icon_type: 'class',
+              container: '<div class="col-xs-10 col-sm-10 col-md-3 alert"></div>'
+            },
+            position: {
+              from: 'bottom',
+              align: 'right'
+            }
+        }
+      )
     )
 
 makeHandler = (fname) ->
