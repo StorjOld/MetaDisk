@@ -325,7 +325,7 @@
     };
   };
 
-  $('#in-upload').change(function() {
+  $('#in-upload').on('change', function() {
     return uploadFiles(this.files);
   });
 
@@ -415,13 +415,13 @@
     });
   });
 
-  $('.searchbox input[name=search]').keypress(function(e) {
+  $('.searchbox input[name=search]').on('keypress', function(e) {
     if (e.which === 13) {
       return window.location.href = api('download/' + $(e.target).val());
     }
   });
 
-  $('#span-dl-link').focus(function() {
+  $('#span-dl-link').on('focus', function() {
     return $(this).select();
   });
 

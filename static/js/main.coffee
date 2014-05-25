@@ -310,7 +310,7 @@ makeHandler = (fname) ->
         loadStats()
 
 # when a file is selected
-$('#in-upload').change ->
+$('#in-upload').on 'change', () ->
     uploadFiles(this.files)
 
 uploadFiles = (files) ->
@@ -391,12 +391,12 @@ $('#say-please').on 'click', () ->
         redeem('PLEASE', token)
 
 # Searching
-$('.searchbox input[name=search]').keypress (e) ->
+$('.searchbox input[name=search]').on 'keypress', (e) ->
     if e.which == 13
         window.location.href = api('download/' + $(e.target).val())
 
 # select the link when the user focuses or clicks
-$('#span-dl-link').focus -> $(this).select()
+$('#span-dl-link').on 'focus', () -> $(this).select()
 $('#span-dl-link').on 'click', () -> $(this).select()
 
 $('#btn-upload-another').on 'click', () ->
