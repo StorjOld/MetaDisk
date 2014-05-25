@@ -83,7 +83,45 @@
           return callback(token);
         });
       }
-    })
+    }),
+    newToken: function() {
+      return $.post(api('token/new'), function(data) {
+        var token;
+        return token = KeyValueStore.set('access-token', data['token']);
+      }).done(function() {
+        loadPersonal();
+        loadStats();
+        return $.growl({
+          title: 'Done!',
+          icon: 'glyphicon glyphicon-ok',
+          message: 'Successfully created a new access token.'
+        }, {
+          template: {
+            icon_type: 'class',
+            container: '<div class="col-xs-10 col-sm-10 col-md-3 alert alert-success"></div>'
+          },
+          position: {
+            from: 'bottom',
+            align: 'right'
+          }
+        });
+      }).fail(function() {
+        return $.growl({
+          title: 'Whoops!',
+          icon: 'glyphicon glyphicon-remove',
+          message: 'Failed to create a new access token.'
+        }, {
+          template: {
+            icon_type: 'class',
+            container: '<div class="col-xs-10 col-sm-10 col-md-3 alert alert-danger"></div>'
+          },
+          position: {
+            from: 'bottom',
+            align: 'right'
+          }
+        });
+      });
+    }
   };
 
   gigabytes = function(bytes) {
@@ -388,6 +426,10 @@
 
   $('#btn-upload-another').click(function() {
     return showUploadStage('upload');
+  });
+
+  $('#access-token-refresh').click(function() {
+    return AccessToken.newToken();
   });
 
   accessTokenCopy = new ZeroClipboard($('#access-token-copy'));

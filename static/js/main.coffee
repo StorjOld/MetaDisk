@@ -73,7 +73,38 @@ AccessToken = {
       $.post api('token/new'), (data) ->
         token = KeyValueStore.set('access-token', data['token'])
         callback(token)
-  )
+  ),
+  newToken: () ->
+    $.post api('token/new'), (data) ->
+        token = KeyValueStore.set('access-token', data['token'])
+    .done () ->
+        loadPersonal()
+        loadStats()
+        $.growl
+              title: 'Done!'
+              icon: 'glyphicon glyphicon-ok'
+              message: 'Successfully created a new access token.'
+            ,
+              template:
+                icon_type: 'class'
+                container: '<div class="col-xs-10 col-sm-10 col-md-3 alert alert-success"></div>'
+
+              position:
+                from: 'bottom'
+                align: 'right'
+    .fail () ->
+        $.growl
+              title: 'Whoops!'
+              icon: 'glyphicon glyphicon-remove'
+              message: 'Failed to create a new access token.'
+            ,
+              template:
+                icon_type: 'class'
+                container: '<div class="col-xs-10 col-sm-10 col-md-3 alert alert-danger"></div>'
+
+              position:
+                from: 'bottom'
+                align: 'right' 
 }
 
 gigabytes = (bytes) ->
@@ -366,7 +397,11 @@ $('#span-dl-link').click -> $(this).select()
 $('#btn-upload-another').click ->
     showUploadStage('upload')
 
-#Copy Access Token on 'Copy'
+# Refresh/get new access token
+$('#access-token-refresh').click ->
+    AccessToken.newToken()
+
+# Copy Access Token on 'Copy'
 accessTokenCopy = new ZeroClipboard($('#access-token-copy'))
 
 accessTokenCopy.on 'copy', (e) ->
