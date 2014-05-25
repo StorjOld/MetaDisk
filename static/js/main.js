@@ -169,7 +169,7 @@
       $('#bar-storage').css('width', percentage(info.storage.used, info.storage.capacity));
       $('#cont-storage').text(gigabytes_ratio(info.storage.used, info.storage.capacity));
       $('#cont-datacoin-bal').text(info.datacoin.balance + ' DTC');
-      $('#cont-datacoin-addr').html('<code>' + info.datacoin.address + '</code>').find('code').click(function() {
+      $('#cont-datacoin-addr').html('<code>' + info.datacoin.address + '</code>').find('code').on('click', function() {
         return selectElementText($(this)[0]);
       });
       $('#cont-sync-cloud').text(info.sync.cloud_queue.count + ' (' + gigabytes(info.sync.cloud_queue.size) + ')');
@@ -220,7 +220,7 @@
   addFile = function(file) {
     var $file, $fileCode, downloadUrlCopy, fileHashCopy;
     $file = $('<div/>').addClass('file-row cf').append($('<div/>').addClass('left').append('<div class="name">' + file.fname + '</div>').append('<div class="hash"><code>' + file.fhash + '</code></div>')).append($('<div/>').addClass('right').append('<button class="btn btn-dl"><i class="fa fa-download"></i>Download</button>')).append($('<div/>').addClass('right').append('<button class="btn btn-copy-url"><i class="fa fa-clipboard"></i>Copy URL</button>')).appendTo($('#cont-file-list'));
-    $file.find('button.btn-dl').click(function() {
+    $file.find('button.btn-dl').on('click', function() {
       return AccessToken.get(function(token) {
         return window.location.href = downloadUrl(file, token);
       });
@@ -403,13 +403,13 @@
     });
   };
 
-  $('#redeem-promocode').click(function() {
+  $('#redeem-promocode').on('click', function() {
     return AccessToken.get(function(token) {
       return redeem($('#promocode').val(), token);
     });
   });
 
-  $('#say-please').click(function() {
+  $('#say-please').on('click', function() {
     return AccessToken.get(function(token) {
       return redeem('PLEASE', token);
     });
@@ -425,19 +425,19 @@
     return $(this).select();
   });
 
-  $('#span-dl-link').click(function() {
+  $('#span-dl-link').on('click', function() {
     return $(this).select();
   });
 
-  $('#btn-upload-another').click(function() {
+  $('#btn-upload-another').on('click', function() {
     return showUploadStage('upload');
   });
 
-  $('#access-token-refresh').click(function() {
+  $('#access-token-refresh').on('click', function() {
     return AccessToken.generate();
   });
 
-  $('#access-token-edit').click(function() {
+  $('#access-token-edit').on('click', function() {
     return $('#access-token').attr('disabled', false);
   });
 
@@ -539,7 +539,7 @@
       $cont.append('<button data-id="' + i + '" type="button" class="btn btn-default">' + (i + 1) + '</button>');
     }
     $cont.append('<button data-id="next" type="button" class="btn btn-default"><i class="fa fa-arrow-circle-right"></i></button>');
-    $cont.find('button').click(function() {
+    $cont.find('button').on('click', function() {
       return pickFilePage($(this).attr('data-id'));
     });
     return pickFilePage(0);

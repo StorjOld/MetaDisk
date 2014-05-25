@@ -151,7 +151,7 @@ loadStats = ->
         $('#cont-datacoin-bal').text(info.datacoin.balance + ' DTC')
         $('#cont-datacoin-addr')
             .html('<code>' + info.datacoin.address + '</code>')
-            .find('code').click ->
+            .find('code').on 'click', ()->
                 selectElementText($(this)[0])
 
         $('#cont-sync-cloud').text(info.sync.cloud_queue.count + ' (' + gigabytes(info.sync.cloud_queue.size) + ')')
@@ -219,7 +219,7 @@ addFile = (file) ->
         )
         .appendTo($('#cont-file-list'))
 
-    $file.find('button.btn-dl').click ->
+    $file.find('button.btn-dl').on 'click', () ->
         AccessToken.get (token) ->
           window.location.href = downloadUrl(file, token)
 
@@ -382,11 +382,11 @@ redeem = (promocode, token) ->
 
 
 # Redeeming
-$('#redeem-promocode').click ->
+$('#redeem-promocode').on 'click', () ->
     AccessToken.get (token) ->
         redeem($('#promocode').val(), token)
 
-$('#say-please').click ->
+$('#say-please').on 'click', () ->
     AccessToken.get (token) ->
         redeem('PLEASE', token)
 
@@ -397,17 +397,17 @@ $('.searchbox input[name=search]').keypress (e) ->
 
 # select the link when the user focuses or clicks
 $('#span-dl-link').focus -> $(this).select()
-$('#span-dl-link').click -> $(this).select()
+$('#span-dl-link').on 'click', () -> $(this).select()
 
-$('#btn-upload-another').click ->
+$('#btn-upload-another').on 'click', () ->
     showUploadStage('upload')
 
 # Refresh/get new access token
-$('#access-token-refresh').click ->
+$('#access-token-refresh').on 'click', () ->
     AccessToken.generate()
 
 # Re-enable access token field
-$('#access-token-edit').click ->
+$('#access-token-edit').on 'click', () ->
     $('#access-token').attr('disabled', false)
 
 # Update token info when enabled token field loses focus
@@ -501,7 +501,7 @@ initFilePages = ->
 
     $cont.append('<button data-id="next" type="button" class="btn btn-default"><i class="fa fa-arrow-circle-right"></i></button>')
 
-    $cont.find('button').click ->
+    $cont.find('button').on 'click', () ->
         pickFilePage($(this).attr('data-id'))
     pickFilePage(0)
 
