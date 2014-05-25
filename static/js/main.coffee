@@ -187,45 +187,76 @@ addFile = (file) ->
         AccessToken.get (token) ->
           window.location.href = downloadUrl(file, token)
 
-    $file.find('button.btn-copy-url').zclip(
-      path: '/js/ZeroClipboard.swf',
-      copy: -> (AccessToken.get (token) -> return downloadUrl(file, token)),
-      afterCopy: -> $.growl({
-            title: 'Done!',
-            icon: 'glyphicon glyphicon-ok',
-            message: 'Successfully copied the download URL.',
-          }, {
-            template: {
-              icon_type: 'class',
-              container: '<div class="col-xs-10 col-sm-10 col-md-3 alert"></div>'
-            },
-            position: {
-              from: 'bottom',
-              align: 'right'
-            }
-        }
-      )
-    )
+    # Copying file download URL
+    downloadUrlCopy = new ZeroClipboard($file.find('button.btn-copy-url'))
+    downloadUrlCopy.on 'copy', (e) ->
+        e.clipboardData.setData 'text/plain', (AccessToken.get (token) -> return downloadUrl(file, token))
+    downloadUrlCopy.on 'aftercopy', (e) ->
+        if e.success['text/plain']
+            $.growl
+              title: 'Done!'
+              icon: 'glyphicon glyphicon-ok'
+              message: 'Successfully copied the download URL.'
+            ,
+              template:
+                icon_type: 'class'
+                container: '<div class="col-xs-10 col-sm-10 col-md-3 alert alert-success"></div>'
 
-    $file.find('code').zclip(
-      path: '/js/ZeroClipboard.swf',
-      copy: -> return $(this).html(),
-      afterCopy: -> $.growl({
-            title: 'Done!',
-            icon: 'glyphicon glyphicon-ok',
-            message: 'Successfully copied the file hash.',
-          }, {
-            template: {
-              icon_type: 'class',
-              container: '<div class="col-xs-10 col-sm-10 col-md-3 alert"></div>'
-            },
-            position: {
-              from: 'bottom',
-              align: 'right'
-            }
-        }
-      )
-    )
+              position:
+                from: 'bottom'
+                align: 'right'
+
+        else
+            $.growl
+              title: 'Whoops!'
+              icon: 'glyphicon glyphicon-remove'
+              message: 'Failed to copy the download URL.'
+            ,
+              template:
+                icon_type: 'class'
+                container: '<div class="col-xs-10 col-sm-10 col-md-3 alert alert-danger"></div>'
+
+              position:
+                from: 'bottom'
+                align: 'right'
+
+        return
+
+    # Copying file hash
+    $fileCode = $file.find('code') 
+    fileHashCopy = new ZeroClipboard($fileCode)
+    fileHashCopy.on 'copy', (e) ->
+        e.clipboardData.setData 'text/plain', $fileCode.html()
+    fileHashCopy.on 'aftercopy', (e) ->
+        if e.success['text/plain']
+            $.growl
+              title: 'Done!'
+              icon: 'glyphicon glyphicon-ok'
+              message: 'Successfully copied the file hash.'
+            ,
+              template:
+                icon_type: 'class'
+                container: '<div class="col-xs-10 col-sm-10 col-md-3 alert alert-success"></div>'
+
+              position:
+                from: 'bottom'
+                align: 'right'
+
+        else
+            $.growl
+              title: 'Whoops!'
+              icon: 'glyphicon glyphicon-remove'
+              message: 'Failed to copy the file hash.'
+            ,
+              template:
+                icon_type: 'class'
+                container: '<div class="col-xs-10 col-sm-10 col-md-3 alert alert-danger"></div>'
+
+              position:
+                from: 'bottom'
+                align: 'right'
+
+        return
 
 makeHandler = (fname) ->
     (response) ->
@@ -334,6 +365,45 @@ $('#span-dl-link').click -> $(this).select()
 
 $('#btn-upload-another').click ->
     showUploadStage('upload')
+
+#Copy Access Token on 'Copy'
+accessTokenCopy = new ZeroClipboard($('#access-token-copy'))
+
+accessTokenCopy.on 'copy', (e) ->
+  e.clipboardData.setData 'text/plain', $('#access-token').val()
+  return
+
+accessTokenCopy.on 'aftercopy', (e) ->
+  if e.success['text/plain']
+    $.growl
+      title: 'Done!'
+      icon: 'glyphicon glyphicon-ok'
+      message: 'Successfully copied your access token.'
+    ,
+      template:
+        icon_type: 'class'
+        container: '<div class="col-xs-10 col-sm-10 col-md-3 alert alert-success"></div>'
+
+      position:
+        from: 'bottom'
+        align: 'right'
+
+  else
+    $.growl
+      title: 'Whoops!'
+      icon: 'glyphicon glyphicon-remove'
+      message: 'Failed to copy your access token.'
+    ,
+      template:
+        icon_type: 'class'
+        container: '<div class="col-xs-10 col-sm-10 col-md-3 alert alert-danger"></div>'
+
+      position:
+        from: 'bottom'
+        align: 'right'
+
+  return
+
 
 # load history
 
