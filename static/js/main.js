@@ -84,7 +84,12 @@
         });
       }
     }),
-    newToken: function() {
+    set: function(token) {
+      KeyValueStore.set('access-token', token);
+      loadPersonal();
+      return loadStats();
+    },
+    generate: function() {
       return $.post(api('token/new'), function(data) {
         var token;
         return token = KeyValueStore.set('access-token', data['token']);
@@ -429,7 +434,18 @@
   });
 
   $('#access-token-refresh').click(function() {
-    return AccessToken.newToken();
+    return AccessToken.generate();
+  });
+
+  $('#access-token-edit').click(function() {
+    return $('#access-token').attr('disabled', false);
+  });
+
+  $('#access-token').on('keyup blur', function(e) {
+    if (e.type === 'blur' || (e.type === 'keyup' && e.keyCode === 13)) {
+      $('#access-token').attr('disabled', true);
+      return AccessToken.set($('#access-token').val());
+    }
   });
 
   accessTokenCopy = new ZeroClipboard($('#access-token-copy'));

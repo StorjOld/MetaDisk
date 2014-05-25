@@ -74,7 +74,12 @@ AccessToken = {
         token = KeyValueStore.set('access-token', data['token'])
         callback(token)
   ),
-  newToken: () ->
+  set: (token) ->
+    KeyValueStore.set('access-token', token)
+    loadPersonal()
+    loadStats()
+
+  generate: () ->
     $.post api('token/new'), (data) ->
         token = KeyValueStore.set('access-token', data['token'])
     .done () ->
@@ -399,7 +404,17 @@ $('#btn-upload-another').click ->
 
 # Refresh/get new access token
 $('#access-token-refresh').click ->
-    AccessToken.newToken()
+    AccessToken.generate()
+
+# Re-enable access token field
+$('#access-token-edit').click ->
+    $('#access-token').attr('disabled', false)
+
+# Update token info when enabled token field loses focus
+$('#access-token').on 'keyup blur', (e) -> 
+    if e.type == 'blur' or (e.type == 'keyup' and e.keyCode == 13)
+        $('#access-token').attr('disabled', true)
+        AccessToken.set($('#access-token').val())
 
 # Copy Access Token on 'Copy'
 accessTokenCopy = new ZeroClipboard($('#access-token-copy'))
