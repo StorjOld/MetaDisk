@@ -424,7 +424,37 @@
       contentType: "application/json; charset=utf-8",
       success: (function() {
         return loadPersonal();
-      })
+        $.growl({
+        title: "Done!",
+        icon: "glyphicon glyphicon-remove",
+        message: "Your space was successfully redeemed."
+        }, {
+          template: {
+            icon_type: "class",
+            container: "<div class=\"col-xs-10 col-sm-10 col-md-3 alert alert-success\"></div>"
+          },
+          position: {
+            from: "bottom",
+            align: "right"
+          }
+        });
+      }),
+      error: function (XMLHttpRequest, textStatus, errorThrown) {
+        $.growl({
+        title: "Whoops!",
+        icon: "glyphicon glyphicon-remove",
+        message: "We were unable to redeem your space. If you entered a token, please ensure you typed it correctly."
+        }, {
+          template: {
+            icon_type: "class",
+            container: "<div class=\"col-xs-10 col-sm-10 col-md-3 alert alert-danger\"></div>"
+          },
+          position: {
+            from: "bottom",
+            align: "right"
+          }
+        });
+      }
     });
   };
 
