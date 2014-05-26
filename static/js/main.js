@@ -422,9 +422,43 @@
     });
   });
 
+  //Search functionality
   $(".searchbox input[name=search]").on("keypress", function(e) {
     if (e.which === 13) {
-      return window.location.href = api("download/" + $(e.target).val());
+      var searchStr = $(this).val();
+      var searchRegex = /[0-9a-zA-z]+\?key\=[0-9a-zA-z]+/;
+      if (searchRegex.test(searchStr)) {
+        $.growl({
+        title: "OK!",
+        icon: "glyphicon glyphicon-ok",
+        message: "Your search query was correctly formatted! I am just a test message."
+        }, {
+          template: {
+            icon_type: "class",
+            container: "<div class=\"col-xs-10 col-sm-10 col-md-3 alert alert-success\"></div>"
+          },
+          position: {
+            from: "bottom",
+            align: "right"
+          }
+        });
+      } else {
+        $.growl({
+          title: "Whoops!",
+          icon: "glyphicon glyphicon-remove",
+          message: "Your search query needs to be in the form [hash]?key=[key]."
+        }, {
+          template: {
+            icon_type: "class",
+            container: "<div class=\"col-xs-10 col-sm-10 col-md-3 alert alert-danger\"></div>"
+          },
+          position: {
+            from: "bottom",
+            align: "right"
+          }
+        });
+      }
+      //return window.location.href = api("download/" + $(e.target).val());
     }
   });
 
