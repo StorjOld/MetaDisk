@@ -360,11 +360,15 @@ code {
         top: 1px;
         margin-right: 7px;
         font-weight: normal; }
+    .body .file-list .file-row .btn.zeroclipboard-is-hover {
+      background-color: #107fc9;
+      color: white;
+      border-bottom: 3px solid #0c619a; }
     .body .file-list .file-row button.hover {
       color: white;
       background: #107fc9;
       border-bottom: 3px solid #0c619a; }
-    .body .file-list .file-row code.hover {
+    .body .file-list .file-row code.hover, .body .file-list .file-row code.hover.zeroclipboard-is-hover {
       color: #788592; }
 
 .small-break {
@@ -588,3 +592,8 @@ hr.panel-heading-hr {
 
 .data-address code {
   letter-spacing: 1px; }
+
+#access-token-copy.zeroclipboard-is-hover {
+  text-decoration: none;
+  color: #262626;
+  background-color: whitesmoke; }
