@@ -156,6 +156,7 @@
   loadPersonal = function() {
     return AccessToken.get(function(token) {
       $("#access-token").val(token);
+      $("#buy-now").data("custom", token);
       return $.getJSON(api("token/balance/" + token), function(data) {
         $("#token-balance").html(gigabytes(data["balance"]));
         return $("#token-estimated-storage").html(gigabytes(data["balance"] / 3.0));
