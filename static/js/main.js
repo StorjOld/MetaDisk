@@ -423,6 +423,7 @@
       }),
       contentType: "application/json; charset=utf-8",
       success: (function() {
+        $('.modal').modal('hide');
         return loadPersonal();
         $.growl({
         title: "Done!",
@@ -440,6 +441,7 @@
         });
       }),
       error: function (XMLHttpRequest, textStatus, errorThrown) {
+        $('.modal').modal('hide');
         $.growl({
         title: "Whoops!",
         icon: "glyphicon glyphicon-remove",
