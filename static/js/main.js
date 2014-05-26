@@ -226,7 +226,25 @@
     $file = $("<div/>").addClass("file-row cf").append($("<div/>").addClass("left").append("<div class=\"name\">" + file.fname + "</div>").append("<div class=\"hash\"><code>" + file.fhash + " + key</code></div>")).append($("<div/>").addClass("right").append("<button class=\"btn btn-dl\"><i class=\"fa fa-download\"></i>Download</button>")).append($("<div/>").addClass("right").append("<button class=\"btn btn-copy-url\"><i class=\"fa fa-clipboard\"></i>Copy URL</button>")).appendTo($("#cont-file-list"));
     $file.find("button.btn-dl").on("click", function() {
       return AccessToken.get(function(token) {
-        return window.location.href = downloadUrl(file, token);
+        var dlUrl = downloadUrl(file, token);
+        $.get(dlUrl, function(){
+          return window.location.href = dlUrl;
+        }).fail(function() {
+          $.growl({
+          title: "Whoops!",
+          icon: "glyphicon glyphicon-remove",
+          message: "We were unable to download your file due to an insufficient balance."
+          }, {
+            template: {
+              icon_type: "class",
+              container: "<div class=\"col-xs-10 col-sm-10 col-md-3 alert alert-danger\"></div>"
+            },
+            position: {
+              from: "bottom",
+              align: "right"
+            }
+          });
+        });
       });
     });
     downloadUrlCopy = new ZeroClipboard($file.find("button.btn-copy-url"));
