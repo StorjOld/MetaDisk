@@ -223,7 +223,7 @@
 
   addFile = function(file) {
     var $file, $fileCode, downloadUrlCopy, fileHashCopy;
-    $file = $("<div/>").addClass("file-row cf").append($("<div/>").addClass("left").append("<div class=\"name\">" + file.fname + "</div>").append("<div class=\"hash\"><code>" + file.fhash + "+ key</code></div>")).append($("<div/>").addClass("right").append("<button class=\"btn btn-dl\"><i class=\"fa fa-download\"></i>Download</button>")).append($("<div/>").addClass("right").append("<button class=\"btn btn-copy-url\"><i class=\"fa fa-clipboard\"></i>Copy URL</button>")).appendTo($("#cont-file-list"));
+    $file = $("<div/>").addClass("file-row cf").append($("<div/>").addClass("left").append("<div class=\"name\">" + file.fname + "</div>").append("<div class=\"hash\"><code>" + file.fhash + " + key</code></div>")).append($("<div/>").addClass("right").append("<button class=\"btn btn-dl\"><i class=\"fa fa-download\"></i>Download</button>")).append($("<div/>").addClass("right").append("<button class=\"btn btn-copy-url\"><i class=\"fa fa-clipboard\"></i>Copy URL</button>")).appendTo($("#cont-file-list"));
     $file.find("button.btn-dl").on("click", function() {
       return AccessToken.get(function(token) {
         return window.location.href = downloadUrl(file, token);
