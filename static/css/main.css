@@ -597,3 +597,6 @@ hr.panel-heading-hr {
   text-decoration: none;
   color: #262626;
   background-color: whitesmoke; }
+
+#access-token {
+  cursor: default; }
