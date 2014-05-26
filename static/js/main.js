@@ -432,8 +432,36 @@
         var searchHash = searchStr.split('?key=')[0];
         var searchKey = searchStr.split('?key=')[1];
         $.get(api('find/' + searchHash), function(data) {
-          //Add code for adding file details to upload list
-          console.log(data)
+          $.growl({
+          title: "Done!",
+          icon: "glyphicon glyphicon-remove",
+          message: "Your file was found and has been added to your uploads list."
+          }, {
+            template: {
+              icon_type: "class",
+              container: "<div class=\"col-xs-10 col-sm-10 col-md-3 alert alert-success\"></div>"
+            },
+            position: {
+              from: "bottom",
+              align: "right"
+            }
+          });
+
+          //Actually add file to uploads list
+          loadPersonal();
+          var file = {
+            fname: data['filename'],
+            fhash: searchHash,
+            key: searchKey
+          };
+          History.add(file);
+          AccessToken.get(function(token) {
+            return $('#span-dl-link').val(downloadUrl(file, token));
+          });
+          page = currentPage();
+          initFilePages();
+          pickFilePage(page);
+          loadStats();
         }).fail(function() {
           $.growl({
           title: "Whoops!",
