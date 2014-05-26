@@ -433,12 +433,12 @@
         var searchKey = searchStr.split('?key=')[1];
         $.get(api('find/' + searchHash), function(data) {
           //Add code for adding file details to upload list
-          console.log(data);
-        }).fail(function(data) {
+          console.log(data)
+        }).fail(function() {
           $.growl({
           title: "Whoops!",
           icon: "glyphicon glyphicon-remove",
-          message: data['error']
+          message: "We were unable to find your file. Please ensure you typed the hash correctly."
           }, {
             template: {
               icon_type: "class",
