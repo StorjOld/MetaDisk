@@ -506,9 +506,6 @@
             key: searchKey
           };
           History.add(file);
-          AccessToken.get(function(token) {
-            return $('#span-dl-link').val(downloadUrl(file, token));
-          });
           page = currentPage();
           initFilePages();
           pickFilePage(page);
