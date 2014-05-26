@@ -223,7 +223,7 @@
 
   addFile = function(file) {
     var $file, $fileCode, downloadUrlCopy, fileHashCopy;
-    $file = $("<div/>").addClass("file-row cf").append($("<div/>").addClass("left").append("<div class=\"name\">" + file.fname + "</div>").append("<div class=\"hash\"><code>" + file.fhash + "</code></div>")).append($("<div/>").addClass("right").append("<button class=\"btn btn-dl\"><i class=\"fa fa-download\"></i>Download</button>")).append($("<div/>").addClass("right").append("<button class=\"btn btn-copy-url\"><i class=\"fa fa-clipboard\"></i>Copy URL</button>")).appendTo($("#cont-file-list"));
+    $file = $("<div/>").addClass("file-row cf").append($("<div/>").addClass("left").append("<div class=\"name\">" + file.fname + "</div>").append("<div class=\"hash\"><code>" + file.fhash + "+ key</code></div>")).append($("<div/>").addClass("right").append("<button class=\"btn btn-dl\"><i class=\"fa fa-download\"></i>Download</button>")).append($("<div/>").addClass("right").append("<button class=\"btn btn-copy-url\"><i class=\"fa fa-clipboard\"></i>Copy URL</button>")).appendTo($("#cont-file-list"));
     $file.find("button.btn-dl").on("click", function() {
       return AccessToken.get(function(token) {
         return window.location.href = downloadUrl(file, token);
@@ -271,14 +271,14 @@
     $fileCode = $file.find("code");
     fileHashCopy = new ZeroClipboard($fileCode);
     fileHashCopy.on("copy", function(e) {
-      return e.clipboardData.setData("text/plain", $fileCode.html());
+      return e.clipboardData.setData("text/plain", file.fhash + "?key=" + file.key);
     });
     return fileHashCopy.on("aftercopy", function(e) {
       if (e.success["text/plain"]) {
         $.growl({
           title: "Done!",
           icon: "glyphicon glyphicon-ok",
-          message: "Successfully copied the file hash."
+          message: "Successfully copied the file hash and key."
         }, {
           template: {
             icon_type: "class",
@@ -293,7 +293,7 @@
         $.growl({
           title: "Whoops!",
           icon: "glyphicon glyphicon-remove",
-          message: "Failed to copy the file hash."
+          message: "Failed to copy the file hash and key."
         }, {
           template: {
             icon_type: "class",
