@@ -424,7 +424,6 @@
       contentType: "application/json; charset=utf-8",
       success: (function() {
         $('.modal').modal('hide');
-        return loadPersonal();
         $.growl({
         title: "Done!",
         icon: "glyphicon glyphicon-remove",
@@ -439,6 +438,7 @@
             align: "right"
           }
         });
+        return loadPersonal();
       }),
       error: function (XMLHttpRequest, textStatus, errorThrown) {
         $('.modal').modal('hide');
