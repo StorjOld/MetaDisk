@@ -677,4 +677,34 @@
 
   initFilePages();
 
+  // Coinbase buy button
+  $('#buy-now').click(function(){
+    $('#modalBuy').modal('hide');
+    $(document).trigger('coinbase_show_modal', 'd4881aca7f076617c06bee487086150b');
+    return false;
+  });
+
+  // Coinbase success
+  $(document).on('coinbase_payment_complete', function(event, code){
+    loadPersonal();
+    loadStats();
+    $.growl({
+      title: "Done!",
+      icon: "glyphicon glyphicon-ok",
+      message: "You've got an additional 100GB bandwidth."
+    }, {
+      template: {
+        icon_type: "class",
+        container: "<div class=\"col-xs-10 col-sm-10 col-md-3 alert alert-success\"></div>"
+      },
+      position: {
+        from: "bottom",
+        align: "right"
+      }
+    });
+  });
+
+  // Tooltips
+  $('.tooltip-icon').tooltip({ placement: 'top'});
+
 }).call(this);
