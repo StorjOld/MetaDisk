@@ -680,7 +680,7 @@
   // Coinbase buy button
   $('#buy-now').click(function(){
     $('#modalBuy').modal('hide');
-    $(document).trigger('coinbase_show_modal', 'ecf8e92a68275d258d73070172d87e96');
+    $(document).trigger('coinbase_show_modal', '6abcf04559966d00b230920ec5d09920');
     return false;
   });
 
