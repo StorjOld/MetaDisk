@@ -17,3 +17,7 @@ Thumbs.db
 /coverage/*
 npm-debug.log
 testem.log
+
+#sublime
+metadisk.sublime-project
+metadisk.sublime-workspace
