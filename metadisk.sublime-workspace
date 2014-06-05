@@ -1,0 +1,869 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"total",
+				"totalMovies"
+			],
+			[
+				"font",
+				"font-variant"
+			],
+			[
+				"p",
+				"p"
+			],
+			[
+				"r",
+				"r"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "static/index.html",
+			"settings":
+			{
+				"buffer_size": 21954,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "static/js/main.js",
+			"settings":
+			{
+				"buffer_size": 19684,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "Remote:   origin @ git@github.com:Storj/Metadisk.git\nLocal:    master ~/SpiderOak Hive/OSS/storj/Metadisk\nHead:     09bee82 Failing downloads handled using growl instead of raw json output\n\n\nNothing to commit (working directory clean)\n\n# Movement:\n#    r = refresh status\n#    1-5 = jump to section\n#    n = next item, N = next section\n#    p = previous item, P = previous section\n#\n# Staging:\n#    s = stage file/section, S = stage all unstaged files\n#    ctrl+shift+s = stage all unstaged and untracked files\n#    u = unstage file/section, U = unstage all files\n#    backspace = discard file/section, shift+backspace = discard everything\n#\n# Commit:\n#    c = commit, C = commit -a (add unstaged)\n#    ctrl+shift+c = commit --amend (amend previous commit)\n#\n# Other:\n#    i = ignore file, I = ignore pattern\n#    enter = open file\n#    d = view diff\n#\n# Stashes:\n#    a = apply stash, A = pop stash\n#    z = create stash, Z = create stash including untracked files\n#    backspace = discard stash",
+			"settings":
+			{
+				"buffer_size": 996,
+				"line_ending": "Unix",
+				"name": "*git-status*: Metadisk",
+				"read_only": true,
+				"scratch": true
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 127.0,
+		"selected_items":
+		[
+			[
+				"push",
+				"Git: Push"
+			],
+			[
+				"format",
+				"Format Code"
+			],
+			[
+				"status",
+				"Git: Status"
+			],
+			[
+				"stats",
+				"Git: Status"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"cof",
+				"Coffee: Check Syntax"
+			],
+			[
+				"package",
+				"Package Control: Install Package"
+			],
+			[
+				"remote",
+				"Git: Remote"
+			],
+			[
+				"package inst",
+				"Package Control: Install Package"
+			],
+			[
+				"git:Status",
+				"Git: Status"
+			],
+			[
+				"git:Show",
+				"Git: Show"
+			],
+			[
+				"git:show",
+				"Git: Show"
+			],
+			[
+				"for",
+				"Format Code"
+			],
+			[
+				"upgrade",
+				"Package Control: Upgrade Package"
+			],
+			[
+				"packages",
+				"Package Control: Upgrade/Overwrite All Packages"
+			],
+			[
+				"p",
+				"Git: Push"
+			],
+			[
+				"git: remote",
+				"Git: Remote"
+			],
+			[
+				"git push",
+				"Git: Push"
+			],
+			[
+				"git remo",
+				"Git: Remote"
+			],
+			[
+				"add",
+				"Git: Add Remote"
+			],
+			[
+				"git:push",
+				"Git: Push"
+			],
+			[
+				"git:status",
+				"Git: Status"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"remove package",
+				"Package Control: Remove Package"
+			],
+			[
+				"remove ",
+				"Package Control: Remove Package"
+			],
+			[
+				"remove packa",
+				"Package Control: Remove Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"git",
+				"Git: Commit history"
+			],
+			[
+				"commit",
+				"Git: Commit"
+			],
+			[
+				"git:commit",
+				"Git: Commit"
+			],
+			[
+				"code",
+				"Format Code"
+			],
+			[
+				"install pack",
+				"Package Control: Install Package"
+			],
+			[
+				"form",
+				"Format Code"
+			]
+		],
+		"width": 593.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"exit",
+			"npm",
+			"ls",
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) "
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/josh/SpiderOak Hive/OSS/storj/Metadisk/static/css/bootstrap.min.css",
+		"/Users/josh/SpiderOak Hive/OSS/storj/Metadisk/static/css/main.sass",
+		"/Users/josh/SpiderOak Hive/OSS/storj/Metadisk/static/js/bootstrap.min.js",
+		"/Users/josh/SpiderOak Hive/OSS/storj/Metadisk/.gitignore",
+		"/Users/josh/SpiderOak Hive/OSS/storj/Metadisk/static/css/main2.css",
+		"/Users/josh/SpiderOak Hive/OSS/storj/Metadisk/static/css/style.css",
+		"/Users/josh/SpiderOak Hive/OSS/storj/Metadisk/static/css/main.css",
+		"/Users/josh/SpiderOak Hive/OSS/storj/Metadisk/static/js/main.js",
+		"/Users/josh/SpiderOak Hive/OSS/storj/Metadisk/static/index.html",
+		"/Users/josh/SpiderOak Hive/OSS/storj/Metadisk/static/js/ZeroClipboard.js",
+		"/Users/josh/SpiderOak Hive/OSS/storj/Metadisk/static/js/ZeroClipboard.swf",
+		"/Users/josh/SpiderOak Hive/OSS/storj/Metadisk/static/css/bootstrap.css",
+		"/Users/josh/SpiderOak Hive/OSS/storj/Metadisk/static/js/jquery.zclip.js",
+		"/Users/josh/SpiderOak Hive/OSS/storj/Metadisk/static/js/jquery.min.js",
+		"/Users/josh/SpiderOak Hive/OSS/storj/Metadisk/static/js/jquery.js",
+		"/Users/josh/SpiderOak Hive/OSS/storj/Metadisk/static/js/bootstrap-growl.min.js",
+		"/Users/josh/SpiderOak Hive/Tutorials and Training/EmberTraining-20140522/embermail/vendor/ember/Makefile",
+		"/Users/josh/SpiderOak Hive/Tutorials and Training/EmberTraining-20140522/embermail/node_modules/loom/node_modules/cli-color/node_modules/memoizee/node_modules/event-emitter/benchmark/many-on.js",
+		"/Users/josh/SpiderOak Hive/Tutorials and Training/EmberTraining-20140522/embermail/vendor/bootstrap/js/modal.js",
+		"/Users/josh/SpiderOak Hive/Tutorials and Training/EmberTraining-20140522/embermail/node_modules/loom-generators-ember-appkit/loom/generators/model.js",
+		"/Users/josh/SpiderOak Hive/Tutorials and Training/EmberTraining-20140522/embermail/node_modules/loom-generators-ember-appkit/test/functional/model.spec.js",
+		"/Users/josh/SpiderOak Hive/Tutorials and Training/EmberTraining-20140522/embermail/node_modules/loom/lib/add_contrib_paths.js",
+		"/Users/josh/SpiderOak Hive/Tutorials and Training/EmberTraining-20140522/embermail/package.json",
+		"/Users/josh/SpiderOak Hive/Tutorials and Training/EmberTraining-20140522/embermail/node_modules/ember-cli/node_modules/npm/node_modules/npm-registry-client/test/publish-again.js",
+		"/Users/josh/SpiderOak Hive/Tutorials and Training/EmberTraining-20140522/embermail/node_modules/originate/node_modules/shelljs/src/toEnd.js",
+		"/Users/josh/SpiderOak Hive/Tutorials and Training/EmberTraining-20140522/embermail/testem.json",
+		"/Users/josh/SpiderOak Hive/Tutorials and Training/EmberTraining-20140522/embermail/app/templates/compose.hbs",
+		"/Users/josh/SpiderOak Hive/Tutorials and Training/EmberTraining-20140522/embermail/app/routes/folders.js",
+		"/Users/josh/SpiderOak Hive/Tutorials and Training/EmberTraining-20140522/embermail/app/router.js",
+		"/Users/josh/SpiderOak Hive/Tutorials and Training/EmberTraining-20140522/embermail/app/app.js",
+		"/Users/josh/SpiderOak Hive/Tutorials and Training/EmberTraining-20140522/embermail/node_modules/ember-cli/node_modules/bower/node_modules/retry/lib/retry_operation.js",
+		"/Users/josh/SpiderOak Hive/Tutorials and Training/EmberTraining-20140522/embermail/README",
+		"/Users/josh/SpiderOak Hive/Tutorials and Training/EmberTraining-20140522/embermail/node_modules/.bin/generate",
+		"/Users/josh/SpiderOak Hive/Tutorials and Training/EmberTraining-20140522/embermail/node_modules/ember-cli/node_modules/lodash-node/compat/internals/getObject.js",
+		"/Users/josh/SpiderOak Hive/Tutorials and Training/EmberTraining-20140522/embermail/app/routes/folder.js",
+		"/Users/josh/SpiderOak Hive/Tutorials and Training/EmberTraining-20140522/embermail/node_modules/ember-cli/node_modules/leek/node_modules/request/tests/test-follow-all.js",
+		"/Users/josh/SpiderOak Hive/Tutorials and Training/EmberTraining-20140522/embermail/node_modules/broccoli-ember-hbs-template-compiler/node_modules/broccoli-filter/node_modules/rsvp/lib/rsvp/all-settled.js",
+		"/Users/josh/SpiderOak Hive/Tutorials and Training/EmberTraining-20140522/embermail/node_modules/ember-cli/node_modules/lodash-node/compat/collections/findLast.js",
+		"/Users/josh/SpiderOak Hive/Tutorials and Training/EmberTraining-20140522/embermail/node_modules/ember-cli/node_modules/testem/node_modules/socket.io/node_modules/socket.io-client/node_modules/ws/test/autobahn-server.js",
+		"/Users/josh/SpiderOak Hive/Tutorials and Training/EmberTraining-20140522/embermail/node_modules/ember-cli/node_modules/testem/node_modules/socket.io/node_modules/socket.io-client/node_modules/ws/test/autobahn.js",
+		"/Users/josh/SpiderOak Hive/Tutorials and Training/EmberTraining-20140522/embermail/node_modules/glob/test/stat.js",
+		"/Users/josh/SpiderOak Hive/Tutorials and Training/EmberTraining-20140522/embermail/tests/helpers/start-app.js",
+		"/Users/josh/SpiderOak Hive/Tutorials and Training/EmberTraining-20140522/embermail/vendor/qunit/test/setTimeout.html",
+		"/Users/josh/SpiderOak Hive/Tutorials and Training/EmberTraining-20140522/embermail/app/templates/folders.hbs",
+		"/Users/josh/SpiderOak Hive/Tutorials and Training/EmberTraining-20140522/embermail/app/templates/application.hbs",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/app/styles/app.css",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/app/components/issue-star.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/app/router.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/app/routes/application.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/server/routes/issues.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/server/routes/issues-topsim.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/app/components/movie-planet.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/app/templates/components/issue-star.hbs",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/app/templates/components/movie-planet.hbs",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/server/routes/movies.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/app/models/issue.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/app/models/movie.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/app/styles/app.less",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/tests/unit/components/pixi-network-tests.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/tests/.jshintrc",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/Brocfile.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/app/templates/application.hbs",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/tests/unit/components/movie-planet-tests.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/app/components/pixi-network.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/tests/unit/components/issue-star-tests.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/app/utils/svg-text-wrap.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/app/components/header-navigation.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/app/controllers/application.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/tests/unit/controllers/application-tests.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/app/components/zeitgeist-universe.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/tests/unit/components/zeitgeist-universe-tests.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/app/templates/components/zeitgeist-universe.hbs",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/tests/unit/models/movie-test.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/tests/unit/models/issue-test.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/app/templates/components/pixi-network.hbs",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/app/utils/.gitkeep",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/.jshintrc",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/tests/integration/integration-tests.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/package.json",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/app/adapters/.gitkeep",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/app/adapters/application.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/server/index.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/app/templates/index.hbs",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/app/routes/index.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/app/templates/components/header-navigation.hbs",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/tests/unit/components/header-navigation-tests.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/app/controllers/index.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/tmp/es_validate_filter-tmp_cache_dir-OOYjCa1s.tmp/4",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/node_modules/ember-cli/node_modules/testem/node_modules/mustache/npm-install-4664.sh",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/app/app.js",
+		"/Users/josh/Desktop/movie.js.backup.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/app/routes/movie.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/app/routes/issue.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/app/transforms/raw.js",
+		"/Users/josh/Desktop/similarities_data_for_josh.json",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/bower.json",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/config/environment.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/README.md",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/app/index.html",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/dist/assets/app.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/dist/index.html",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/dist/tests/index.html",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/.!47365!.DS_Store",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot/.!46838!.DS_Store",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot-beta/.!75795!.DS_Store",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/impactspace-beta/tmp/template_filter-tmp_dest_dir-YRjCLub1.tmp/impactspace-beta/index.html",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/impactspace-beta/tmp/template_filter-tmp_dest_dir-YRjCLub1.tmp/impactspace-beta/templates/application.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/impactspace-beta/tmp/tree_merger-tmp_dest_dir-erTAiQGf.tmp/assets/app.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/impactspace-beta/tmp/template_filter-tmp_dest_dir-2Zjfjbza.tmp/impactspace-beta/app.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/impactspace-beta/tmp/static_compiler-tmp_dest_dir-zXjSJuwN.tmp/impactspace-beta/templates/application.hbs",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/impactspace-beta/tmp/template_filter-tmp_cache_dir-aFQ9cWG4.tmp/0",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/impactspace-beta/tmp/template_filter-tmp_cache_dir-FRTjZZol.tmp/0",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/impactspace-beta/tmp/template_filter-tmp_cache_dir-fYz2mNaT.tmp/0",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/impactspace-beta/tmp/template_filter-tmp_cache_dir-JehIAOe2.tmp/0",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/impactspace-beta/tmp/template_filter-tmp_dest_dir-2Zjfjbza.tmp/impactspace-beta/index.html",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/impactspace-beta/tmp/template_filter-tmp_dest_dir-NNId0xpv.tmp/impactspace-beta/app.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/impactspace-beta/tmp/template_filter-tmp_dest_dir-2Zjfjbza.tmp/impactspace-beta/templates/application.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/impactspace-beta/tmp/template_filter-tmp_dest_dir-NNId0xpv.tmp/impactspace-beta/index.html",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/impactspace-beta/app/app.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Wireframes/beta/interactive_mockups/backbone_mockup_20140407.html",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/impactspace-beta/tests/unit/components/issue-star-tests.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/impactspace-beta/tests/unit/components/zeitgeist-universe-tests.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/impactspace-beta/tests/unit/components/movie-planet-tests.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/impactspace-beta/app/components/movie-planet.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/impactspace-beta/app/components/issue-star.js",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/impactspace-beta/app/styles/app.less",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/impactspace-beta/app/templates/components/zeitgeist-universe.hbs",
+		"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/impactspace-beta/testem.json"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			"",
+			"<open files>",
+			"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/storypilot",
+			"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/impactspace-beta",
+			"",
+			"/Users/josh/SpiderOak Hive/Work/Harmony Institute/Development/impactspace-beta",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"window",
+			"makeHandler",
+			"uploadFile",
+			"uploadfile",
+			"ajax",
+			"success",
+			"post",
+			"search",
+			"btn",
+			"#",
+			"dropdown-menu>li>a:hover",
+			"395px",
+			"395",
+			"400",
+			"395",
+			"../font/",
+			"file",
+			"url",
+			"font",
+			"font-awesome",
+			"dropdown-menu",
+			"dropdown",
+			"hover",
+			"History",
+			"makeHandler",
+			"upload",
+			"+ key",
+			"fhash",
+			"file",
+			"hash",
+			"key",
+			"fa-download",
+			"Download",
+			"PLEASE",
+			"uploadFiles",
+			"upload",
+			".js",
+			"undefined",
+			"v",
+			"this.",
+			"$",
+			"uploadFiles(",
+			"$",
+			"blur",
+			").",
+			".on 'click'",
+			".on ;click'",
+			"click",
+			".on",
+			"click",
+			"destroy",
+			"set:",
+			"AccessToken",
+			"update:",
+			"e.",
+			"keycode",
+			"access-token",
+			"AccessToken",
+			"newToke",
+			"AccessToken",
+			"disabled",
+			"keyCode",
+			"blur",
+			".click",
+			"Edit",
+			"AccessToken",
+			"Accesstoken",
+			"History",
+			"History.add",
+			"AccessToken",
+			"fail",
+			"callback",
+			"api",
+			"bandwidth",
+			"search",
+			"PLEASE",
+			"please",
+			"zclip",
+			"-danger",
+			"glyphicon",
+			"accessTokenCopy",
+			"copy",
+			"afterCopy",
+			"input id",
+			"table",
+			"data-copy",
+			"afterCopy",
+			"access-token-copy",
+			"ZeroClipboard",
+			"access-token",
+			"redeem",
+			"copy",
+			"copy(",
+			"addFile",
+			"zclip",
+			"growl",
+			"copy",
+			"afterCopy",
+			"code",
+			"token",
+			"copy",
+			"gift",
+			"lorem",
+			"didInsertElement",
+			"that",
+			"padding",
+			"getStarRadius",
+			"node",
+			"console",
+			"length",
+			"@each",
+			"linkedNode",
+			"myStars",
+			"that",
+			"console.log",
+			".attr(",
+			"find",
+			"\"class\": \"issue\"",
+			"\"issue\"",
+			"class\": \"issue",
+			"\"_id\":\n",
+			"this",
+			"([ ",
+			"banks_and_corporations",
+			"\"id\"",
+			"length",
+			"d3",
+			"model"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			".prop(",
+			"\"id\":",
+			"movie_ids",
+			"\"_id\"",
+			"\"parent_id\"",
+			"\"movie_ids\":",
+			"\"id\":",
+			"id",
+			"storypilot",
+			"storypilot-beta",
+			"StoryPilot",
+			"[REMOVED]",
+			"impactspace-beta",
+			"ImpactSpace",
+			".element",
+			"\"size\"",
+			"\"name\""
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "static/index.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 21954,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								952,
+								958
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close"
+							],
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "static/js/main.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 19684,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7925,
+								7925
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close"
+							],
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true,
+							"word_wrap": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2962.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 996,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								191,
+								191
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"__vi_external_disable": true,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close"
+							],
+							"draw_white_space": "none",
+							"git_repo": "/Users/josh/SpiderOak Hive/OSS/storj/Metadisk",
+							"git_status": true,
+							"git_view": "status",
+							"syntax": "Packages/SublimeGit/syntax/SublimeGit Status.tmLanguage",
+							"translate_tabs_to_spaces": false,
+							"word_wrap": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.git":
+	{
+		"height": 100.0
+	},
+	"output.git-commit":
+	{
+		"height": 25.0
+	},
+	"output.git-push":
+	{
+		"height": 100.0
+	},
+	"output.sftp":
+	{
+		"height": 0.0
+	},
+	"project": "metadisk.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"application",
+				"app/routes/application.js"
+			],
+			[
+				"test",
+				"testem.json"
+			],
+			[
+				"router.js",
+				"embermail/app/router.js"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 214.0,
+	"status_bar_visible": false,
+	"template_settings":
+	{
+	}
+}

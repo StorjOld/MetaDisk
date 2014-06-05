@@ -1,4 +1,19 @@
-metadisk.sublime-project
-metadisk.sublime-workspace
-.sass-cache
-static/css/.sass-cache
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/dist
+/tmp
+
+# dependencies
+/node_modules
+/vendor/*
+
+# misc
+/.sass-cache
+/connect.lock
+/libpeerconnection.log
+.DS_Store
+Thumbs.db
+/coverage/*
+npm-debug.log
+testem.log

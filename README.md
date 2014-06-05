@@ -1,7 +1,7 @@
 Metadisk
 ========
 
-Metadisk is a filehost web app, that allows anyone to upload files via a web
+Metadisk is a filehost web application which allows anyone to upload files via a web
 interface or API. Files are hashed and uploaded to public file hosting. Using
 the hashes a node can look up the information of where that file was stored
 using the [Datacoin](http://datacoin.info/) blockchain. This makes a file
@@ -31,7 +31,7 @@ This project depends on several other projects:
   Metadisk. It provides a JSON API web service, and the daemons to synchronize
   files to the cloud hosting services and to the blockchain.
 
-Metadisk, this project, provides a web interface to web-core, allowing you to
+Metadisk--this project--provides a web interface to web-core. It allows you to
 upload files and check the server status regarding bandwidth, disk usage, and
 synchronization state.
 
