@@ -1,4 +1,6 @@
 metadisk.sublime-project
 metadisk.sublime-workspace
+
 .sass-cache
 static/css/.sass-cache
+static/js/local_settings.js

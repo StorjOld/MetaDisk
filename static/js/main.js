@@ -2,7 +2,7 @@
   var AccessToken, Cookies, GIGABYTE, History, KeyValueStore, LocalStorage, accessTokenCopy, addFile, api, currentPage, downloadUrl, files, gigabytes, gigabytes_ratio, initFilePages, loadPersonal, loadStats, makeHandler, pageCount, percentage, pickFilePage, pickPagination, redeem, selectElementText, showUploadStage, uploadFile, uploadFiles;
 
   api = function(resource) {
-    return "http://node2.storj.io/api/" + resource;
+    return API_BASE_URL + "api/" + resource;
   };
 
   GIGABYTE = 1024 * 1024 * 1024;
