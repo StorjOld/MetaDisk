@@ -1,3 +1,6 @@
+@import url('http://fonts.googleapis.com/css?family=Exo+2:400,300,500');
+@import url('http://fonts.googleapis.com/css?family=Montserrat:700');
+
 @import 'normalize/normalize';
 
 //Inefficient import
@@ -6,9 +9,6 @@ $fa-font-path: '/assets/fonts';
 
 @import 'bourbon/bourbon';
 @import 'neat/neat';
-
-@import url(http://fonts.googleapis.com/css?family=Exo+2:300,400,500);
-@import url(http://fonts.googleapis.com/css?family=Montserrat:700);
 
 // Notes:
 // Remove any redundancies and collect
@@ -26,6 +26,8 @@ $light-gray: #777777; //text-light
 $ivory: #fafafa; //hr
 $light-ivory: #F8F8F8;
 $asphalt: #555;
+$snow: #F0F0F0;
+$light-purple: #5f81e3;
 
 // Fonts
 $exo: 'Exo 2', sans-serif;
@@ -54,6 +56,11 @@ body {
 		color: $asphalt;
 		font-family: $exo;
 	}
+}
+
+a {
+	color: $light-purple;
+	text-decoration: none;
 }
 
 // HEADER
@@ -110,3 +117,40 @@ header {
 		}
 	}
 }
+
+
+// FOOTER
+footer {
+	height: 67px;
+	background: #fff;
+	padding: 25px 0 12px;
+	font-family: $exo;
+	border-top: 1px solid $snow;
+	@include outer-container();
+
+	a {
+		font-weight: $medium;
+	}
+
+	p {
+		@include span-columns(10);
+
+		.muted {
+			color: $light-gray;
+			font-weight: $regular;
+		}
+	}
+
+	aside {
+		@include span-columns(2);
+
+		a:first-of-type {
+			float: left;
+		}
+
+		a:last-of-type {
+			float: right;
+		}
+	}
+}
+
