@@ -14,13 +14,13 @@
       return $.post(this.url("token/new"), function(data) {
         callback(data["token"]);
       });
-    }
+    },
 
     balance: function(token, callback) {
       return $.getJSON(this.url("token/balance/" + token), function(data) {
         callback(data["balance"]);
       });
-    }
+    },
 
     redeem_promocode: function(token, promocode) {
       return $.ajax({
