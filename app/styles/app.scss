@@ -76,7 +76,7 @@ header {
 	min-width: $min-width;
 	@include outer-container();
 
-	section.logo {
+	section:first-of-type {
 		@include span-columns(3);
 
 		img {
@@ -86,7 +86,7 @@ header {
 		}	
 	}
 
-	section.search {
+	section:last-of-type {
 		padding: 8px;
 		margin-top: 1px;
 		background-color: #fff;
@@ -125,7 +125,6 @@ header {
 
 // FOOTER
 footer {
-	height: 67px;
 	background: #fff;
 	padding: 30px 25px;
 	font-family: $exo;
