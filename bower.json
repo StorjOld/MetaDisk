@@ -14,7 +14,6 @@
     "ember-load-initializers": "stefanpenner/ember-load-initializers#0.0.2",
     "ember-qunit-notifications": "^0.0.1",
     "ember-cli-test-loader": "rjackson/ember-cli-test-loader#0.0.2",
-    "normalize-css": "~3.0.1",
     "font-awesome": "~4.1.0"
   }
 }
