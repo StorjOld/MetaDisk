@@ -1,6 +1,112 @@
+@import 'normalize/normalize';
+
+//Inefficient import
+$fa-font-path: '/assets/fonts';
+@import '../../vendor/font-awesome/scss/font-awesome.scss';
+
 @import 'bourbon/bourbon';
 @import 'neat/neat';
 
-html, body {
-  margin: 20px;
+@import url(http://fonts.googleapis.com/css?family=Exo+2:300,400,500);
+@import url(http://fonts.googleapis.com/css?family=Montserrat:700);
+
+// Notes:
+// Remove any redundancies and collect
+// Some of these dependencies are pretty heavy. Can we trim them?
+// Some nesting is too deep, minimize to 3 deep max
+
+// VARIABLES
+// Colors
+$blue: #107FC9;
+$orange: #f39c12;
+$green: #88C425;
+$dark-gray: #324040; //text
+$medium-gray: #E7E7E7;
+$light-gray: #777777; //text-light
+$ivory: #fafafa; //hr
+$light-ivory: #F8F8F8;
+$asphalt: #555;
+
+// Fonts
+$exo: 'Exo 2', sans-serif;
+$montserrat: 'Montserrat', sans-serif;
+
+// Weight
+$regular: 300;
+$medium: 400;
+$bold: 500;
+$very-bold: 700;
+
+// Size
+$min-width: 960px;
+
+// GLOBAL
+body {
+	background: $light-ivory;
+	margin: 0;
+
+	p {
+		color: $dark-gray;
+		font-family: $exo;
+	}
+
+	h1, h3, h4 {
+		color: $asphalt;
+		font-family: $exo;
+	}
+}
+
+// HEADER
+header {
+	background-color: $blue;
+	padding: 30px 25px;
+	border-bottom: 3px solid $medium-gray;
+	text-align: center;
+	min-width: $min-width;
+	@include outer-container();
+
+	section.logo {
+		@include span-columns(3);
+
+		img {
+			width: 187px;
+			height: 40px;
+			float: left;
+		}	
+	}
+
+	section.search {
+		padding: 8px;
+		margin-top: 1px;
+		background-color: #fff;
+		position: relative;
+		font-size: 16px;
+		font-weight: $regular;
+		@include span-columns(7);
+		@include shift(2);
+
+		.search-icon {
+			color: $blue;
+			position: absolute;
+			top: 11px;
+			left: 10px;
+
+			&:before {
+				content: '\f002';
+			}
+		}
+
+		input {
+			font-family: $exo;
+			font-weight: $regular;
+			font-size: inherit;
+			outline: 0;
+			background: none;
+			border-style: none;
+			height: 23px;
+			width: 100%;
+			padding: 3px 0 0 22px;
+			float: left;
+		}
+	}
 }
