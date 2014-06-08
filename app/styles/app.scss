@@ -43,6 +43,7 @@ $very-bold: 700;
 // Size
 $min-width: 960px;
 
+
 // GLOBAL
 body {
 	background: $light-ivory;
@@ -66,6 +67,12 @@ a {
 	color: $light-purple;
 	text-decoration: none;
 }
+
+.muted {
+	color: $muted-gray;
+	font-weight: $regular;
+}
+
 
 // HEADER
 header {
@@ -138,11 +145,6 @@ footer {
 
 	h1 {
 		@include span-columns(10);
-
-		.muted {
-			color: $muted-gray;
-			font-weight: $regular;
-		}
 	}
 
 	aside {
