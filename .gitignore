@@ -4,6 +4,8 @@
 
 #old files
 /old
+old/static/css/main.sass
+old/static/index.html
 
 # dependencies
 /node_modules
