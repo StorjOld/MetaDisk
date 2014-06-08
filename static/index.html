@@ -6,6 +6,7 @@
         <meta name='viewport' content='width=device-width, initial-scale=1'>
         <meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <link rel='stylesheet' href='css/bootstrap.min.css' type='text/css'>
+        <link rel='stylesheet' href='css/local_settings.css'>
         <link rel='stylesheet' href='css/main.css'>
         <link href='http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css' rel='stylesheet'>
         <title>Metadisk - Powered by Storj</title>
@@ -63,7 +64,7 @@
                             </div>
                         </div>
 
-                        <div class="panel-group" id="accordion">
+                        <div class="panel-group account-panel" id="accordion">
                           <div class="panel panel-default">
                             <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#user-info">
                                 <div class="panel-heading">
@@ -226,25 +227,6 @@
                                 </h3>
                             </div>
                             <div class='file-list' id='cont-file-list'>
-                                <!--
-                                $for name in '011927_1280x800_scrot.png 134801_1280x800_scrot.png 012038_1280x800_scrot.png 011749_1280x800_scrot.png ies4linux-latest.tar.gz thoughts.txt -11-033326_1280x800_scrot.png 143159_1280x800_scrot.png imgur-screenshot Tiffany.class 190712_1280x800_scrot.png 121345_1280x800_scrot.png index.html Tiffany.java 210853_1280x800_scrot.png 160657_1280x800_scrot.png lighttpd.conf untitled-link.txt'.split(' ')
-                                    <div class='file-row cf'>
-                                        <div class='left'>
-                                            <div class='name'>
-                                                $if '.' in name:
-                                                    $ splitted = name.split('.')
-                                                    $ fname, ext = '.'.join(splitted[:-1]), splitted[-1]
-                                                    $fname<span class='text-muted'>.$ext</span>
-                                                $else:
-                                                    $name
-                                            </div>
-                                            <div class='hash'><code>$sha256(name)</code></div>
-                                        </div>
-                                        <div class='right'>
-                                            <button data-url='download url' class='btn btn-dl'><i class='fa fa-download'></i> Download</button>
-                                        </div>
-                                    </div>
-                                -->
                             </div>
                             <div class='btn-toolbar' role='toolbar'>
                                 <div class='btn-group' id='cont-pagination'></div>
@@ -262,14 +244,13 @@
                         <p>
                             <a href="http://metadisk.org">Metadisk</a> - Powered by <a href="http://storj.io">Storj</a>
                             <span class="text-muted"> - by using this site you are agreeing to the terms of the <a href="http://opensource.org/licenses/MIT" target="_blank">MIT license</a>.</span>
-                        </p>                   
+                        </p>
                     </div>
                     <div class="col-md-4 col-xs-4 text-right">
                         <p>
                             <a class="footer-link" href="https://github.com/Storj/web-core#api-documentation">API</a>
                             <a class="footer-link footer-space" href="https://github.com/Storj/Metadisk/issues">Report a bug</a>
-                            
-                        </p>                       
+                        </p>
                     </div>
                 </div>
             </div>
