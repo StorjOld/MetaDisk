@@ -1,5 +1,5 @@
 var Router = Ember.Router.extend({
-  location: ENV.locationType
+  location: MetadiskENV.locationType
 });
 
 Router.map(function() {

@@ -14,11 +14,11 @@
   </head>
   <body>
     <script>
-      window.ENV = {{ENV}};
+      window.MetadiskENV = {{ENV}};
     </script>
     <script src="assets/metadisk.js"></script>
     <script>
-      window.Metadisk = require('metadisk/app')['default'].create(ENV.APP);
+      window.Metadisk = require('metadisk/app')['default'].create(MetadiskENV.APP);
     </script>
   </body>
 </html>
