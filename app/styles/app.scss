@@ -23,6 +23,7 @@ $green: #88C425;
 $dark-gray: #324040; //text
 $medium-gray: #E7E7E7;
 $light-gray: #777777; //text-light
+$muted-gray: #999999;
 $ivory: #fafafa; //hr
 $light-ivory: #F8F8F8;
 $asphalt: #555;
@@ -46,6 +47,7 @@ $min-width: 960px;
 body {
 	background: $light-ivory;
 	margin: 0;
+	font-size: 14px;
 
 	p {
 		color: $dark-gray;
@@ -55,6 +57,8 @@ body {
 	h1, h3, h4 {
 		color: $asphalt;
 		font-family: $exo;
+		font-size: inherit;
+		margin: 0;
 	}
 }
 
@@ -123,20 +127,21 @@ header {
 footer {
 	height: 67px;
 	background: #fff;
-	padding: 25px 0 12px;
+	padding: 30px 25px;
 	font-family: $exo;
 	border-top: 1px solid $snow;
+	min-width: $min-width;
 	@include outer-container();
 
 	a {
 		font-weight: $medium;
 	}
 
-	p {
+	h1 {
 		@include span-columns(10);
 
 		.muted {
-			color: $light-gray;
+			color: $muted-gray;
 			font-weight: $regular;
 		}
 	}
