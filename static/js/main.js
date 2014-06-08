@@ -1,13 +1,40 @@
 (function() {
-  var AccessToken, Cookies, GIGABYTE, History, KeyValueStore, LocalStorage, accessTokenCopy, addFile, api, currentPage, downloadUrl, files, gigabytes, gigabytes_ratio, initFilePages, loadPersonal, loadStats, makeHandler, pageCount, percentage, pickFilePage, pickPagination, redeem, selectElementText, showUploadStage, uploadFile, uploadFiles;
+  var accessTokenCopy, addFile, currentPage, downloadUrl, files, gigabytes, gigabytes_ratio, initFilePages, loadPersonal, loadStats, makeHandler, pageCount, percentage, pickFilePage, pickPagination, redeem, selectElementText, showUploadStage, uploadFile, uploadFiles;
 
-  api = function(resource) {
+  var api = function(resource) {
     return API_BASE_URL + "api/" + resource;
   };
 
-  GIGABYTE = 1024 * 1024 * 1024;
+  var accounts_api = {
+    url: function(resource) {
+      return API_BASE_URL + "accounts/" + resource;
+    },
 
-  Cookies = {
+    create: function(callback) {
+      return $.post(this.url("token/new"), function(data) {
+        callback(data["token"]);
+      });
+    }
+
+    balance: function(token, callback) {
+      return $.getJSON(this.url("token/balance/" + token), function(data) {
+        callback(data["balance"]);
+      });
+    }
+
+    redeem_promocode: function(token, promocode) {
+      return $.ajax({
+        type: 'POST',
+        url:  this.url("token/redeem/" + token),
+        data: JSON.stringify({promocode: promocode}),
+        contentType: 'application/json; charset=UTF-8'
+      });
+    }
+  }
+
+  var GIGABYTE = 1024 * 1024 * 1024;
+
+  var Cookies = {
     set: (function(k, v, days) {
       var date, expires, secs;
       if (days) {
@@ -45,7 +72,7 @@
     })
   };
 
-  LocalStorage = {
+  var LocalStorage = {
     set: (function(k, v) {
       localStorage.setItem(k, v);
       return v;
@@ -58,9 +85,9 @@
     })
   };
 
-  KeyValueStore = LocalStorage;
+  var KeyValueStore = LocalStorage;
 
-  History = {
+  var History = {
     add: (function(file) {
       var stuff;
       stuff = this.get();
@@ -75,32 +102,33 @@
     })
   };
 
-  AccessToken = {
+  var AccessToken = {
     get: (function(callback) {
       var token;
       token = KeyValueStore.get("access-token");
       if (token) {
         return callback(token);
       } else {
-        return $.post(api("token/new"), function(data) {
-          token = KeyValueStore.set("access-token", data["token"]);
-          return callback(token);
+        return accounts_api.create(function(token) {
+          KeyValueStore.set("access-token", token);
+          loadPersonal();
+          loadStats();
+          callback(token);
         });
       }
     }),
     set: function(token) {
       KeyValueStore.set("access-token", token);
       loadPersonal();
-      return loadStats();
+      loadStats();
     },
     generate: function() {
-      return $.post(api("token/new"), function(data) {
-        var token;
-        return token = KeyValueStore.set("access-token", data["token"]);
-      }).done(function() {
+      accounts_api.create(function(token) {
+        KeyValueStore.set("access-token", token);
         loadPersonal();
         loadStats();
-        return $.growl({
+
+        $.growl({
           title: "Done!",
           icon: "glyphicon glyphicon-ok",
           message: "Successfully created a new access token."
@@ -115,7 +143,7 @@
           }
         });
       }).fail(function() {
-        return $.growl({
+        $.growl({
           title: "Whoops!",
           icon: "glyphicon glyphicon-remove",
           message: "Failed to create a new access token."
@@ -157,9 +185,9 @@
     return AccessToken.get(function(token) {
       $("#access-token").val(token);
       $("#buy-now").data("custom", token);
-      return $.getJSON(api("token/balance/" + token), function(data) {
-        $("#token-balance").html(gigabytes(data["balance"]));
-        return $("#token-estimated-storage").html(gigabytes(data["balance"] / 3.0));
+      return accounts_api.balance(token, function(balance) {
+        $("#token-balance").html(gigabytes(balance));
+        return $("#token-estimated-storage").html(gigabytes(balance / 3.0));
       });
     });
   };
@@ -416,15 +444,8 @@
   }));
 
   redeem = function(promocode, token) {
-    return $.ajax({
-      type: "POST",
-      url: api("token/redeem/" + token),
-      data: JSON.stringify({
-        promocode: promocode
-      }),
-      contentType: "application/json; charset=utf-8",
-      success: (function() {
-        $('.modal').modal('hide');
+    return accounts_api.redeem_promocode(token, promocode).done(function() {
+       $('.modal').modal('hide');
         $.growl({
         title: "Done!",
         icon: "glyphicon glyphicon-remove",
@@ -440,8 +461,7 @@
           }
         });
         return loadPersonal();
-      }),
-      error: function (XMLHttpRequest, textStatus, errorThrown) {
+      }).fail(function() {
         $('.modal').modal('hide');
         $.growl({
         title: "Whoops!",
@@ -546,29 +566,29 @@
   });
 
   $("#span-dl-link").on("focus", function() {
-    return $(this).select();
+    $(this).select();
   });
 
   $("#span-dl-link").on("click", function() {
-    return $(this).select();
+    $(this).select();
   });
 
   $("#btn-upload-another").on("click", function() {
-    return showUploadStage("upload");
+    showUploadStage("upload");
   });
 
   $("#access-token-refresh").on("click", function() {
-    return AccessToken.generate();
+    AccessToken.generate();
   });
 
   $("#access-token-edit").on("click", function() {
-    return $("#access-token").attr("disabled", false);
+    $("#access-token").attr("disabled", false);
   });
 
   $("#access-token").on("keyup blur", function(e) {
     if (e.type === "blur" || (e.type === "keyup" && e.keyCode === 13)) {
       $("#access-token").attr("disabled", true);
-      return AccessToken.set($("#access-token").val());
+      AccessToken.set($("#access-token").val());
     }
   });
 
