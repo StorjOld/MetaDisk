@@ -103,14 +103,11 @@ header {
 
 		.search-icon {
 			@extend .fa;
+			@extend .fa-search;
 			color: $blue;
 			position: absolute;
 			top: 11px;
 			left: 10px;
-
-			&:before {
-				content: '\f002';
-			}
 		}
 
 		input {
