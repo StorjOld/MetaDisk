@@ -157,12 +157,13 @@ main {
 
 	h1 {
 		cursor: pointer;
-		font-size: 14px;
+		font-size: 18px;
 		font-weight: $very-bold;
 		font-family: $montserrat;
 		color: $blue;
 
 		span {
+			font-size: 14px;
 			float: left;
 		}
 
