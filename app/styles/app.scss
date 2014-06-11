@@ -1,7 +1,7 @@
 @import url('http://fonts.googleapis.com/css?family=Exo+2:400,300,500');
 @import url('http://fonts.googleapis.com/css?family=Montserrat:700');
-@import 'normalize/normalize';
 $fa-font-path: '/assets/fonts';
+@import 'normalize/normalize';
 @import 'font-awesome/font-awesome';
 @import 'bourbon/bourbon';
 @import 'neat/neat';
@@ -10,6 +10,7 @@ $fa-font-path: '/assets/fonts';
 // Remove any redundancies and collect
 // Some of these dependencies are pretty heavy. Can we trim them?
 // Some nesting is too deep, minimize to 3 deep max
+// use media sheets for iphone, ipad, etc.
 
 // VARIABLES
 // Colors
@@ -147,10 +148,31 @@ main {
 
 	section {
 		margin-bottom: 20px;
+		padding: 20px;
 		background-color: $white;
 		border: 1px solid $medium-gray;
 		border-bottom-width: 3px;
-		height: 50px; //TEMP
+		height: 150px; //TEMP
+	}
+
+	h1 {
+		cursor: pointer;
+		font-size: 14px;
+		font-weight: $very-bold;
+		font-family: $montserrat;
+		color: $blue;
+
+		span {
+			float: left;
+		}
+
+		aside {
+			@extend .fa;
+			@extend .fa-chevron-up;
+			font-weight: inherit;
+			font-size: 15px;
+			float: right;
+		}
 	}
 }
 
