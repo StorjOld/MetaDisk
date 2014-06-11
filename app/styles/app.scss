@@ -24,6 +24,7 @@ $ivory: #fafafa; //hr
 $light-ivory: #F8F8F8;
 $asphalt: #555;
 $snow: #F0F0F0;
+$white: #FFFFFF;
 $light-purple: #5f81e3;
 
 // Fonts
@@ -96,10 +97,11 @@ header {
 		position: relative;
 		font-size: 16px;
 		font-weight: $regular;
-		@include span-columns(7);
-		@include shift(2);
+		@include span-columns(8);
+		@include shift(1);
 
 		.search-icon {
+			@extend .fa;
 			color: $blue;
 			position: absolute;
 			top: 11px;
@@ -125,6 +127,32 @@ header {
 	}
 }
 
+// MAIN
+main {
+	min-width: $min-width;
+	margin-top: 40px;
+	margin-bottom: 40px;
+	padding: 0 25px;
+	@include outer-container();
+
+	div {
+		&:first-of-type {
+			@include span-columns(4);
+		}
+
+		&:last-of-type {
+			@include span-columns(8);
+		}
+	}
+
+	section {
+		margin-bottom: 20px;
+		background-color: $white;
+		border: 1px solid $medium-gray;
+		border-bottom-width: 3px;
+		height: 50px; //TEMP
+	}
+}
 
 // FOOTER
 footer {
