@@ -58,6 +58,7 @@ $fa-font-path: '/assets/fonts';
 // Colors
 $blue: #107FC9;
 $orange: #f39c12;
+$dark-orange: #e08e0b;
 $green: #88C425;
 $dark-gray: #324040; //text
 $medium-gray: #E7E7E7;
@@ -73,6 +74,7 @@ $light-purple: #5f81e3;
 // Fonts
 $exo: 'Exo 2', sans-serif;
 $montserrat: 'Montserrat', sans-serif;
+$awesome: 'FontAwesome';
 
 // Weight
 $regular: 300;
@@ -123,7 +125,7 @@ header {
 	min-width: $min-width;
 	@include outer-container();
 
-	section:first-of-type {
+	section.branding {
 		@include span-columns(3);
 
 		img {
@@ -133,7 +135,7 @@ header {
 		}	
 	}
 
-	section:last-of-type {
+	section.search {
 		padding: 8px;
 		margin-top: 1px;
 		background-color: #fff;
@@ -142,15 +144,6 @@ header {
 		font-weight: $regular;
 		@include span-columns(8);
 		@include shift(1);
-
-		.search-icon {
-			@extend .fa;
-			@extend .fa-search;
-			color: $blue;
-			position: absolute;
-			top: 11px;
-			left: 10px;
-		}
 
 		input {
 			font-family: $exo;
@@ -163,6 +156,15 @@ header {
 			width: 100%;
 			padding: 1px 0 0 28px;
 			float: left;
+		}
+
+		label:before {
+			content: '\f002';
+			@extend .fa;
+			color: $blue;
+			position: absolute;
+			top: 11px;
+			left: 10px;
 		}
 	}
 }
@@ -208,6 +210,55 @@ main {
 			font-weight: inherit;
 			font-size: 15px;
 			float: right;
+		}
+	}
+}
+
+// UPLOAD SECTION
+section.upload {
+	button {
+		width: 100%;
+		background-color: $orange;
+		color: $white;
+		font-weight: $very-bold;
+		border: none;
+		border-bottom: 3px solid $dark-orange;
+		font-family: $montserrat;
+		font-size: 18px;
+		padding: 12px 0 7px 0;
+		height: 45px;
+		margin-bottom: 50px;
+
+		&:before {
+			content: '\f0ee';
+			padding-right: 5px;
+			@extend .fa;
+		}
+	}
+
+	button:after {
+		content: '\AOR USE DRAG-AND-DROP';
+		white-space: pre;
+		font-size: 10px;
+		font-weight: $regular;
+		color: $dark-gray;
+		font-family: $exo;
+		position: relative;
+		top: 19px;
+	}
+
+	h3 {
+		font-family: $exo;
+		font-weight: $medium;
+
+		span {
+			float: left;
+		}
+
+		aside {
+			float: right;
+			color: $light-gray;
+			font-weight: $regular;
 		}
 	}
 }
