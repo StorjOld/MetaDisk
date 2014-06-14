@@ -1,4 +1,8 @@
+// Vendor configuration
 $fa-font-path: '/assets/fonts';
+$max-width: 1200px;
+
+// Vendor import
 @import 'normalize/normalize';
 @import 'font-awesome/font-awesome';
 @import 'bourbon/bourbon';
@@ -85,7 +89,6 @@ $very-bold: 700;
 
 // Size
 $min-width: 960px;
-
 
 // GLOBAL
 body {
@@ -255,20 +258,20 @@ section {
 
 // GLOBAL PROGRESS
 progress[value] {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  border: none;
-  width: 100%;
-  height: 20px;
-  margin-bottom: 20px;
-  color: $blue //IE10
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	border: none;
+	width: 100%;
+	height: 20px;
+	margin-bottom: 20px;
+	color: $blue //IE10
 }
 
 progress[value]::-webkit-progress-bar {
-  background-color: $light-ivory;
-  border-radius: 3px;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+	background-color: $light-ivory;
+	border-radius: 3px;
+	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 progress[value]::-webkit-progress-value {
@@ -281,18 +284,18 @@ progress[value]::-webkit-progress-value {
 }
 
 progress[value]::-moz-progress-bar { 
-  background-image: -moz-linear-gradient(45deg, rgba(255,255,255,0.15) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.15) 75%, transparent 75%, transparent);
-  border-radius: 2px; 
-  background-size: 40px 40px;
-  background-color: $blue;
+	background-image: -moz-linear-gradient(45deg, rgba(255,255,255,0.15) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.15) 75%, transparent 75%, transparent);
+	border-radius: 2px; 
+	background-size: 40px 40px;
+	background-color: $blue;
 }
 
 @-webkit-keyframes animate-stripes {
-   100% { background-position: -100px 0px; }
+	100% { background-position: -100px 0px; }
 }
 
 @keyframes animate-stripes {
-   100% { background-position: -100px 0px; }
+	100% { background-position: -100px 0px; }
 }
 
 // UPLOAD SECTION
