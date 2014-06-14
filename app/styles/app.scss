@@ -169,7 +169,7 @@ header {
 	}
 }
 
-// MAIN
+// MAIN 
 main {
 	min-width: $min-width;
 	margin-top: 40px;
@@ -179,11 +179,10 @@ main {
 
 	section {
 		margin-bottom: 20px;
-		padding: 20px;
+		padding: 25px;
 		background-color: $white;
 		border: 1px solid $medium-gray;
 		border-bottom-width: 3px;
-		height: 150px; //TEMP
 		@include span-columns(4);
 
 		&:nth-of-type(2) {
@@ -250,6 +249,7 @@ section.upload {
 	h3 {
 		font-family: $exo;
 		font-weight: $medium;
+		margin: 15px 0 20px 0;
 
 		span {
 			float: left;
