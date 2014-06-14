@@ -37,7 +37,7 @@ You can also see test results in Chrome at [localhost:4200/tests](http://localho
 
 To build minified production files, run `ember build --environment=production`.
 
-This will create minified JavaScript and CSS files in the `dist` folder
+This will create minified JavaScript and CSS files in the `dist` folder. Assets in the `public` folder will also need to be available to clients (e.g. some.tld/assets/images/logo.png).
 
 
 Installation
