@@ -12,7 +12,6 @@ $max-width: 1200px;
 // Remove any redundancies and collect
 // Some nesting is too deep, minimize to 3 deep max
 // use media sheets for iphone, ipad, etc.
-// use :hover:before for tooltip
 
 // FONTS
 @font-face {
@@ -351,11 +350,11 @@ section.upload {
 		border-radius: 4px;
 		bottom: 24px;
 		z-index: 8;
-		
+		@include animation(fadeIn 250ms ease-in-out);
 	}
 
 	&:hover:before {
-		border:solid;
+		border: solid;
 		border-color: $blue80 transparent;
 		border-width: 6px 6px 0 6px;
 		content: '';
@@ -364,6 +363,7 @@ section.upload {
 		right: 3%;
 		bottom: 18px;
 		z-index: 9;
+		@include animation(fadeIn 250ms ease-in-out);
 	}
 
 	&.address:hover:after {
@@ -373,7 +373,20 @@ section.upload {
 	&.encryption:hover:after {
 		content: 'Your file is encrypted with its own hash. Note: Don\0027t rely on this prototype for file security. Encryption/decryption is currently handled by the server.';
 	}
+
+	&.bandwidth:hover:after {
+		content: 'Bandwidth is consumed when uploading or downloading files based on the size of files transferred.';
+	}
+
+	&.storage:hover:after {
+		content: 'Your storage capacity is based on the bandwidth you use. On upload the file will use 3x the filesize. Downloads will also spend bandwidth.';
+	}
+
+	&.token:hover:after {
+		content: 'This is your private access token for your bandwidth and files. Please don\0027t lose it or share it with anyone. If you lose your token, you will also lose the bandwidth credits stored on it. Only redeemable at this node.';
+	}
 }
+@include keyframes(fadeIn) {from { opacity: 0; } to { opacity: 1;}}
 
 .help-icon:after {
 	content: '\f059';
