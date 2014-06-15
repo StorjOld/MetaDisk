@@ -200,6 +200,7 @@ main {
 	margin-top: 40px;
 	margin-bottom: 40px;
 	padding: 0 25px;
+	position: relative;
 	@include outer-container();
 
 	section {
