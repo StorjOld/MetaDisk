@@ -61,6 +61,7 @@ $max-width: 1200px;
 // VARIABLES
 // Colors
 $blue: #107FC9;
+$blue80: rgba(16, 127, 201, 0.8);
 $orange: #f39c12;
 $dark-orange: #e08e0b;
 $green: #88C425;
@@ -330,6 +331,57 @@ section.upload {
 		position: relative;
 		top: 19px;
 	}
+}
+
+// HELP
+.with-help {
+	display: inline;
+	position: relative;
+
+	&:hover:after {
+		text-align: center;
+		font-family: $exo;
+		color: $white;
+		background-color: $blue80;
+		font-size: 14px;
+		padding: 15px;
+		width: 170px;
+		display: block;
+		position: absolute;
+		border-radius: 4px;
+		bottom: 24px;
+		z-index: 8;
+		
+	}
+
+	&:hover:before {
+		border:solid;
+		border-color: $blue80 transparent;
+		border-width: 6px 6px 0 6px;
+		content: '';
+		display: block;
+		position: absolute;
+		right: 3%;
+		bottom: 18px;
+		z-index: 9;
+	}
+
+	&.address:hover:after {
+		content: 'Bandwidth is consumed when uploading or downloading files based on the size of files transferred.';
+	}
+
+	&.encryption:hover:after {
+		content: 'Your file is encrypted with its own hash. Note: Don\0027t rely on this prototype for file security. Encryption/decryption is currently handled by the server.';
+	}
+}
+
+.help-icon:after {
+	content: '\f059';
+	color: $blue;
+	margin-left: 5px;
+	width: 15px;
+	cursor: pointer;
+	@extend .fa;	
 }
 
 // FOOTER
