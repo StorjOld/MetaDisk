@@ -226,7 +226,26 @@ main {
 
 		&.uploaded-files {
 			padding-top: 34px;
+			max-height: 1396px;
+			overflow-y: auto;
+			word-break: break-all; //NEEDED?
 			@include span-columns(8);
+		}
+
+		&.uploaded-files:before {
+			content: 'UPLOADED FILES';
+			font-size: 18px;
+			font-weight: $very-bold;
+			font-family: $montserrat;
+			color: $blue;
+			content: 'UPLOADED FILES';
+			position: absolute;
+			@include background(linear-gradient($white 0, $white 75%, transparent 100%) bottom no-repeat);
+			height: 50px;
+			padding-top: 37px;
+			margin-top: -34px;
+			width: 59%;
+			min-width: 550px;
 		}
 	}
 
