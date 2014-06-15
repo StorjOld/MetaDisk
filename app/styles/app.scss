@@ -98,7 +98,7 @@ $bold: 500;
 $very-bold: 700;
 
 // Size
-$min-width: 417px;
+$min-width: 320px;
 
 // GLOBAL
 body {
@@ -496,7 +496,8 @@ section.your-account {
 		padding: 0;
 		margin: 0;
 		border: 1px solid $ash-gray;
-		width: 95%;
+		width: 85%;
+		max-width: 235px;
 		height: 34px;
 		box-shadow: inset 0 1px 1px $black0p75;
 		background-color: $medium-gray;
@@ -552,11 +553,12 @@ section.your-account {
 
 	fieldset.token-select div:last-of-type {
 		float: left;
-		width: 5%;
+		width: 15%;
+		max-width: 32px;
 		@extend .fa;
 		cursor: pointer;
 
-		&:before {
+		&:after {
 			min-width: 10px;
 			content: '\f1b8';
 			pointer-events: none;
@@ -573,7 +575,7 @@ section.your-account {
 			height: 9px;
 		}
 
-		&:hover:before {
+		&:hover:after {
 			background-color: $medium-gray;
 			@include transition(all 120ms ease-in);
 		}
