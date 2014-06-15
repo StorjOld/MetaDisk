@@ -9,7 +9,7 @@ $max-width: 1200px;
 @import 'neat/neat';
 
 // Notes:
-// Remove any redundancies and collect
+// Remove any redundancies and collect; colors?
 // Some nesting is too deep, minimize to 3 deep max
 // use media sheets for iphone, ipad, etc.
 
@@ -61,6 +61,7 @@ $max-width: 1200px;
 // Colors
 $blue: #107FC9;
 $blue80: rgba(16, 127, 201, 0.8);
+$light-orange: #f4a62a;
 $orange: #f39c12;
 $black: #000000;
 $black0: rgba(0, 0, 0, 0);
@@ -334,6 +335,13 @@ section.upload {
 		position: relative;
 		top: 19px;
 	}
+
+	button:hover,
+	button:active,
+	button:focus {
+		background-color: $light-orange;
+		outline: none;
+	}
 }
 
 // MY ACCOUNT SELECT
@@ -399,7 +407,7 @@ section.my-account {
 		}
 
 	    select:focus {
-	    		outline: none;
+	    	outline: none;
 	    }
 	}
 
@@ -477,6 +485,10 @@ section.my-account fieldset {
 			background-color: $lime;
 			@include transition(background-color 120ms ease-in);
 		}
+	}
+
+	button:focus {
+		outline: none;
 	}
 }
 
