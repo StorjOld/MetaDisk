@@ -203,16 +203,30 @@ main {
 	@include outer-container();
 
 	section {
-		margin-bottom: 20px;
-		padding: 25px;
-		background-color: $white;
-		border: 1px solid $medium-gray;
-		border-bottom-width: 3px;
 		@include span-columns(4);
 
-		&:nth-of-type(2) {
+		&.upload,
+		&.your-account,
+		&.sharing,
+		&.node-info,
+		&.uploaded-files {
+			margin-bottom: 20px;
+			padding: 25px;
+			background-color: $white;
+			border: 1px solid $medium-gray;
+			border-bottom-width: 3px;
+		}
+		
+		&.upload,
+		&.your-account,
+		&.sharing,
+		&.node-info {
+			@include span-columns(4 of 4);
+		}
+
+		&.uploaded-files {
+			padding-top: 34px;
 			@include span-columns(8);
-			@include omega();
 		}
 	}
 

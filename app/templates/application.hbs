@@ -8,100 +8,102 @@
 </header>
 <!-- status messages should pop in here as opposed to way down on bottom right-->
 <main>
-	<section class="upload">
-		<button>UPLOAD</button>
-		<h3>
-			<span>File Size Limit</span>
-			<aside>1.00 GB</aside>
-		</h3>
+	<section class="sidebar">
+		<section class="upload">
+			<button>UPLOAD</button>
+			<h3>
+				<span>File Size Limit</span>
+				<aside>1.00 GB</aside>
+			</h3>
+		</section>
+		<section class="your-account">
+			<h1>
+				<span>YOUR ACCOUNT</span>
+				<aside></aside>
+			</h1>
+			<h3>
+				<span class="with-help token"><span class="help-icon">Access Token</span></span>
+			</h3>
+			<!-- emberfy this select + enable get new token -->
+			<fieldset class="token-select">
+				<div>
+					<select>
+					  <option value="QKhN5xN6OVWUmW9e">QKhN5xN6OVWUmW9e</option>
+					  <option value="rtW6fj6sET6x7tl9">rtW6fj6sET6x7tl9</option>
+					  <option value="T5dlNZONVTyBhNX5">T5dlNZONVTyBhNX5</option>
+					</select>
+				</div>
+				<div></div>
+			</fieldset>
+			<h3>
+				<span class="with-help bandwidth"><span class="help-icon">Your Bandwidth</span></span>
+				<aside>0.10 GB</aside>
+			</h3>
+			<h3>
+				<span class="with-help storage"><span class="help-icon">Estimated Storage</span></span>
+				<aside>0.03 GB</aside>
+			</h3>
+			<fieldset>
+				<button>FREE SPACE</button>
+				<button>BUY SPACE</button>
+			</fieldset>
+		</section>
+		<section class="sharing">
+			<h1>
+				<span>SHARING</span>
+				<aside></aside>
+			</h1>
+			<h3>
+				<span class="with-help address"><span class="help-icon">Data Address</span></span>
+			</h3>
+			<code>D8B9xbwN6696tw9UbYmqvZNLNZ4MH9HSdE</code>
+			<h3>
+				<span class="with-help encryption"><span class="help-icon">Encryption</span></span>
+				<aside>Convergent Encryption</aside>
+			</h3>
+		</section>
+		<section class="node-info">
+			<h1>
+				<span>NODE INFORMATION</span>
+				<aside></aside>
+			</h1>
+			<h3>
+				<span>Upload Bandwidth</span>
+				<aside>3.28/300 GB</aside>
+			</h3>
+			<progress max="100" value="1"></progress>
+			<h3>
+				<span>Download Bandwidth</span>
+				<aside>16.68/700 GB</aside>
+			</h3>
+			<progress max="100" value="2"></progress>
+			<h3>
+				<span>Cache Used</span>
+				<aside>4.39/10.00 GB</aside>
+			</h3>
+			<progress max="100" value="44"></progress>
+			<h3>
+				<span>Files Syncing to Cloud</span>
+				<aside>0 (0.00 GB)</aside>
+			</h3>
+			<h3>
+				<span>Files Syncing to Block</span>
+				<aside>0 (0.00 GB)</aside>
+			</h3>
+			<h3>
+				<span>Datacoin Address</span>
+				<aside>38.25 DTC</aside>
+			</h3>
+			<code>DFtXnb2JcBWVYmt8oESCuvh4ekbMLkDHSy</code>
+		</section>
 	</section>
-	<section>
+	<section class="uploaded-files">
 		<h1>UPLOADED FILES</h1>
 		<!-- keep existing setup for now, however instead of single file
 		loading in upload, upload multiple files here with progress bar for
 		each, can have status, etc. stored in localstorage. download, etc.
 		buttons only available once file upload complete. also, make row
 		change color with status of upload -->
-	</section>
-	<section class="your-account">
-		<h1>
-			<span>YOUR ACCOUNT</span>
-			<aside></aside>
-		</h1>
-		<h3>
-			<span class="with-help token"><span class="help-icon">Access Token</span></span>
-		</h3>
-		<!-- emberfy this select + enable get new token -->
-		<fieldset class="token-select">
-			<div>
-				<select>
-				  <option value="QKhN5xN6OVWUmW9e">QKhN5xN6OVWUmW9e</option>
-				  <option value="rtW6fj6sET6x7tl9">rtW6fj6sET6x7tl9</option>
-				  <option value="T5dlNZONVTyBhNX5">T5dlNZONVTyBhNX5</option>
-				</select>
-			</div>
-			<div></div>
-		</fieldset>
-		<h3>
-			<span class="with-help bandwidth"><span class="help-icon">Your Bandwidth</span></span>
-			<aside>0.10 GB</aside>
-		</h3>
-		<h3>
-			<span class="with-help storage"><span class="help-icon">Estimated Storage</span></span>
-			<aside>0.03 GB</aside>
-		</h3>
-		<fieldset>
-			<button>FREE SPACE</button>
-			<button>BUY SPACE</button>
-		</fieldset>
-	</section>
-	<section class="sharing">
-		<h1>
-			<span>SHARING</span>
-			<aside></aside>
-		</h1>
-		<h3>
-			<span class="with-help address"><span class="help-icon">Data Address</span></span>
-		</h3>
-		<code>D8B9xbwN6696tw9UbYmqvZNLNZ4MH9HSdE</code>
-		<h3>
-			<span class="with-help encryption"><span class="help-icon">Encryption</span></span>
-			<aside>Convergent Encryption</aside>
-		</h3>
-	</section>
-	<section class="node-info">
-		<h1>
-			<span>NODE INFORMATION</span>
-			<aside></aside>
-		</h1>
-		<h3>
-			<span>Upload Bandwidth</span>
-			<aside>3.28/300 GB</aside>
-		</h3>
-		<progress max="100" value="1"></progress>
-		<h3>
-			<span>Download Bandwidth</span>
-			<aside>16.68/700 GB</aside>
-		</h3>
-		<progress max="100" value="2"></progress>
-		<h3>
-			<span>Cache Used</span>
-			<aside>4.39/10.00 GB</aside>
-		</h3>
-		<progress max="100" value="44"></progress>
-		<h3>
-			<span>Files Syncing to Cloud</span>
-			<aside>0 (0.00 GB)</aside>
-		</h3>
-		<h3>
-			<span>Files Syncing to Block</span>
-			<aside>0 (0.00 GB)</aside>
-		</h3>
-		<h3>
-			<span>Datacoin Address</span>
-			<aside>38.25 DTC</aside>
-		</h3>
-		<code>DFtXnb2JcBWVYmt8oESCuvh4ekbMLkDHSy</code>
 	</section>
 </main>
 <footer>
