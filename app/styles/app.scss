@@ -79,6 +79,7 @@ $light-ivory: #F8F8F8;
 $asphalt: #555;
 $snow: #F0F0F0;
 $white: #FFFFFF;
+$white0: rgba(255, 255, 255, 0);
 $light-purple: #5f81e3;
 
 // Fonts
@@ -241,7 +242,7 @@ main {
 			color: $blue;
 			content: 'UPLOADED FILES';
 			position: absolute;
-			@include background(linear-gradient($white 0, $white 75%, transparent 100%) bottom no-repeat);
+			@include background(linear-gradient($white 0, $white 75%, $white0 100%) bottom no-repeat);
 			height: 50px;
 			padding-top: 37px;
 			margin-top: -34px;
