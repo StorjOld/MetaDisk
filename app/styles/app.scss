@@ -469,7 +469,7 @@ section.upload {
 
 // UPLOADED FILE ITEM
 section.file {
-	margin-bottom: 25px;
+	margin-bottom: 35px;
 	@include span-columns(12 of 12);
 
 	&:first-of-type {
@@ -477,9 +477,60 @@ section.file {
 	}
 
 	h1 {
+		padding-bottom: 10px;
+		cursor: default;
 		font-weight: $medium;
 		font-size: 18px;
 		color: $blue;
+	}
+
+	fieldset {
+		margin: 0;
+		padding: 0;
+		border: none;
+	}
+
+	button {
+		cursor: pointer;
+		background-color: $white;
+		padding: 8px 18px;
+		border-style: solid;
+		border-width: 2px 2px 3px 2px;
+		letter-spacing: 1px;
+		font-size: 12px;
+		font-family: $montserrat;
+		border-radius: 3px;
+		@include transition(all 120ms ease-out);
+		float: left;
+		color: $blue;
+		border-color: $blue;
+		margin-right: 20px;
+
+		&:hover {
+			color: $white;
+			background-color: $blue;
+			@include transition(all 120ms ease-in);
+		}
+
+		&:before {
+			position: relative;
+			right: 4px;
+		}
+
+		&:first-of-type:before {
+			content: '\f084';
+			@extend .fa;
+		}
+
+		&:nth-of-type(2):before {
+			content: '\f0ea';
+			@extend .fa;
+		}
+
+		&:last-of-type:before {
+			content: '\f019';
+			@extend .fa;
+		}
 	}
 }
 
