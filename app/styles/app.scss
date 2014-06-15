@@ -195,7 +195,7 @@ header {
 			font-family: $exo;
 			font-weight: $regular;
 			font-size: inherit;
-			outline: 0;
+			outline: none;
 			background: none;
 			border-style: none;
 			height: 23px;
@@ -508,6 +508,11 @@ section.file {
 			position: relative;
 			right: 4px;
 			@extend .fa;
+		}
+
+		&:active {
+			outline: none;
+			outline: 0
 		}
 
 		&:first-of-type:before {
