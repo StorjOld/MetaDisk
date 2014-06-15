@@ -61,6 +61,7 @@ $max-width: 1200px;
 // Colors
 $blue: #107FC9;
 $blue80: rgba(16, 127, 201, 0.8);
+$blue10: rgba(16, 127, 201, 0.1);
 $light-orange: #f4a62a;
 $orange: #f39c12;
 $black: #000000;
@@ -302,7 +303,7 @@ main {
 			position: relative;
 			padding-top: 34px;
 			min-height: 100px;
-			max-height: 1396px;
+			max-height: 1412px;
 			overflow-y: auto;
 			@include span-columns(8);
 
@@ -317,25 +318,6 @@ main {
 			font-weight: $very-bold;
 			font-family: $montserrat;
 			color: $blue;
-			position: absolute;
-			z-index: 10;
-			@include background(linear-gradient($white 0, $white 75%, $white0 100%) bottom no-repeat);
-			height: 50px;
-			padding-top: 37px;
-			left: 26px;
-			margin-top: -34px;
-			@include media(min-width 993px) {
-				width: 59.9%;
-			}
-			@include media(min-width 771px max-width 992px) {
-				width: 90%;
-			}
-			@include media(min-width 592px max-width 770px) {
-				width: 87%;
-			}
-			@include media(max-width 591px) {
-				width: 82%;
-			}
 		}
 	}
 
@@ -469,11 +451,13 @@ section.upload {
 
 // UPLOADED FILE ITEM
 section.file {
-	margin-bottom: 35px;
+	height: 135px;
+	padding-top: 30px;
+	padding-left: 25px;
 	@include span-columns(12 of 12);
 
-	&:first-of-type {
-		margin-top: 50px;
+	&:nth-of-type(even) {
+		background-color: $blue10; 
 	}
 
 	h1 {
