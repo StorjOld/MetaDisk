@@ -269,6 +269,7 @@ main {
 
 	section {
 		@include span-columns(4);
+		position: relative;
 
 		@include media(max-width 992px) {
 			@include span-columns(12);
@@ -298,10 +299,11 @@ main {
 		}
 
 		&.uploaded-files {
+			position: relative;
 			padding-top: 34px;
+			min-height: 100px;
 			max-height: 1396px;
 			overflow-y: auto;
-			word-break: break-all; //NEEDED?
 			@include span-columns(8);
 
 			@include media(max-width 992px) {
@@ -316,9 +318,11 @@ main {
 			font-family: $montserrat;
 			color: $blue;
 			position: absolute;
+			z-index: 10;
 			@include background(linear-gradient($white 0, $white 75%, $white0 100%) bottom no-repeat);
 			height: 50px;
 			padding-top: 37px;
+			left: 26px;
 			margin-top: -34px;
 			@include media(min-width 993px) {
 				width: 59.9%;
@@ -460,6 +464,22 @@ section.upload {
 	button:focus {
 		background-color: $light-orange;
 		outline: none;
+	}
+}
+
+// UPLOADED FILE ITEM
+section.file {
+	margin-bottom: 25px;
+	@include span-columns(12 of 12);
+
+	&:first-of-type {
+		margin-top: 50px;
+	}
+
+	h1 {
+		font-weight: $medium;
+		font-size: 18px;
+		color: $blue;
 	}
 }
 
