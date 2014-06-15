@@ -1,13 +1,3 @@
-// Vendor configuration
-$fa-font-path: '/assets/fonts';
-$max-width: 1200px;
-
-// Vendor import
-@import 'normalize/normalize';
-@import 'font-awesome/font-awesome';
-@import 'bourbon/bourbon';
-@import 'neat/neat';
-
 // Notes:
 // Remove any redundancies and collect; colors?
 // font awesome still loads unnecessary parts
@@ -16,7 +6,6 @@ $max-width: 1200px;
 // FONTS
 @font-face {
     font-family: 'Montserrat';
-    font-style: normal;
   	font-weight: 700;
     src: url('/assets/fonts/montserrat-bold-webfont.eot');
     src: local('Montserrat-Bold'), 
@@ -31,13 +20,13 @@ $max-width: 1200px;
     src: url('/assets/fonts/exo2-light-webfont.eot');
     src: local('Exo 2 Light'), 
          local('Exo2-Light'), 
-         url('/assets/fonts/exo2-light-webfont.ttf') format('truetype'),
-         url('/assets/fonts/exo2-light-webfont.svg#font') format('svg'); 
+         url('/assets/fonts/exo2-light.woff') format('woff'),
+         url('/assets/fonts/exo2-light-webfont.svg#font') format('svg'),
+         url('/assets/fonts/exo2-light.ttf') format('truetype'); 
 }
 
 @font-face {
     font-family: 'Exo 2';
-    font-style: normal;
   	font-weight: 500;
     src: url('/assets/fonts/exo2-medium-webfont.eot');
     src: local('Exo 2 Medium'), 
@@ -48,7 +37,6 @@ $max-width: 1200px;
 
 @font-face {
     font-family: 'Exo 2';
-    font-style: normal;
   	font-weight: 400;
     src: url('/assets/fonts/exo2-regular-webfont.eot');
     src: local('Exo 2 Regular'), 
@@ -56,6 +44,16 @@ $max-width: 1200px;
          url('/assets/fonts/exo2-regular-webfont.ttf') format('truetype'),
          url('/assets/fonts/exo2-regular-webfont.svg#font') format('svg'); 
 }
+
+// Vendor configuration
+$fa-font-path: '/assets/fonts';
+$max-width: 1200px;
+
+// Vendor import
+@import 'normalize/normalize';
+@import 'font-awesome/font-awesome';
+@import 'bourbon/bourbon';
+@import 'neat/neat';
 
 // VARIABLES
 // Colors
