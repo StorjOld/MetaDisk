@@ -502,21 +502,45 @@ section.file {
 		&:before {
 			position: relative;
 			right: 4px;
+			@extend .fa;
 		}
 
 		&:first-of-type:before {
 			content: '\f084';
-			@extend .fa;
+		}
+
+		&:first-of-type:after {
+			content: 'COPY HASH/KEY';
 		}
 
 		&:nth-of-type(2):before {
 			content: '\f0ea';
-			@extend .fa;
+		}
+
+		&:nth-of-type(2):after {
+			content: 'COPY URL';
 		}
 
 		&:last-of-type:before {
 			content: '\f019';
-			@extend .fa;
+		}
+
+		&:last-of-type:after {
+			content: 'DOWNLOAD';
+		}
+
+		@include media(max-width 615px) {
+			margin-right: 12px;
+			
+			&:last-of-type:after,
+			&:first-of-type:after,
+			&:nth-of-type(2):after {
+				content: '';
+			}
+
+			&:before {
+				right: 0;
+			}
 		}
 	}
 }
