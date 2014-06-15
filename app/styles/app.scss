@@ -453,6 +453,7 @@ section.file {
 	padding-top: 30px;
 	padding-left: 25px;
 	@include span-columns(12 of 12);
+	@include transition(all 300ms ease-out);
 
 	&:nth-of-type(even) {
 		background-color: $blue10; 
@@ -466,6 +467,10 @@ section.file {
 
 		&:before {
 			content: '\f077';
+			margin-right: 6px;
+			font-size: 12px;
+			position: relative;
+			bottom: 3px;
 			@extend .fa;
 		}
 
@@ -530,8 +535,8 @@ section.file {
 		}
 
 		@include media(max-width 615px) {
-			margin-right: 12px;
-			
+			margin-right: 11px;
+
 			&:last-of-type:after,
 			&:first-of-type:after,
 			&:nth-of-type(2):after {
@@ -542,6 +547,20 @@ section.file {
 				right: 0;
 			}
 		}
+	}
+
+	&.closed {
+		height: 75px;
+		
+		fieldset {
+			display: none;
+		}
+
+		h1:before {
+			content: '\f078';
+		}
+
+		@include transition(all 300ms ease-in);
 	}
 }
 
