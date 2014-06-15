@@ -460,10 +460,15 @@ section.file {
 
 	h1 {
 		padding-bottom: 10px;
-		cursor: default;
 		font-weight: $medium;
 		font-size: 18px;
 		color: $blue;
+
+		&:before {
+			content: '\f077';
+			@extend .fa;
+		}
+
 	}
 
 	fieldset {
@@ -529,8 +534,7 @@ section.your-account {
 		padding: 0;
 		margin: 0;
 		border: 1px solid $ash-gray;
-		width: 85%;
-		max-width: 235px;
+		width: 90%;
 		height: 34px;
 		box-shadow: inset 0 1px 1px $black0p75;
 		background-color: $medium-gray;
@@ -585,9 +589,8 @@ section.your-account {
 	}
 
 	fieldset.token-select div:last-of-type {
-		float: left;
-		width: 15%;
-		max-width: 32px;
+		float: right;
+		width: 10%;
 		@extend .fa;
 		cursor: pointer;
 
