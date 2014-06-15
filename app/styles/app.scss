@@ -1,6 +1,6 @@
 // Notes:
 // Remove any redundancies and collect; colors?
-// font awesome still loads unnecessary parts
+// don't load unused scss assets
 // Some nesting is too deep, minimize to 3 deep max
 
 // FONTS
@@ -268,6 +268,7 @@ main {
 
 	section {
 		@include span-columns(4);
+		max-height: 575px;
 		position: relative;
 
 		@include media(max-width 992px) {
@@ -290,6 +291,7 @@ main {
 		&.your-account,
 		&.sharing,
 		&.node-info {
+			overflow: hidden;
 			@include span-columns(4 of 4);
 
 			@include media(max-width 992px) {
@@ -317,6 +319,16 @@ main {
 			font-family: $montserrat;
 			color: $blue;
 		}
+
+		&.closed {
+			@include transition(max-height 500ms ease-in-out);
+			max-height: 70px;
+			h1 aside:before {
+				content: '\f078';
+			}
+		}
+
+		@include transition(max-height 500ms ease-in-out);
 	}
 
 	h1 {
