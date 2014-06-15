@@ -10,6 +10,7 @@ $max-width: 1200px;
 
 // Notes:
 // Remove any redundancies and collect; colors?
+// font awesome still loads unnecessary parts
 // Some nesting is too deep, minimize to 3 deep max
 
 // FONTS
@@ -148,7 +149,12 @@ header {
 	border-bottom: 3px solid $medium-gray;
 	text-align: center;
 	min-width: $min-width;
+	height: 105px;
+	position: relative;
 	@include outer-container();
+	@include media(max-width 992px) {
+		height: 165px;
+	}
 
 	section.branding {
 		@include span-columns(3);
@@ -203,6 +209,36 @@ header {
 			top: 11px;
 			left: 10px;
 		}
+	}
+
+	&:after {
+		// for alerts
+		opacity: 0;
+		color: $white0;
+		content: '\f06a This is an important announcement yadda yadda.';
+		width: 100%;
+		position: relative;
+		top: 38px;
+		height: 21px;
+		padding-top: 7px;
+		@include transition(all 500ms ease-out);
+		@extend .fa;
+	}
+
+	&.success:after,
+	&.error:after {
+		opacity: 1;
+		@include transition(all 500ms ease-in);
+	}
+
+	&.success:after {
+		color: white;
+		background: red;
+	}
+
+	&.error:after {
+		color: white;
+		background: red;
 	}
 }
 
@@ -263,14 +299,23 @@ main {
 			font-weight: $very-bold;
 			font-family: $montserrat;
 			color: $blue;
-			content: 'UPLOADED FILES';
 			position: absolute;
 			@include background(linear-gradient($white 0, $white 75%, $white0 100%) bottom no-repeat);
 			height: 50px;
 			padding-top: 37px;
 			margin-top: -34px;
-			width: 59%;
-			min-width: 550px;
+			@include media(min-width 993px) {
+				width: 59.9%;
+			}
+			@include media(min-width 771px max-width 992px) {
+				width: 90%;
+			}
+			@include media(min-width 592px max-width 770px) {
+				width: 87%;
+			}
+			@include media(max-width 591px) {
+				width: 82%;
+			}
 		}
 	}
 
