@@ -291,7 +291,6 @@ main {
 		&.your-account,
 		&.sharing,
 		&.node-info {
-			overflow: hidden;
 			@include span-columns(4 of 4);
 
 			@include media(max-width 992px) {
@@ -322,6 +321,7 @@ main {
 
 		&.closed {
 			@include transition(max-height 500ms ease-in-out);
+			overflow: hidden;
 			max-height: 70px;
 			h1 aside:before {
 				content: '\f078';
@@ -749,7 +749,6 @@ section.your-account fieldset {
 		position: absolute;
 		border-radius: 4px;
 		bottom: 24px;
-		z-index: 8;
 		@include animation(fadeIn 250ms ease-in-out);
 	}
 
