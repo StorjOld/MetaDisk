@@ -4,7 +4,7 @@ Installation
 This project is just a set of static files. To get it running, just point nginx
 (or your favourite web server) to it, and make sure that you set up
 [web-core](https://github.com/Storj/web-core) correctly and that it is running
-on the domain as BitCumulus.
+on the domain as Metadisk.
 
 
 #### Sample nginx site
@@ -16,11 +16,11 @@ The following site definition would work:
 server {
     listen 80;
     server_name storj.example.com;
-    root /path/to/BitCumulus/static/;
+    root /path/to/Metadisk/static/;
     client_max_body_size 510M;
 
-    access_log /var/log/nginx/bitcumulus.access.log;
-    error_log /var/log/nginx/bitcumulus.error.log;
+    access_log /var/log/nginx/metadisk.access.log;
+    error_log /var/log/nginx/metadisk.error.log;
 
     location / {
         try_files $uri/index.html $uri $uri.html @webcore;
