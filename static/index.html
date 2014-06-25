@@ -127,14 +127,57 @@
 
                         <div class="panel-group" id="accordion">
                           <div class="panel panel-default">
-                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#sharing-info">
+                            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#sharing-info">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        Sharing 
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="sharing-info" class="panel-collapse collapse ">
+                              <div class="panel-body">
+                                <hr class="panel-heading-hr">
+                                <div class='panel-progress'>
+                                    <div class='cf'>
+                                        <p class='stats-label pull-left'>Data Address <i class='fa fa-question-circle tooltip-icon' data-toggle="tooltip" data-placement="top" title="Your files will be sent to this address."></i></p>
+                                    </div>
+                                    <div class="cf">
+                                        <select id="data-address" class="form-control">
+                                          <option value="D8B9xbwN6696tw9UbYmqvZNLNZ4MH9HSdE">D8B9xbwN6696tw9UbYmqvZNLNZ4MH9HSdE</option>
+                                        </select>
+                                    </div>
+                                    <hr>
+                                    <div class='cf'>
+                                        <p class='stats-label pull-left'>Key <i class='fa fa-question-circle tooltip-icon' data-toggle="tooltip" data-placement="top" title="Used to encrypt your files."></i></p>
+                                        <div class="pull-right btn-group sharing-key-toggle"> 
+                                            <button class="btn btn-default" data-toggle="collapse" data-target="#sharing-key">Show</button>
+                                            <button class="btn btn-primary active" data-toggle="collapse" data-target="#sharing-key">Hide</button>
+                                        </div>
+                                    </div>
+                                    <div class="collapse" id="sharing-key">
+                                        <code>D8B9xbwN6696tw9UbYmqvZNLNZ4MH9HSdE</code>
+                                    </div>
+                                    <hr>
+                                        <a class='btn-sharing'><i class='fa fa-plus'></i> New</a>
+                                        <a class='btn-sharing'><i class='fa fa-download'></i> Import</a>
+                                        <a class='btn-sharing'><i class='fa fa-upload'></i> Export</a>
+                                        <a class='btn-sharing'><i class='fa fa-trash-o'></i> Delete</a>                          
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="panel-group" id="accordion">
+                          <div class="panel panel-default">
+                            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#application">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
                                         Application
                                     </h4>
                                 </div>
                             </a>
-                            <div id="sharing-info" class="panel-collapse collapse in">
+                            <div id="application" class="panel-collapse collapse ">
                               <div class="panel-body">
                                 <hr class="panel-heading-hr">
                                 <div class='panel-progress'>

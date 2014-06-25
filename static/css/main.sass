@@ -99,7 +99,7 @@ hr
     &:hover:focus
         color: #fff
 .btn-default
-    border-bottom: 2px solid #ccc
+    border-bottom: 3px solid #ccc
     font-size: 13px
     padding: 8px 18px
     font-family: $font-mont
@@ -122,7 +122,7 @@ hr
         box-shadow: none
         border-bottom: 3px solid darken($blue, 5%)
     &:focus
-        color: $blue
+        color: #fff
     &:active:focus
         color: #fff
     &:hover:focus
@@ -199,6 +199,21 @@ hr
     width: 100%
     height: 34px
     margin-top: 9px
+.btn-sharing
+    font-family: "Montserrat", sans-serif
+    text-transform: uppercase
+    font-size: 11px
+    padding: 10px
+    cursor: pointer
+    display: inline-block
+    margin-top: 5px
+    color: #9C9DAC
+    &:hover
+        text-decoration: none
+    &:first-of-type
+        color: $green
+    &:last-of-type
+        color: #D31337
 .searchbox
     padding: 8px
     margin-top: 1px
@@ -265,7 +280,7 @@ code
     font-size: 12px
     font-weight: 300
     font-family: $font-exo
-    letter-spacing: 1.5px
+    letter-spacing: 1px
     border: solid 1px #E9E9E9
     overflow: hidden
     cursor: pointer
@@ -519,13 +534,31 @@ hr.panel-heading-hr
     font-size: 18px
 .input-group-btn .btn
     padding: 7px 35px
-.data-address
-    margin-bottom: 20px
-.data-address code
-    letter-spacing: 1px
 #access-token-copy.zeroclipboard-is-hover
     text-decoration: none
     color: #262626
     background-color: #f5f5f5
 #access-token
     cursor: default
+    font-size: 12px
+#data-address
+    font-size: 12px
+    padding-left: 5px
+    margin-bottom: 5px
+#sharing-info
+#sharing-key code
+    letter-spacing: 1px
+.sharing-key-toggle
+    margin: 5px 0 !important
+    .btn
+        padding: 5px 7px
+        font-size: 11px
+        border: 0
+        text-transform: uppercase
+        letter-spacing: 1px
+        margin-left: 0 !important
+        &:hover
+            border: 0
+            margin-left: 0 !important
+    .btn-default
+        background: #ebebeb

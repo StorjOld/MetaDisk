@@ -30,7 +30,7 @@
         contentType: 'application/json; charset=UTF-8'
       });
     }
-  }
+  };
 
   var GIGABYTE = 1024 * 1024 * 1024;
 
@@ -725,5 +725,12 @@
 
   // Tooltips
   $('.tooltip-icon').tooltip({ placement: 'top'});
+
+  // Sharing Key toggle visibility
+  $('.sharing-key-toggle').click(function() {
+    $(this).find('.btn').toggleClass('active');
+    $(this).find('.btn').toggleClass('btn-primary');
+    $(this).find('.btn').toggleClass('btn-default');
+  });
 
 }).call(this);
