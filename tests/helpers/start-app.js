@@ -2,6 +2,7 @@
 
 var Application = require('metadisk/app')['default'];
 var Router = require('metadisk/router')['default'];
+import Ember from 'ember';
 
 export default function startApp(attrs) {
   var App;
