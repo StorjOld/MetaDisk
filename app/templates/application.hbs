@@ -7,6 +7,21 @@
 	</section>
 </header>
 <!-- ALERT BAR ONLY APPEARS AS NEEDED, scroll to top when appear -->
+<!-- 
+Steps:
+* Figure out local storage paradigm then what/how information is stored
+        * Web sockets push node information and application stuff (2 models)
+          SocketIO server-side, EmberSockets client-side
+        * localstorage for tokens + file hashesh
+        * before filehash can be added to list, FileAPI must complete and verify upload
+* Figure out component composition of display elements
+* Make page itself available offline with HTML5 caching
+
+Notes:
+* The file listing is simply a reflection of the model (has its own route/outlet)
+* Redirect them to files route
+
+-->
 <main>
 	<section class="sidebar">
 		<section class="upload">
