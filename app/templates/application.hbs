@@ -9,18 +9,11 @@
 <!-- ALERT BAR ONLY APPEARS AS NEEDED, scroll to top when appear -->
 <!-- 
 Steps:
-* Figure out local storage paradigm then what/how information is stored
-        * Web sockets push node information and application stuff (2 models)
-          SocketIO server-side, EmberSockets client-side
-        * localstorage for tokens + file hashesh
-        * before filehash can be added to list, FileAPI must complete and verify upload
-* Figure out component composition of display elements
-* Make page itself available offline with HTML5 caching
-
-Notes:
-* The file listing is simply a reflection of the model (has its own route/outlet)
-* Redirect them to files route
-
+* Create component composition for all sections
+* Wire up node information
+* Wire up other sections
+* Wire up data with indexeddb adapter
+* Manifest page
 -->
 <main>
 	<section class="sidebar">
@@ -82,33 +75,15 @@ Notes:
 				<span>NODE INFORMATION</span>
 				<aside></aside>
 			</h1>
-			<h3>
-				<span>Upload Bandwidth</span>
-				<aside>3.28/300 GB</aside>
-			</h3>
+			{{section-information caption="Upload Bandwidth" unit="GB" value=35816221 valueTotal=4065158501 fileCount=null}}
 			<progress max="100" value="1"></progress>
-			<h3>
-				<span>Download Bandwidth</span>
-				<aside>16.68/700 GB</aside>
-			</h3>
+			{{section-information caption="Download Bandwidth" unit="GB" value=5563127000 valueTotal=52547081041 fileCount=null}}
 			<progress max="100" value="2"></progress>
-			<h3>
-				<span>Cache Used</span>
-				<aside>4.39/10.00 GB</aside>
-			</h3>
+			{{section-information caption="Cache Used" unit="GB" value=3868872523 valueTotal=10737418240 fileCount=null}}
 			<progress max="100" value="44"></progress>
-			<h3>
-				<span>Files Syncing to Cloud</span>
-				<aside>0 (0.00 GB)</aside>
-			</h3>
-			<h3>
-				<span>Files Syncing to Block</span>
-				<aside>0 (0.00 GB)</aside>
-			</h3>
-			<h3>
-				<span>Datacoin Address</span>
-				<aside>38.25 DTC</aside>
-			</h3>
+			{{section-information caption="Files Syncing to Cloud" unit="GB" value=null valueTotal="0" fileCount="0"}}
+			{{section-information caption="Files Syncing to Block" unit="GB" value=null valueTotal="0" fileCount="0"}}
+			{{section-information caption="Datacoin Address" unit="DTC" value="38.25" valueTotal=null fileCount=null}}
 			<code>DFtXnb2JcBWVYmt8oESCuvh4ekbMLkDHSy</code>
 		</section>
 	</section>
