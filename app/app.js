@@ -6,7 +6,13 @@ Ember.MODEL_FACTORY_INJECTIONS = true;
 
 var App = Ember.Application.extend({
   modulePrefix: 'metadisk', // TODO: loaded via config
-  Resolver: Resolver
+  Resolver: Resolver,
+  Socket: EmberSockets.extend({
+  	host: 'node2.storj.io', //TODO: should be configurable
+  	path: 'ws-metadisk',
+  	port: '80',
+  	controllers: ['application']
+  })
 });
 
 loadInitializers(App, 'metadisk');
