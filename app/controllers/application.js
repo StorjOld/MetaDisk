@@ -27,7 +27,6 @@ export default Ember.Controller.extend({
 				syncFileCount: data.sync.blockchain_queue.count,
 				syncFileSize: data.sync.blockchain_queue.size
 			});
-			console.log(data);
 		}
 	}
 })
