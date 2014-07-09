@@ -75,7 +75,6 @@ Steps:
 				<span>NODE INFORMATION</span>
 				<aside></aside>
 			</h1>
-			{{#with controller}}
 			{{section-information caption="Upload Bandwidth" unit="GB" value=uploadBandwidth valueTotal=uploadBandwidthTotal fileCount=null}}
 			<progress {{bind-attr max=uploadBandwidthTotal}}  {{bind-attr value=uploadBandwidth}}></progress>
 			{{section-information caption="Download Bandwidth" unit="GB" value=downloadBandwidth valueTotal=downloadBandwidthTotal fileCount=null}}
@@ -85,7 +84,6 @@ Steps:
 			{{section-information caption="Files Syncing to Cloud" unit="GB" value=null valueTotal=cloudFileSize fileCount=cloudFileCount}}
 			{{section-information caption="Files Syncing to Block" unit="GB" value=null valueTotal=syncFileSize fileCount=syncFileCount}}
 			{{section-information caption="Datacoin Address" unit="DTC" value=datacoinBalance valueTotal=null fileCount=null}}
-			{{/with}}
 			<code>{{datacoinAddress}}</code>
 		</section>
 	</section>
