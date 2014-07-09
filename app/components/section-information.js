@@ -18,13 +18,13 @@ export default Ember.Component.extend({
 		if (unit === 'DTC') {
 			return value + ' ' + unit;
 		} else {
-			if (fileCount && valueTotal) {
+			if (typeof fileCount !== 'undefined' && typeof valueTotal !== 'undefined') {
 				return fileCount + ' (' + this.bytesToGB(valueTotal) + ' ' + unit + ')';
-			} else if (value && valueTotal) {
+			} else if (typeof value !== 'undefined' && typeof valueTotal !== 'undefined') {
 				return this.bytesToGB(value) + '/' + this.bytesToGB(valueTotal) + ' ' + unit;
-			} else if (value && !valueTotal) {
+			} else if (typeof value !== 'undefined' && typeof valueTotal === 'undefined') {
 				return this.bytesToGB(value) + ' ' + unit;
-			} else if (!value && valueTotal) {
+			} else if (typeof value === 'undefined' && typeof valueTotal !== 'undefined') {
 				return this.bytesToGB(valueTotal) + ' ' + unit;
 			} else {
 				return '';

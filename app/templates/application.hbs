@@ -64,7 +64,7 @@ Steps:
 			<h3>
 				<span class="with-help address"><span class="help-icon">Data Address</span></span>
 			</h3>
-			<code>D8B9xbwN6696tw9UbYmqvZNLNZ4MH9HSdE</code>
+			<code>{{datacoinAddress}}</code>
 			<h3>
 				<span class="with-help encryption"><span class="help-icon">Encryption</span></span>
 				<aside>Convergent Encryption</aside>
@@ -75,16 +75,18 @@ Steps:
 				<span>NODE INFORMATION</span>
 				<aside></aside>
 			</h1>
-			{{section-information caption="Upload Bandwidth" unit="GB" value=35816221 valueTotal=4065158501 fileCount=null}}
-			<progress max="100" value="1"></progress>
-			{{section-information caption="Download Bandwidth" unit="GB" value=5563127000 valueTotal=52547081041 fileCount=null}}
-			<progress max="100" value="2"></progress>
-			{{section-information caption="Cache Used" unit="GB" value=3868872523 valueTotal=10737418240 fileCount=null}}
-			<progress max="100" value="44"></progress>
-			{{section-information caption="Files Syncing to Cloud" unit="GB" value=null valueTotal="0" fileCount="0"}}
-			{{section-information caption="Files Syncing to Block" unit="GB" value=null valueTotal="0" fileCount="0"}}
-			{{section-information caption="Datacoin Address" unit="DTC" value="38.25" valueTotal=null fileCount=null}}
-			<code>DFtXnb2JcBWVYmt8oESCuvh4ekbMLkDHSy</code>
+			{{#with controller}}
+			{{section-information caption="Upload Bandwidth" unit="GB" value=uploadBandwidth valueTotal=uploadBandwidthTotal fileCount=null}}
+			<progress {{bind-attr max=uploadBandwidthTotal}}  {{bind-attr value=uploadBandwidth}}></progress>
+			{{section-information caption="Download Bandwidth" unit="GB" value=downloadBandwidth valueTotal=downloadBandwidthTotal fileCount=null}}
+			<progress {{bind-attr max=downloadBandwidthTotal}} {{bind-attr value=downloadBandwidth}}></progress>
+			{{section-information caption="Cache Used" unit="GB" value=cacheUsed valueTotal=cacheUsedTotal fileCount=null}}
+			<progress {{bind-attr max=cacheUsedTotal}} {{bind-attr value=cacheUsed}}></progress>
+			{{section-information caption="Files Syncing to Cloud" unit="GB" value=null valueTotal=cloudFileSize fileCount=cloudFileCount}}
+			{{section-information caption="Files Syncing to Block" unit="GB" value=null valueTotal=syncFileSize fileCount=syncFileCount}}
+			{{section-information caption="Datacoin Address" unit="DTC" value=datacoinBalance valueTotal=null fileCount=null}}
+			{{/with}}
+			<code>{{datacoinAddress}}</code>
 		</section>
 	</section>
 	<section class="uploaded-files">
