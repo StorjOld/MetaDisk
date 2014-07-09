@@ -12,7 +12,7 @@
     "ember-load-initializers": "stefanpenner/ember-load-initializers#0.0.2",
     "ember-qunit-notifications": "^0.0.3",
     "ember-cli-test-loader": "rjackson/ember-cli-test-loader#0.0.2",
-    "ember-indexeddb-adapter": "kurko/ember-indexeddb-adapter#0.6.0",
+    "ember-indexeddb-adapter": "kurko/ember-indexeddb-adapter#0.7.0",
     "ember-sockets": "~0.6.1"
   }
 }
