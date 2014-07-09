@@ -377,7 +377,8 @@ section {
 }
 
 // GLOBAL PROGRESS
-progress[value] {
+progress[value],
+progress:not([value]) {
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
@@ -388,13 +389,15 @@ progress[value] {
 	color: $blue //IE10
 }
 
-progress[value]::-webkit-progress-bar {
+progress[value]::-webkit-progress-bar, 
+progress:not([value])::-webkit-progress-bar, {
 	background-color: $light-ivory;
 	border-radius: 3px;
 	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-progress[value]::-webkit-progress-value {
+progress[value]::-webkit-progress-value,
+progress:not([value])::-webkit-progress-value {
 	background-image: -webkit-linear-gradient(45deg, rgba(255,255,255,0.15) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.15) 75%, transparent 75%, transparent);
 	border-radius: 2px; 
 	background-size: 40px 40px;
@@ -403,7 +406,8 @@ progress[value]::-webkit-progress-value {
     animation: animate-stripes 5s linear infinite;
 }
 
-progress[value]::-moz-progress-bar { 
+progress[value]::-moz-progress-bar,
+progress:not([value])::-moz-progress-bar { 
 	background-image: -moz-linear-gradient(45deg, rgba(255,255,255,0.15) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.15) 75%, transparent 75%, transparent);
 	border-radius: 2px; 
 	background-size: 40px 40px;
