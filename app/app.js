@@ -9,8 +9,7 @@ var App = Ember.Application.extend({
   Resolver: Resolver,
   Socket: EmberSockets.extend({
   	host: 'node2.storj.io', //TODO: should be configurable
-  	path: 'ws-metadisk',
-  	port: '80',
+  	path: 'metadisk',
   	controllers: ['application']
   })
 });
