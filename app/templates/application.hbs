@@ -64,11 +64,11 @@ Steps:
 		{{/section-wrapper}}
 		{{#section-wrapper name="node-info" title="NODE INFORMATION"}}
 			{{section-information caption="Upload Bandwidth" unit="GB" value=uploadBandwidth valueTotal=uploadBandwidthTotal fileCount=null}}
-			{{progress-bar max=uploadBandWidthTotal value=uploadBandwidth}}
+			{{progress-bar max=uploadBandWidthTotal toValue=uploadBandwidth}}
 			{{section-information caption="Download Bandwidth" unit="GB" value=downloadBandwidth valueTotal=downloadBandwidthTotal fileCount=null}}
-			{{progress-bar max=downloadBandWidthTotal value=downloadBandwidth}}
+			{{progress-bar max=downloadBandWidthTotal toValue=downloadBandwidth}}
 			{{section-information caption="Cache Used" unit="GB" value=cacheUsed valueTotal=cacheUsedTotal fileCount=null}}
-			{{progress-bar max=cacheUsedTotal value=cacheUsed}}
+			{{progress-bar max=cacheUsedTotal toValue=cacheUsed}}
 			{{section-information caption="Files Syncing to Cloud" unit="GB" value=null valueTotal=cloudFileSize fileCount=cloudFileCount}}
 			{{section-information caption="Files Syncing to Block" unit="GB" value=null valueTotal=syncFileSize fileCount=syncFileCount}}
 			{{section-information caption="Datacoin Address" unit="DTC" value=datacoinBalance valueTotal=null fileCount=null}}
