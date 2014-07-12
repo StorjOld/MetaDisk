@@ -226,11 +226,14 @@ main {
 
 	section {
 		@include span-columns(4);
-		max-height: 575px;
 		position: relative;
-		@include transition(max-height 500ms ease-in-out);
 		@include media(max-width 992px) {
 			@include span-columns(12);
+		}
+
+		h3, fieldset, code, progress {
+			opacity: 1;
+			@include transition(opacity 500ms ease-in-out 200ms);
 		}
 
 		&.upload,
@@ -249,7 +252,9 @@ main {
 		&.your-account,
 		&.sharing,
 		&.node-info {
-			overflow: hidden;
+			max-height: 575px;
+			overflow: visible;
+			@include transition(max-height 500ms ease-in-out);
 			@include span-columns(4 of 4);
 			@include media(max-width 992px) {
 				@include span-columns(12 of 12);
@@ -280,10 +285,16 @@ main {
 		&.closed {
 			overflow: hidden;
 			max-height: 70px;
+			@include transition(max-height 500ms ease-in-out);
+
 			h1 aside:before {
 				content: '\f078';
 			}
-			@include transition(max-height 500ms ease-in-out);
+			
+			h3, fieldset, code, progress {
+				opacity: 0;
+				@include transition(opacity 500ms ease-in-out);
+			}
 		}
 	}
 
@@ -709,6 +720,8 @@ section.your-account fieldset {
 		position: absolute;
 		border-radius: 4px;
 		bottom: 24px;
+		position: absolute;
+		z-index: 100;
 		@include animation(fadeIn 250ms ease-in-out);
 	}
 
