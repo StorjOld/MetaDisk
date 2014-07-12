@@ -6,11 +6,14 @@
 		<label><input type="text" placeholder="Search file hash&hellip;"></label>
 	</section>
 </header>
-<!-- ALERT BAR ONLY APPEARS AS NEEDED, scroll to top when appear -->
+<!-- use native alerts or something similar:
+https://developer.mozilla.org/en-US/docs/Web/API/notification#Browser_compatibility
+https://github.com/ttsvetko/HTML5-Desktop-Notifications
+ -->
+
 <!-- 
 Steps:
-* Create component composition for all sections
-* Wire up node information
+* Create component composition for all sections, some with embedded layouts and others, like section w/ yield
 * Wire up other sections
 * Wire up data with indexeddb adapter
 * Manifest page
@@ -24,11 +27,7 @@ Steps:
 				<aside>1.00 GB</aside>
 			</h3>
 		</section>
-		<section class="your-account">
-			<h1>
-				<span>YOUR ACCOUNT</span>
-				<aside></aside>
-			</h1>
+		{{#section-wrapper name="your-account" title="YOUR ACCOUNT"}}
 			<h3>
 				<span class="with-help token"><span class="help-icon">Access Token</span></span>
 			</h3>
@@ -55,12 +54,8 @@ Steps:
 				<button>FREE SPACE</button>
 				<button>BUY SPACE</button>
 			</fieldset>
-		</section>
-		<section class="sharing">
-			<h1>
-				<span>SHARING</span>
-				<aside></aside>
-			</h1>
+		{{/section-wrapper}}
+		{{#section-wrapper name="sharing" title="SHARING"}}
 			<h3>
 				<span class="with-help address"><span class="help-icon">Data Address</span></span>
 			</h3>
@@ -69,13 +64,10 @@ Steps:
 				<span class="with-help encryption"><span class="help-icon">Encryption</span></span>
 				<aside>Convergent Encryption</aside>
 			</h3>
-		</section>
-		<section class="node-info">
-			<h1>
-				<span>NODE INFORMATION</span>
-				<aside></aside>
-			</h1>
+		{{/section-wrapper}}
+		{{#section-wrapper name="node-info" title="NODE INFORMATION"}}
 			{{section-information caption="Upload Bandwidth" unit="GB" value=uploadBandwidth valueTotal=uploadBandwidthTotal fileCount=null}}
+			<!-- change progress to component and animate on change...can be used later for file upload -->
 			<progress {{bind-attr max=uploadBandwidthTotal}}  {{bind-attr value=uploadBandwidth}}></progress>
 			{{section-information caption="Download Bandwidth" unit="GB" value=downloadBandwidth valueTotal=downloadBandwidthTotal fileCount=null}}
 			<progress {{bind-attr max=downloadBandwidthTotal}} {{bind-attr value=downloadBandwidth}}></progress>
@@ -85,7 +77,7 @@ Steps:
 			{{section-information caption="Files Syncing to Block" unit="GB" value=null valueTotal=syncFileSize fileCount=syncFileCount}}
 			{{section-information caption="Datacoin Address" unit="DTC" value=datacoinBalance valueTotal=null fileCount=null}}
 			<code>{{datacoinAddress}}</code>
-		</section>
+		{{/section-wrapper}}
 	</section>
 	<section class="uploaded-files">
 		<!-- upload multiple files here with progress bar for
