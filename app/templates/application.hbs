@@ -6,17 +6,15 @@
 		<label><input type="text" placeholder="Search file hash&hellip;"></label>
 	</section>
 </header>
-<!-- use native alerts or something similar:
-https://developer.mozilla.org/en-US/docs/Web/API/notification#Browser_compatibility
-https://github.com/ttsvetko/HTML5-Desktop-Notifications
- -->
-
 <!-- 
 Steps:
-* Create component composition for all sections, some with embedded layouts and others, like section w/ yield
-* Wire up other sections
-* Wire up data with indexeddb adapter
-* Manifest page
+* Set up token/your bandwidth/estimated storage/file hash+key with model and indexeddb adapter
+* File listing should be tied to given token and change when it is changed
+* Auto-generate new token button activates, can switch active token and update sample file list
+* add progress bar to file upload component and enable multi-file upload
+* enable file hash/search and add to given token list if found
+* enable buy/free space modals and system
+* enable complete offline manifest for all application files
 -->
 <main>
 	<section class="sidebar">
@@ -28,7 +26,6 @@ Steps:
 			<h3>
 				<span class="with-help token"><span class="help-icon">Access Token</span></span>
 			</h3>
-			<!-- emberfy this select + enable get new token -->
 			<fieldset class="token-select">
 				<div>
 					<select>
@@ -103,182 +100,6 @@ Steps:
 				<button></button>
 			</fieldset>
 		</section>
-		<section class="file">
-			<h1>Batmans Secret Plan's.docx</h1>
-			<fieldset>
-				<button></button>
-				<button></button>
-				<button></button>
-			</fieldset>
-		</section>
-		<section class="file">
-			<h1>Batmans Secret Plan's.docx</h1>
-			<fieldset>
-				<button></button>
-				<button></button>
-				<button></button>
-			</fieldset>
-		</section>
-		<section class="file">
-			<h1>Batmans Secret Plan's.docx</h1>
-			<fieldset>
-				<button></button>
-				<button></button>
-				<button></button>
-			</fieldset>
-		</section>
-		<section class="file">
-			<h1>Batmans Secret Plan's.docx</h1>
-			<fieldset>
-				<button></button>
-				<button></button>
-				<button></button>
-			</fieldset>
-		</section>
-		<section class="file">
-			<h1>Batmans Secret Plan's.docx</h1>
-			<fieldset>
-				<button></button>
-				<button></button>
-				<button></button>
-			</fieldset>
-		</section>
-		<section class="file">
-			<h1>Batmans Secret Plan's.docx</h1>
-			<fieldset>
-				<button></button>
-				<button></button>
-				<button></button>
-			</fieldset>
-		</section>
-		<section class="file">
-			<h1>Batmans Secret Plan's.docx</h1>
-			<fieldset>
-				<button></button>
-				<button></button>
-				<button></button>
-			</fieldset>
-		</section>
-		<section class="file">
-			<h1>Batmans Secret Plan's.docx</h1>
-			<fieldset>
-				<button></button>
-				<button></button>
-				<button></button>
-			</fieldset>
-		</section>
-		<section class="file">
-			<h1>Batmans Secret Plan's.docx</h1>
-			<fieldset>
-				<button></button>
-				<button></button>
-				<button></button>
-			</fieldset>
-		</section>
-		<section class="file">
-			<h1>Batmans Secret Plan's.docx</h1>
-			<fieldset>
-				<button></button>
-				<button></button>
-				<button></button>
-			</fieldset>
-		</section>
-		<section class="file">
-			<h1>Batmans Secret Plan's.docx</h1>
-			<fieldset>
-				<button></button>
-				<button></button>
-				<button></button>
-			</fieldset>
-		</section>
-		<section class="file">
-			<h1>Batmans Secret Plan's.docx</h1>
-			<fieldset>
-				<button></button>
-				<button></button>
-				<button></button>
-			</fieldset>
-		</section>
-		<section class="file">
-			<h1>Batmans Secret Plan's.docx</h1>
-			<fieldset>
-				<button></button>
-				<button></button>
-				<button></button>
-			</fieldset>
-		</section>
-		<section class="file">
-			<h1>Batmans Secret Plan's.docx</h1>
-			<fieldset>
-				<button></button>
-				<button></button>
-				<button></button>
-			</fieldset>
-		</section>
-		<section class="file">
-			<h1>Batmans Secret Plan's.docx</h1>
-			<fieldset>
-				<button></button>
-				<button></button>
-				<button></button>
-			</fieldset>
-		</section>
-		<section class="file">
-			<h1>Batmans Secret Plan's.docx</h1>
-			<fieldset>
-				<button></button>
-				<button></button>
-				<button></button>
-			</fieldset>
-		</section>
-		<section class="file">
-			<h1>Batmans Secret Plan's.docx</h1>
-			<fieldset>
-				<button></button>
-				<button></button>
-				<button></button>
-			</fieldset>
-		</section>
-		<section class="file">
-			<h1>Batmans Secret Plan's.docx</h1>
-			<fieldset>
-				<button></button>
-				<button></button>
-				<button></button>
-			</fieldset>
-		</section>
-		<section class="file">
-			<h1>Batmans Secret Plan's.docx</h1>
-			<fieldset>
-				<button></button>
-				<button></button>
-				<button></button>
-			</fieldset>
-		</section>
-		<section class="file">
-			<h1>Batmans Secret Plan's.docx</h1>
-			<fieldset>
-				<button></button>
-				<button></button>
-				<button></button>
-			</fieldset>
-		</section>
-		<section class="file">
-			<h1>Batmans Secret Plan's.docx</h1>
-			<fieldset>
-				<button></button>
-				<button></button>
-				<button></button>
-			</fieldset>
-		</section>
-		<section class="file">
-			<h1>Batmans Secret Plan's.docx</h1>
-			<fieldset>
-				<button></button>
-				<button></button>
-				<button></button>
-			</fieldset>
-		</section>
 	</section>
 </main>
 <footer>
@@ -290,5 +111,3 @@ Steps:
 		<a href="https://github.com/Storj/Metadisk/issues">Report a bug</a>
 	</aside>
 </footer>
-
-{{outlet}}
