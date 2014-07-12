@@ -11,6 +11,7 @@ export default Ember.Controller.extend({
 	syncFileSize: null,
 	datacoinAddress: null,
 	datacoinBalance: null,
+	maxFileSize: null,
 	sockets: {
 		status: function(data) {
 			this.setProperties({
@@ -25,7 +26,8 @@ export default Ember.Controller.extend({
 				cloudFileCount: data.sync.cloud_queue.count,
 				cloudFileSize: data.sync.cloud_queue.size,
 				syncFileCount: data.sync.blockchain_queue.count,
-				syncFileSize: data.sync.blockchain_queue.size
+				syncFileSize: data.sync.blockchain_queue.size,
+				maxFileSize: data.storage.max_file_size
 			});
 		}
 	}
