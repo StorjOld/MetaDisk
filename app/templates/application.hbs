@@ -8,7 +8,7 @@
 </header>
 <!-- 
 Steps:
-* Get a default token and set as current token; recycle gets new token; switching updates current token
+* recycle gets new token; switching updates current token
 * add progress bar to file upload component and enable multi-file upload
 * enable file hash/search and add to given token list if found
 * enable buy/free space modals and system
@@ -32,7 +32,7 @@ Steps:
 					{{/each}}
 					</select>
 				</div>
-				<div></div>
+				<div {{action 'generateToken'}}></div>
 			</fieldset>
 			<h3>
 				<span class="with-help bandwidth"><span class="help-icon">Your Bandwidth</span></span>

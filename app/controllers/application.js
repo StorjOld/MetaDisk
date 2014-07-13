@@ -19,14 +19,13 @@ export default Ember.ObjectController.extend({
 		if (model.get('length') === 0) {
 			$.ajax('http://node2.storj.io/accounts/token/new', {type: 'POST'})
 				.fail(function() {
-					this.send('notify', 'Uh-Oh', 'Metadisk was unable to retrieve a new access token.');
-				}.bind(this))
-				.then(function(response) {
-					var newToken = response.token;
-					var newRecord = this.store.createRecord('token', {token: newToken});
-					newRecord.save();
-					this.set('currentToken', newToken);
-				}.bind(this));
+					this.send('notify', 'Uh-Oh', 'Metadisk was unable to generate your access token.');
+				}.bind(this)
+			).then(function(response) {
+				var newRecord = this.store.createRecord('token', {token: response.token});
+				newRecord.save();
+				this.set('currentToken', newToken);
+			}.bind(this));
 		}
 
 		if (!this.get('currentToken')) {
@@ -59,6 +58,17 @@ export default Ember.ObjectController.extend({
 	},
 
 	actions: {
+		generateToken: function() {
+			$.ajax('http://node2.storj.io/accounts/token/new', {type: 'POST'})
+				.fail(function() {
+					this.send('notify', 'Uh-Oh', 'Metadisk was unable to retrieve a new access token.');
+				}.bind(this)
+			).then(function(response) {
+				var newRecord = this.store.createRecord('token', {token: response.token});
+				newRecord.save();
+				this.send('notify', 'Success', 'Metadisk retrieved a new access token.');
+			}.bind(this));
+		},
 		notify: function(subject, body) {
 			if (Notification && Notification.permission !== 'granted') {
 				Notification.requestPermission(function(status) {
