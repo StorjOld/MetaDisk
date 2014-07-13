@@ -8,7 +8,7 @@
 </header>
 <!-- 
 Steps:
-* add progress bar to file upload component and enable multi-file upload
+* enable multi-file upload
 * allow copy/pasting stuff, file download
 * enable file hash/search and add to given token list if found
 * enable buy/free space modals and system
@@ -17,7 +17,7 @@ Steps:
 <main>
 	<section class="sidebar">
 		<section class="upload">
-			<input id="uploader" multiple="true" type="file" {{action "handleFiles" this.files on="change"}}> 
+			{{file-upload multiple=true}}
 			<button>UPLOAD</button>
 			{{section-information caption="File Size Limit" unit="GB" value=maxFileSize valueTotal=null fileCount=null}}
 		</section>
