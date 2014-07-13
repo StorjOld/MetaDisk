@@ -295,6 +295,13 @@ main {
 				opacity: 0;
 				@include transition(opacity 500ms ease-in-out);
 			}
+
+			&.file h3, 
+			&.file fieldset, 
+			&.file progress {
+				opacity: 0;
+				@include transition(opacity 100ms ease-in-out);
+			}
 		}
 	}
 
