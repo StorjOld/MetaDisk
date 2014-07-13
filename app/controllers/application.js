@@ -98,6 +98,9 @@ export default Ember.ObjectController.extend({
 			} else {
 				alert(body);
 			}
+		},
+		handleFiles: function(files) {
+			console.log(files);
 		}
 	}
 });
