@@ -9,7 +9,7 @@
 <!-- 
 Steps:
 * add progress bar to file upload component and enable multi-file upload
-* allow copy/pasting stuff
+* allow copy/pasting stuff, file download
 * enable file hash/search and add to given token list if found
 * enable buy/free space modals and system
 * enable complete offline manifest for all application files
@@ -68,9 +68,9 @@ Steps:
 		{{/section-wrapper}}
 	</section>
 	<section class="uploaded-files">
-		{{file-listing title="SuperSecretFile.pdf" fileHash="12345nsdfkjb" fileKey="superkey" fileUri="12345nsdfkjb?key=superkey&amp;token=whassup" progressValue=0 uploadStatus="Ready." size=832074237}}
+		{{file-listing title="SuperSecretFile.pdf" fileHash="12345nsdfkjb" fileKey="superkey" fileUri="12345nsdfkjb?key=superkey&amp;token=whassup"}}
 		{{#each currentFileList}}
-			{{file-listing title=title fileHash=hash fileKey=key fileUri=uri progressValue=progress uploadStatus=status size=fileSize}}
+			{{file-listing title=title fileHash=hash fileKey=key fileUri=uri bytesUploaded=progress fileSize=fileSize}}
 		{{/each}}
 	</section>
 </main>

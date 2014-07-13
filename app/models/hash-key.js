@@ -4,7 +4,6 @@ export default DS.Model.extend({
 	key: DS.attr('key'),
 	title: DS.attr('string'),
 	bytesUploaded: DS.attr('number'),
-	status: DS.attr('string'),
 	uri: function() {
 		return this.get('hash') + '?key=' + this.get('key') + '&token=' + this.get('token').get('token');
 	}.property('hash', 'key')
