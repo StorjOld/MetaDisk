@@ -1,4 +1,4 @@
-export default Ember.Controller.extend({
+export default Ember.ObjectController.extend({
 	uploadBandwidth: null,
 	uploadBandwidthTotal: null,
 	downloadBandwidth: null,
@@ -13,9 +13,30 @@ export default Ember.Controller.extend({
 	datacoinBalance: null,
 	maxFileSize: null,
 	currentToken: null,
+	setupToken: function() {
+		var model = this.get('model');
+
+		if (model.get('length') === 0) {
+			$.ajax('http://node2.storj.io/accounts/token/new', {type: 'POST'})
+				.fail(function() {
+					this.send('notify', 'Uh-Oh', 'Metadisk was unable to retrieve a new access token.');
+				}.bind(this))
+				.then(function(response) {
+					var newToken = response.token;
+					var newRecord = this.store.createRecord('token', {token: newToken});
+					newRecord.save();
+					this.set('currentToken', newToken);
+				}.bind(this));
+		}
+
+		if (!this.get('currentToken')) {
+			this.set('currentToken', model.get('firstObject').get('token'));
+		}
+	}.observes('model'),
 	currentFileList: function() {
-		var listing =  this.get('store').findQuery('token', {token: this.get('currentToken')}).get('hashes');
-		return listing ? listing : []; 
+		var currentToken = this.get('currentToken');
+		var listing = this.store.find('token', {token: currentToken});
+		return listing ? listing.get('hashes') : []; 
 	}.property('currentToken'),
 	sockets: {
 		status: function(data) {
@@ -47,7 +68,7 @@ export default Ember.Controller.extend({
 				});
 			} else if (Notification && Notification.permission === 'granted') {
 				var notification = new Notification(subject, {body: body, icon: '/assets/images/storj.ico'});
-				setTimeout(function(){ notification.close(); }, 4000);
+				setTimeout(function(){ notification.close(); }, 6000);
 			} else if (Notification && Notification.permission !== 'denied') {
 				Notification.requestPermission(function(status) {
 					if (Notification.permission !== status) {
@@ -56,7 +77,7 @@ export default Ember.Controller.extend({
 
 					if (status === 'granted') {
 						var notification = new Notification(subject, {body: body, icon: '/assets/images/storj.ico'});
-						setTimeout(function(){ notification.close(); }, 4000);
+						setTimeout(function(){ notification.close(); }, 6000);
 					} else {
 						alert(body);
 					}

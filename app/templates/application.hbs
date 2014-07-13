@@ -8,8 +8,7 @@
 </header>
 <!-- 
 Steps:
-* File listing should be tied to given token and change when it is changed
-* Auto-generate new token button activates, can switch active token and update sample file list
+* Get a default token and set as current token; recycle gets new token; switching updates current token
 * add progress bar to file upload component and enable multi-file upload
 * enable file hash/search and add to given token list if found
 * enable buy/free space modals and system
@@ -28,9 +27,9 @@ Steps:
 			<fieldset class="token-select">
 				<div>
 					<select>
-					  <option value="QKhN5xN6OVWUmW9e">QKhN5xN6OVWUmW9e</option>
-					  <option value="rtW6fj6sET6x7tl9">rtW6fj6sET6x7tl9</option>
-					  <option value="T5dlNZONVTyBhNX5">T5dlNZONVTyBhNX5</option>
+					{{#each model}}
+						<option {{bind-attr value=token}}>{{token}}</option>
+					{{/each}}
 					</select>
 				</div>
 				<div></div>
