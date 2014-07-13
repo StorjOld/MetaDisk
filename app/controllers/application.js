@@ -58,6 +58,9 @@ export default Ember.ObjectController.extend({
 	},
 
 	actions: {
+		updateCurrentToken: function(token) {
+			this.set('currentToken', token);
+		},
 		generateToken: function() {
 			$.ajax('http://node2.storj.io/accounts/token/new', {type: 'POST'})
 				.fail(function() {
