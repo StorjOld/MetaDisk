@@ -12,6 +12,11 @@ export default Ember.Controller.extend({
 	datacoinAddress: null,
 	datacoinBalance: null,
 	maxFileSize: null,
+	currentToken: null,
+	currentFileList: function() {
+		var listing =  this.get('store').findQuery('token', {token: this.get('currentToken')}).get('hashes');
+		return listing ? listing : []; 
+	}.property('currentToken'),
 	sockets: {
 		status: function(data) {
 			this.setProperties({
