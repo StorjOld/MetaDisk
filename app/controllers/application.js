@@ -21,8 +21,8 @@ export default Ember.ObjectController.extend({
 	uploadsStarted: 0,
 	uploadsCompleted: 0,
 	setCurrentTokenRecord: function() {
-		this.store.find('token').then(function(records) {
-			var record = records.filterProperty('token', this.get('currentToken'))[0];
+		this.store.findQuery('token', {token: this.get('currentToken')}).then(function(records) {
+			var record = records.get('firstObject');
 			this.set('currentTokenRecord', record);
 			this.set('currentTokenBandwidth', record.get('yourBandwidth'));
 			this.set('currentTokenStorage', record.get('estimatedStorage'));
@@ -70,6 +70,9 @@ export default Ember.ObjectController.extend({
 	actions: {
 		updateCurrentToken: function(token) {
 			this.set('currentToken', token);
+		},
+		updateCurrentBalance: function() {
+			debugger;
 		},
 		generateToken: function() {
 			$.ajax(this.get('baseUrl') + '/accounts/token/new', {type: 'POST'})
