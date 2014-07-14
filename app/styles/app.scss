@@ -438,6 +438,11 @@ section.upload {
 	}
 }
 
+// UPLOAD CONTROL
+input[name=file] {
+	display: none;
+}
+
 // UPLOADED FILE ITEM
 section.file {
 	height: 135px;

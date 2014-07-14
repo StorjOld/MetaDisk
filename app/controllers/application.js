@@ -18,6 +18,8 @@ export default Ember.ObjectController.extend({
 	currentTokenBandwidth: 0,
 	currentTokenStorage: 0,
 	currentFileList: null,
+	uploadsStarted: 0,
+	uploadsCompleted: 0,
 	setCurrentTokenRecord: function() {
 		this.store.find('token').then(function(records) {
 			var record = records.filterProperty('token', this.get('currentToken'))[0];
@@ -118,9 +120,11 @@ export default Ember.ObjectController.extend({
 				var xhr = new XMLHttpRequest();
 				var fd = new FormData();
 				var fileRecord = this.store.createRecord('file', {title: file.name, fileSize: file.size});
-				this.get('currentTokenRecord').get('files').then(function(files){
+
+				this.get('currentTokenRecord').get('files').then(function(files) {
+					this.set('uploadsStarted', this.get('uploadsStarted') + 1);
 					files.unshiftObject(fileRecord);
-				});
+				}.bind(this));
 
 				xhr.upload.addEventListener('progress', function(e) { 
 					if (e.lengthComputable) {
@@ -149,10 +153,16 @@ export default Ember.ObjectController.extend({
 							this.get('currentTokenRecord').get('files').removeObject(fileRecord);
 							this.send('notify', 'Uh-Oh', file.name + ' could not be uploaded due to a server error.');
 						} else if (responseCode === 201) {
+							this.set('uploadsCompleted', this.get('uploadsCompleted') + 1);
 							fileRecord.set('hash', responseText.filehash);
 							fileRecord.set('key', responseText.key);
 							fileRecord.save().then(function() {
-								this.get('currentTokenRecord').save();
+								if (this.get('uploadsCompleted') === this.get('uploadsStarted')) {
+									this.get('currentTokenRecord').save();
+									this.set('uploadsCompleted', 0);
+									this.set('uploadsStarted', 0);
+								}
+								//
 							}.bind(this));
 
 							this.send('notify', 'Success', file.name + ' was successfully uploaded.');

@@ -8,8 +8,7 @@
 </header>
 <!-- 
 Steps:
-* fix: multifile upload is flaky when done at once...
-* fix bandwidth updating when using file (or just pull from server on success)
+* fix bandwidth updating when using file (or just pull from server on success/sockets)...remove hack
 * allow copy/pasting stuff, file download
 * enable file hash/search and add to given token list if found
 * enable buy/free space modals and system
@@ -19,7 +18,6 @@ Steps:
 	<section class="sidebar">
 		<section class="upload">
 			{{file-upload multiple=true}}
-			<button>UPLOAD</button>
 			{{section-information caption="File Size Limit" unit="GB" value=maxFileSize valueTotal=null fileCount=null}}
 		</section>
 		{{#section-wrapper name="your-account" title="YOUR ACCOUNT"}}
