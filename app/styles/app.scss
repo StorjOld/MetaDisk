@@ -441,8 +441,7 @@ section.upload {
 // UPLOADED FILE ITEM
 section.file {
 	height: 135px;
-	padding-top: 30px;
-	padding-left: 25px;
+	padding: 30px 25px 0 25px;
 	@include span-columns(12 of 12);
 	@include transition(all 300ms ease-out);
 

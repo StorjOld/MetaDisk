@@ -5,7 +5,8 @@ export default Ember.Component.extend({
 	value: null,
 	valueTotal: null,
 	fileCount: null,
-	layout: Ember.Handlebars.compile('<span>{{caption}}</span><aside>{{metrics}}</aside>'),
+	helpType: null,
+	layout: Ember.Handlebars.compile('{{#if helpType}}<span {{bind-attr class=":with-help helpType"}}><span class="help-icon">{{caption}}</span></span>{{else}}<span>{{caption}}</span>{{/if}}<aside>{{metrics}}</aside>'),
 	bytesToGB: function(bytes) {
 		return (bytes / 1073741824).toFixed(2);
 	},

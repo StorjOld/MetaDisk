@@ -12,5 +12,5 @@ export default Ember.Component.extend({
 				this.that.set('value', this.barValue);
 			}
 		});
-	}.property('toValue')
+	}.observes('toValue')
 });

@@ -8,7 +8,8 @@
 </header>
 <!-- 
 Steps:
-* enable multi-file upload
+* fix: multifile upload is flaky when done at once...
+* fix bandwidth updating when using file (or just pull from server on success)
 * allow copy/pasting stuff, file download
 * enable file hash/search and add to given token list if found
 * enable buy/free space modals and system
@@ -31,14 +32,8 @@ Steps:
 				</div>
 				<div {{action 'generateToken'}}></div>
 			</fieldset>
-			<h3>
-				<span class="with-help bandwidth"><span class="help-icon">Your Bandwidth</span></span>
-				<aside>0.10 GB</aside>
-			</h3>
-			<h3>
-				<span class="with-help storage"><span class="help-icon">Estimated Storage</span></span>
-				<aside>0.03 GB</aside>
-			</h3>
+			{{section-information caption="Your Bandwidth" helpType="bandwidth" unit="GB" value=currentTokenBandwidth valueTotal=null fileCount=null}}
+			{{section-information unit="GB" caption="Estimated Storage" helpType="storage" value=currentTokenStorage valueTotal=null fileCount=null}}
 			<fieldset>
 				<button>FREE SPACE</button>
 				<button>BUY SPACE</button>
@@ -68,9 +63,8 @@ Steps:
 		{{/section-wrapper}}
 	</section>
 	<section class="uploaded-files">
-		{{file-listing title="SuperSecretFile.pdf" fileHash="12345nsdfkjb" fileKey="superkey" fileUri="12345nsdfkjb?key=superkey&amp;token=whassup"}}
 		{{#each currentFileList}}
-			{{file-listing title=title fileHash=hash fileKey=key fileUri=uri bytesUploaded=progress fileSize=fileSize}}
+			{{file-listing title=title fileHash=hash fileKey=key bytesUploaded=bytesUploaded fileSize=fileSize}}
 		{{/each}}
 	</section>
 </main>

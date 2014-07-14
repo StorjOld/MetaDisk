@@ -1,8 +1,9 @@
 export default DS.IndexedDBAdapter.extend({
   databaseName: 'metadisk',
-  version: 1,
+  version: 7,
+  smartSearch: true,
   migrations: function() {
     this.addModel('token');
-    this.addModel('hash-key');
+    this.addModel('file');
   }
 });

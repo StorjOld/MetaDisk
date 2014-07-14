@@ -1,7 +1,8 @@
 export default Ember.TextField.extend({
 	type: 'file',
 	action: 'handleFiles',
-	attributeBindings: ['multiple'],
+	attributeBindings: ['multiple', 'name'],
+	name: 'file',
 	change: function() {
 		var fileList = this.$().prop('files');
 		if (fileList.length > 0) {
