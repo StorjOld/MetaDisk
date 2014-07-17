@@ -71,9 +71,6 @@ export default Ember.ObjectController.extend({
 		updateCurrentToken: function(token) {
 			this.set('currentToken', token);
 		},
-		updateCurrentBalance: function() {
-			debugger;
-		},
 		generateToken: function() {
 			$.ajax(this.get('baseUrl') + '/accounts/token/new', {type: 'POST'})
 				.fail(function() {

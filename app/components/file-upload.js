@@ -3,7 +3,6 @@ export default Ember.TextField.extend({
 	action: 'handleFiles',
 	attributeBindings: ['multiple', 'name'],
 	name: 'file',
-	layout: Ember.Handlebars.compile('<button {{action "activateUpload"}}>UPLOAD</button>'),
 	change: function() {
 		var fileList = this.$().prop('files');
 		if (fileList.length > 0) {

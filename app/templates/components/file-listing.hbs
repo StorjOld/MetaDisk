@@ -1,0 +1,1 @@
+<h1 {{action "toggleClosed"}}>{{title}}</h1>{{#animated-unless condition=isCompletelyUploaded}}{{progress-bar max=fileSize toValue=bytesUploaded}}{{/animated-unless}}{{#animated-if condition=isCompletelyUploaded}}<fieldset><button></button><button></button><button></button></fieldset>{{/animated-if}}
