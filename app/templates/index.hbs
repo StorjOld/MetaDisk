@@ -8,9 +8,9 @@
 </header>
 <!-- 
 Steps:
-* allow copy/pasting stuff
+* allow copy/pasting stuff ::: http://coderberry.me/blog/2013/07/19/githubs-copy-to-clipboard-with-ember/
 * test that download handling actually works
-* enable file hash/search and add to given token list if found
+* enable file hash/search and add to given token list if found (other urls)
 * enable buy/free space modals and system (update bandwidth on purchase)
 * enable complete offline manifest for all application files
 -->
@@ -52,9 +52,9 @@ Steps:
 		{{/section-wrapper}}
 		{{#section-wrapper name="node-info" title="NODE INFORMATION"}}
 			{{section-information caption="Upload Bandwidth" unit="GB" value=uploadBandwidth valueTotal=uploadBandwidthTotal fileCount=null}}
-			{{progress-bar max=uploadBandWidthTotal toValue=uploadBandwidth}}
+			{{progress-bar max=uploadBandwidthTotal toValue=uploadBandwidth}}
 			{{section-information caption="Download Bandwidth" unit="GB" value=downloadBandwidth valueTotal=downloadBandwidthTotal fileCount=null}}
-			{{progress-bar max=downloadBandWidthTotal toValue=downloadBandwidth}}
+			{{progress-bar max=downloadBandwidthTotal toValue=downloadBandwidth}}
 			{{section-information caption="Cache Used" unit="GB" value=cacheUsed valueTotal=cacheUsedTotal fileCount=null}}
 			{{progress-bar max=cacheUsedTotal toValue=cacheUsed}}
 			{{section-information caption="Files Syncing to Cloud" unit="GB" value=null valueTotal=cloudFileSize fileCount=cloudFileCount}}
