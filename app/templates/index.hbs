@@ -63,8 +63,8 @@ Steps:
 		{{/section-wrapper}}
 	</section>
 	<section class="uploaded-files">
-		{{#each currentTokenRecord.files}}
-			{{file-listing title=title fileHash=hash fileKey=key bytesUploaded=bytesUploaded fileSize=fileSize}}
+		{{#each file in currentTokenRecord.files}}
+			{{file-listing title=file.title fileHash=file.hash fileKey=file.key downloadUri=downloadUri bytesUploaded=file.bytesUploaded fileSize=file.fileSize}}
 		{{/each}}
 	</section>
 </main>

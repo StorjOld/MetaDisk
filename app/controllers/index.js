@@ -1,5 +1,6 @@
 export default Ember.ObjectController.extend({
 	baseUrl: 'http://node2.storj.io',
+	downloadUri: null,
 	uploadBandwidth: null,
 	uploadBandwidthTotal: null,
 	downloadBandwidth: null,
@@ -18,6 +19,10 @@ export default Ember.ObjectController.extend({
 	currentFileList: null,
 	uploadsStarted: 0,
 	uploadsCompleted: 0,
+	downloadFile: function() {
+		var url = this.get('baseUrl') + this.get('downloadUri') + this.get('currentToken');
+		window.location=url;
+	}.observes('downloadUri'),
 	notifyAccessGranted: function() {
 		return Notification && Notification.permission === 'granted';
 	}.on('init').property(),
