@@ -21,7 +21,23 @@ export default Ember.ObjectController.extend({
 	uploadsCompleted: 0,
 	downloadFile: function() {
 		var url = this.get('baseUrl') + this.get('downloadUri') + this.get('currentToken');
-		window.location=url;
+		$.ajax(url, {
+			statusCode: {
+				500: function(xhr) {
+					this.send('notify', 'Uh-Oh', 'Metadisk was unable to download your file. Please wait for the file to sync to the cloud or try again later.');
+				}.bind(this),
+				404: function(xhr) {
+					this.send('notify', 'Uh-Oh', 'A file with this specified key and/or hash was not found and could not be downloaded.');
+				}.bind(this),
+				402: function(xhr) {
+					this.send('notify', 'Uh-Oh', 'You do not have sufficient balance to download this file. Please purchase additional bandwidth.');
+				}.bind(this),
+				200: function(xhr) {
+					//201?
+					this.send('updateBandwidth');
+				}.bind(this)
+			}
+		});
 	}.observes('downloadUri'),
 	notifyAccessGranted: function() {
 		return Notification && Notification.permission === 'granted';

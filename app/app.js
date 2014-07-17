@@ -10,7 +10,7 @@ var App = Ember.Application.extend({
   Socket: EmberSockets.extend({
   	host: 'node2.storj.io', //TODO: should be configurable
   	path: 'metadisk',
-  	controllers: ['application']
+  	controllers: ['index']
   })
 });
 
