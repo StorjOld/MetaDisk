@@ -11,7 +11,7 @@ export default Ember.Component.extend({
 	isClosed: false,
 	isCompletelyUploaded: function() {
 		return this.get('fileSize') === this.get('bytesUploaded');
-	}.property('fileSize', 'bytesUploaded')
+	}.property('fileSize', 'bytesUploaded'),
 	actions: {
 		toggleClosed: function() {
 			this.toggleProperty('isClosed');
