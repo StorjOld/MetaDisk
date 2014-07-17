@@ -15,13 +15,16 @@ export default Ember.ObjectController.extend({
 	maxFileSize: null,
 	currentToken: null,
 	currentTokenRecord: null,
+	currentFileList: null,
 	uploadsStarted: 0,
 	uploadsCompleted: 0,
 	notifyAccessGranted: function() {
 		return Notification && Notification.permission === 'granted';
 	}.on('init').property(),
 	setCurrentTokenRecord: function() {
-		this.set('currentTokenRecord', this.get('model').filterBy('token', this.get('currentToken'))[0]);
+		this.store.filter('token', {token: this.get('currentToken')}, function(record) {
+			this.set('currentTokenRecord', record);
+		}.bind(this));
 		this.send('updateBandwidth');
 	}.observes('currentToken'),
 	setupToken: function() {
@@ -121,10 +124,10 @@ export default Ember.ObjectController.extend({
 			}
 		},
 		handleFiles: function(file) {
-			//REMOVE BANDWIDTH CHECK HACK WHEN READY
 			if (file.size > this.get('maxFileSize')) {
 				this.send('notify', 'Uh-Oh', file.name + ' is too large to be uploaded to this node.');
 			} else if (file.size > this.get('currentTokenRecord.yourBandwidth')) {
+				console.log('file size:', file.size, 'yourBandwidth:', this.get('currentTokenRecord.yourBandwidth'))
 				this.send('notify', 'Uh-Oh', 'You do not have enough bandwidth to upload ' + file.name + ' to this node. Please purchase additional bandwidth.');
 			} else {
 				var reader = new FileReader();
@@ -132,7 +135,7 @@ export default Ember.ObjectController.extend({
 				var fd = new FormData();
 				var fileRecord = this.store.createRecord('file', {title: file.name, fileSize: file.size});
 
-				this.get('currentTokenRecord').get('files').then(function(files) {
+				this.get('currentTokenRecord.files').then(function(files) {
 					this.set('uploadsStarted', this.get('uploadsStarted') + 1);
 					files.unshiftObject(fileRecord);
 				}.bind(this));
@@ -158,11 +161,11 @@ export default Ember.ObjectController.extend({
 						var responseText = JSON.parse(xhr.responseText);
 
 						if (responseCode === 402) {
-							this.get('currentTokenRecord').get('files').removeObject(fileRecord);
+							this.get('currentTokenRecord.files').removeObject(fileRecord);
 							this.send('updateBandwidth');
 							this.send('notify', 'Uh-Oh', file.name + ' could not be uploaded due to insufficient balance.');
 						} else if (responseCode === 500) {
-							this.get('currentTokenRecord').get('files').removeObject(fileRecord);
+							this.get('currentTokenRecord.files').removeObject(fileRecord);
 							this.send('notify', 'Uh-Oh', file.name + ' could not be uploaded due to a server error.');
 						} else if (responseCode === 201) {
 							this.set('uploadsCompleted', this.get('uploadsCompleted') + 1);
