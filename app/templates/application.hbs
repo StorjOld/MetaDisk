@@ -33,8 +33,8 @@ Steps:
 				</div>
 				<div {{action 'generateToken'}}></div>
 			</fieldset>
-			{{section-information caption="Your Bandwidth" helpType="bandwidth" unit="GB" value=currentTokenBandwidth valueTotal=null fileCount=null}}
-			{{section-information unit="GB" caption="Estimated Storage" helpType="storage" value=currentTokenStorage valueTotal=null fileCount=null}}
+			{{section-information caption="Your Bandwidth" helpType="bandwidth" unit="GB" value=currentTokenRecord.yourBandwidth valueTotal=null fileCount=null}}
+			{{section-information unit="GB" caption="Estimated Storage" helpType="storage" value=currentTokenRecord.estimatedStorage valueTotal=null fileCount=null}}
 			<fieldset>
 				<button>FREE SPACE</button>
 				<button>BUY SPACE</button>
@@ -64,7 +64,7 @@ Steps:
 		{{/section-wrapper}}
 	</section>
 	<section class="uploaded-files">
-		{{#each currentFileList}}
+		{{#each currentTokenRecord.files}}
 			{{file-listing title=title fileHash=hash fileKey=key bytesUploaded=bytesUploaded fileSize=fileSize}}
 		{{/each}}
 	</section>

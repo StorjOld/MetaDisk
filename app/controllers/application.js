@@ -15,22 +15,14 @@ export default Ember.ObjectController.extend({
 	maxFileSize: null,
 	currentToken: null,
 	currentTokenRecord: null,
-	currentTokenBandwidth: 0,
-	currentTokenStorage: 0,
-	currentFileList: null,
 	uploadsStarted: 0,
 	uploadsCompleted: 0,
 	notifyAccessGranted: function() {
 		return Notification && Notification.permission === 'granted';
 	}.on('init').property(),
 	setCurrentTokenRecord: function() {
-		this.store.findQuery('token', {token: this.get('currentToken')}).then(function(records) {
-			var record = records.get('firstObject');
-			this.set('currentTokenRecord', record);
-			this.set('currentTokenBandwidth', record.get('yourBandwidth'));
-			this.set('currentTokenStorage', record.get('estimatedStorage'));
-			this.set('currentFileList', record.get('files'));
-		}.bind(this));
+		this.set('currentTokenRecord', this.get('model').filterBy('token', this.get('currentToken'))[0]);
+		this.send('updateBandwidth');
 	}.observes('currentToken'),
 	setupToken: function() {
 		var model = this.get('model');
@@ -48,6 +40,7 @@ export default Ember.ObjectController.extend({
 		}
 		if (!this.get('currentToken')) {
 			this.set('currentToken', model.get('firstObject').get('token'));
+			this.send('updateBandwidth');
 		}
 	}.observes('model'),
 	sockets: {
@@ -75,13 +68,14 @@ export default Ember.ObjectController.extend({
 			this.set('currentToken', token);
 		},
 		updateBandwidth: function() {
-			$.ajax(this.get('baseUrl') + '/accounts/token/balance/' + this.get('currentTokenRecord'), {type: 'POST'})
+			$.ajax(this.get('baseUrl') + '/accounts/token/balance/' + this.get('currentToken'))
 				.fail(function() {
 					this.send('notify', 'Uh-Oh', 'Metadisk was unable to sync your available bandwidth amount.');
 				}.bind(this)
 			).then(function(response) {
-				this.set('currentTokenBandwidth', response.balance);
-				debugger;
+				var model = this.get('model').filterBy('token', this.get('currentToken'))[0];
+				model.set('yourBandwidth', response.balance);
+				model.save();
 			}.bind(this));
 		},
 		generateToken: function() {
@@ -165,6 +159,7 @@ export default Ember.ObjectController.extend({
 
 						if (responseCode === 402) {
 							this.get('currentTokenRecord').get('files').removeObject(fileRecord);
+							this.send('updateBandwidth');
 							this.send('notify', 'Uh-Oh', file.name + ' could not be uploaded due to insufficient balance.');
 						} else if (responseCode === 500) {
 							this.get('currentTokenRecord').get('files').removeObject(fileRecord);
@@ -178,6 +173,7 @@ export default Ember.ObjectController.extend({
 									this.get('currentTokenRecord').save();
 									this.set('uploadsCompleted', 0);
 									this.set('uploadsStarted', 0);
+									this.send('updateBandwidth');
 								}
 								//
 							}.bind(this));
