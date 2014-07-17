@@ -8,12 +8,15 @@
 </header>
 <!-- 
 Steps:
-* retrieve token bandwidth on token creation, successfule file upload...then remove hack
+* retrieve token bandwidth on: upload (when complete), buying
 * allow copy/pasting stuff, file download (update bandwidth)
 * enable file hash/search and add to given token list if found
-* enable buy/free space modals and system
+* enable buy/free space modals and system (update bandwidth on purchase)
 * enable complete offline manifest for all application files
 -->
+{{#animated-unless condition=notifyAccessGranted}}
+	<div {{action "notify" "Great!" "Thank you for allowing Metadisk to send you important notifications!"}} id="notify-ask"><span></span> Click here to allow Metadisk to send you important notifications. <span></span></div>
+{{/animated-unless}}
 <main>
 	<section class="sidebar">
 		<section class="upload">

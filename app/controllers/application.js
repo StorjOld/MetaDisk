@@ -20,6 +20,9 @@ export default Ember.ObjectController.extend({
 	currentFileList: null,
 	uploadsStarted: 0,
 	uploadsCompleted: 0,
+	notifyAccessGranted: function() {
+		return Notification && Notification.permission === 'granted' ? true : false;
+	}.on('init'),
 	setCurrentTokenRecord: function() {
 		this.store.findQuery('token', {token: this.get('currentToken')}).then(function(records) {
 			var record = records.get('firstObject');
@@ -83,6 +86,11 @@ export default Ember.ObjectController.extend({
 			}.bind(this));
 		},
 		notify: function(subject, body) {
+			if (Notification && Notification.permission !== 'denied') {
+				this.set('notifyAccessGranted', true);
+			}
+			
+
 			if (Notification && Notification.permission !== 'granted') {
 				Notification.requestPermission(function(status) {
 					if (Notification.permission !== status) {

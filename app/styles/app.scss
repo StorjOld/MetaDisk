@@ -215,6 +215,36 @@ header {
 	}
 }
 
+// NOTIFY ASK
+#notify-ask {
+	cursor: pointer;
+	background-color: $blood-orange;
+	text-align: center;
+	min-width: 320px;
+	position: relative;
+	max-width: 1200px;
+	margin-left: auto;
+	margin-right: auto;
+	color: $white;
+	font-size: 17px;
+	font-family: $exo;
+	border-radius: 5px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-top: 10px;
+	margin-bottom: -28px;
+	font-weight: $very-bold;
+	min-width: $min-width;
+	@include outer-container();
+
+	span {
+		@extend .fa;
+		@extend .fa-exclamation-triangle;
+		margin: 0 10px;
+	}
+	
+}
+
 // MAIN 
 main {
 	min-width: $min-width;
@@ -420,7 +450,7 @@ section.upload {
 	}
 
 	button:after {
-		content: '\AOR USE DRAG-AND-DROP';
+		//content: '\AOR USE DRAG-AND-DROP';
 		white-space: pre;
 		font-size: 10px;
 		font-weight: $regular;
