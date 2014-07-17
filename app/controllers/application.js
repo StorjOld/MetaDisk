@@ -124,7 +124,7 @@ export default Ember.ObjectController.extend({
 			//REMOVE BANDWIDTH CHECK HACK WHEN READY
 			if (file.size > this.get('maxFileSize')) {
 				this.send('notify', 'Uh-Oh', file.name + ' is too large to be uploaded to this node.');
-			} else if (file.size === this.get('currentTokenBandwidth')) {
+			} else if (file.size > this.get('currentTokenRecord.yourBandwidth')) {
 				this.send('notify', 'Uh-Oh', 'You do not have enough bandwidth to upload ' + file.name + ' to this node. Please purchase additional bandwidth.');
 			} else {
 				var reader = new FileReader();
