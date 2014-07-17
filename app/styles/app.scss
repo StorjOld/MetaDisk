@@ -427,6 +427,18 @@ progress:not([value])::-moz-progress-bar {
 }
 
 // UPLOAD SECTION
+span.uploading {
+	position: relative;
+	bottom: 15px;
+	font-family: $exo;
+
+	&:before {
+		content: '\f0ee';
+		padding-right: 5px;
+		@extend .fa;
+	}
+}
+
 section.upload {
 	button {
 		width: 100%;
