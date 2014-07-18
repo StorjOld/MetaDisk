@@ -9,8 +9,13 @@ export default Ember.Component.extend({
 	fileSize: null,
 	bytesUploaded: null,
 	isClosed: false,
-	downloadUri: null,
+	downloadUrl: null,
 	copyValue: null,
+	baseUrl: null,
+	currentToken: null,
+	preparedDownloadUrl: function() {
+		return this.get('baseUrl') + '/api/download/' + this.get('fileHash') + '?key=' + this.get('fileKey') + '?token=' + this.get('currentToken');
+	}.property('hostName', 'fileHash', 'fileKey', 'currentToken'),
 	hashAndKey: function() {
 		return this.get('fileHash') + '?key=' + this.get('fileKey');
 	}.property('fileHash', 'fileKey'),
@@ -25,7 +30,7 @@ export default Ember.Component.extend({
 			this.toggleProperty('isClosed');
 		},
 		downloadFile: function() {
-			this.set('downloadUri', '/api/download/' + this.get('fileHash') + '?key=' + this.get('fileKey') + '?token=');
+			this.set('downloadUrl', this.get('preparedDownloadUrl'));
 		}
 	}
 });

@@ -1,6 +1,5 @@
 export default Ember.ObjectController.extend({
-	baseUrl: 'http://node2.storj.io',
-	downloadUri: null,
+	downloadUrl: null,
 	copyValue: null,
 	uploadBandwidth: null,
 	uploadBandwidthTotal: null,
@@ -20,13 +19,16 @@ export default Ember.ObjectController.extend({
 	currentFileList: null,
 	uploadsStarted: 0,
 	uploadsCompleted: 0,
+	baseUrl: function() {
+		return MetadiskENV.environment === 'development' ? 'http://node2.storj.io' : 'http://' + window.location.hostname;
+	}.on('init').property(),
 	copiedFile: function() {
 		var copyValue = this.get('copyValue');
 		if (copyValue) this.send('notify', 'Success', 'The ' + copyValue + ' was successfully copied.');
 		this.set('copyValue', null);
 	}.observes('copyValue'),
 	downloadFile: function() {
-		var url = this.get('baseUrl') + this.get('downloadUri') + this.get('currentToken');
+		var url = this.get('downloadUrl');
 		$.ajax(url, {
 			statusCode: {
 				500: function(xhr) {
@@ -44,7 +46,7 @@ export default Ember.ObjectController.extend({
 				}.bind(this)
 			}
 		});
-	}.observes('downloadUri'),
+	}.observes('downloadUrl'),
 	notifyAccessGranted: function() {
 		return Notification && Notification.permission === 'granted';
 	}.on('init').property(),
