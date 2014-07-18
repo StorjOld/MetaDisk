@@ -3,13 +3,11 @@
 		<img src="/assets/images/logo.png" width="187" height="140" alt="Metadisk - Powered by Storj">
 	</section>
 	<section class="search">
-		<label><input type="text" placeholder="Search file hash&hellip;"></label>
+		<label>{{input action="retrieveHashKey" value=searchValue placeholder="Enter a file hash + key to add it to your files&hellip;"}}</label>
 	</section>
 </header>
 <!-- 
 Steps:
-* enable file hash/search and add to given token list if found (other urls)
-* test that download handling actually works on node2
 * enable buy/free space modals and system (update bandwidth on purchase)
 * enable complete offline manifest for all application files
 -->

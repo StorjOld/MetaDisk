@@ -19,6 +19,7 @@ export default Ember.ObjectController.extend({
 	currentFileList: null,
 	uploadsStarted: 0,
 	uploadsCompleted: 0,
+	searchValue: null,
 	baseUrl: function() {
 		return MetadiskENV.environment === 'development' ? 'http://node2.storj.io' : 'http://' + window.location.hostname;
 	}.on('init').property(),
@@ -151,6 +152,36 @@ export default Ember.ObjectController.extend({
 			} else {
 				alert(body);
 			}
+		},
+		retrieveHashKey: function() {
+			//searchValue
+			var val = this.get('searchValue');
+			var searchRegex = /[0-9a-zA-z]+\?key\=[0-9a-zA-z]+/;
+			var searchHash = val.split('?key=')[0];
+			var searchKey = val.split('?key=')[1];
+
+			if (searchRegex.test(val)) {
+				$.ajax(this.get('baseUrl') + '/api/find/' + searchHash)
+					.fail(function() {
+						this.send('notify', 'Uh-Oh', 'Metadisk was unable to find your file. Please be sure you typed your hash correctly.');
+					}.bind(this)
+				).then(function(response) {
+					var newRecord = this.store.createRecord('file', {title: response.filename, hash: searchHash, key: searchKey, fileSize: response.filesize, bytesUploaded: response.filesize});
+					this.get('currentTokenRecord.files').then(function(files) {
+						files.unshiftObject(newRecord);
+					}.bind(this));
+
+					newRecord.save().then(function(){
+						if (this.get('uploadsCompleted') === this.get('uploadsStarted')) {
+							this.get('currentTokenRecord').save();
+						}
+					}.bind(this));
+				}.bind(this));
+			} else {
+				this.send('notify', 'Uh-Oh', 'Your search query needs to be in the form [hash]?key=[key].');
+			}
+
+			this.set('searchValue', '');
 		},
 		handleFiles: function(file) {
 			if (file.size > this.get('maxFileSize')) {
