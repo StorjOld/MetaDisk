@@ -17,9 +17,9 @@ var app = new EmberApp();
 // please specify an object with the list of modules as keys
 // along with the exports of each module as its value.
 
-app.import('vendor/socket.io-client/dist/socket.io.min.js', {'exports': {'socket.io-client': ['default']}});
-app.import('vendor/ember-sockets/package/ember-sockets.js', {'exports': {'ember-sockets': ['default']}});
-app.import('vendor/ember-indexeddb-adapter/dist/ember_indexeddb_adapter.js', {'exports': {'ember-indexeddb-adapter': [ 'default' ]}});
+app.import('vendor/socket.io-client/dist/socket.io.min.js');
+app.import('vendor/ember-sockets/package/ember-sockets.js');
+app.import('vendor/ember-indexeddb-adapter/dist/ember_indexeddb_adapter.js');
 app.import('vendor/zeroclipboard/dist/ZeroClipboard.js');
 
 module.exports = app.toTree();
