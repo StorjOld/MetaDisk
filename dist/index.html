@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="/assets/images/favicon.ico">
+    <title>Metadisk - Powered by Storj</title>
+    <meta name="description" content="World's first blockchain-based decentralized file-sharing app.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <base href="/" />
+
+    <link rel="stylesheet" href="assets/vendor-d41d8cd98f00b204e9800998ecf8427e.css">
+    <link rel="stylesheet" href="assets/metadisk-9582d89c011532c343c86e8b3c5ecef9.css">
+  </head>
+  <body>
+    <script src="assets/local_settings-6eae9fbe3186e20afed997abf472cc29.js"></script>
+    <script>
+      window.MetadiskENV = {"environment":"production","baseURL":"/","locationType":"auto","EmberENV":{"FEATURES":{}},"APP":{}};
+      window.EmberENV = window.MetadiskENV.EmberENV;
+    </script>
+    <script src="assets/vendor-46069ac0decd7e90351879a73adc6d23.js"></script>
+    <script src="assets/metadisk-9824d4e4077b200ac8c75ae75738a40a.js"></script>
+    <script>
+      window.Metadisk = require('metadisk/app')['default'].create(MetadiskENV.APP);
+    </script>
+  </body>
+</html>
