@@ -20,5 +20,6 @@ var app = new EmberApp();
 app.import('vendor/socket.io-client/dist/socket.io.min.js', {'exports': {'socket.io-client': ['default']}});
 app.import('vendor/ember-sockets/package/ember-sockets.js', {'exports': {'ember-sockets': ['default']}});
 app.import('vendor/ember-indexeddb-adapter/dist/ember_indexeddb_adapter.js', {'exports': {'ember-indexeddb-adapter': [ 'default' ]}});
+app.import('vendor/zeroclipboard/dist/ZeroClipboard.js');
 
 module.exports = app.toTree();

@@ -13,6 +13,7 @@
     "ember-qunit-notifications": "^0.0.3",
     "ember-cli-test-loader": "rjackson/ember-cli-test-loader#0.0.2",
     "ember-indexeddb-adapter": "kurko/ember-indexeddb-adapter#master",
-    "ember-sockets": "~0.5.7"
+    "ember-sockets": "~0.5.7",
+    "zeroclipboard": "~2.1.5"
   }
 }
