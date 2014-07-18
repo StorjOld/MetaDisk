@@ -535,6 +535,7 @@ section.file {
 		border-color: $blue;
 		margin-right: 20px;
 
+		&.zeroclipboard-is-hover,
 		&:hover {
 			color: $white;
 			background-color: $blue;
@@ -547,6 +548,7 @@ section.file {
 			@extend .fa;
 		}
 
+		&.zeroclipboard-is-active,
 		&:active {
 			outline: none;
 			outline: 0

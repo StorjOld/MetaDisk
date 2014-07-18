@@ -5,8 +5,8 @@
 {{/animated-unless}}
 {{#animated-if condition=isCompletelyUploaded}}
 	<fieldset>
-		<button></button>
-		<button></button>
+		{{clipboard-button copyValue=copyValue copyText="hash and key" data-clipboard-text=hashAndKey}}
+		{{clipboard-button copyValue=copyValue copyText="download URL" data-clipboard-text=""}}
 		<button {{action "downloadFile"}}></button>
 	</fieldset>
 {{/animated-if}}

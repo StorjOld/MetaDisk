@@ -1,6 +1,7 @@
 export default Ember.ObjectController.extend({
 	baseUrl: 'http://node2.storj.io',
 	downloadUri: null,
+	copyValue: null,
 	uploadBandwidth: null,
 	uploadBandwidthTotal: null,
 	downloadBandwidth: null,
@@ -19,6 +20,11 @@ export default Ember.ObjectController.extend({
 	currentFileList: null,
 	uploadsStarted: 0,
 	uploadsCompleted: 0,
+	copiedFile: function() {
+		var copyValue = this.get('copyValue');
+		if (copyValue) this.send('notify', 'Success', 'The ' + copyValue + ' was successfully copied.');
+		this.set('copyValue', null);
+	}.observes('copyValue'),
 	downloadFile: function() {
 		var url = this.get('baseUrl') + this.get('downloadUri') + this.get('currentToken');
 		$.ajax(url, {

@@ -10,6 +10,10 @@ export default Ember.Component.extend({
 	bytesUploaded: null,
 	isClosed: false,
 	downloadUri: null,
+	copyValue: null,
+	hashAndKey: function() {
+		return this.get('fileHash') + '?key=' + this.get('fileKey');
+	}.property('fileHash', 'fileKey'),
 	uploadedPercent: function() {
 		return Math.min(100, Math.floor(this.get('bytesUploaded')/this.get('fileSize') * 100));
 	}.property('bytesUploaded', 'fileSize'),
