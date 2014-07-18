@@ -1,3 +1,5 @@
+import Ember from 'ember';
+
 export default Ember.ObjectController.extend({
 	downloadUrl: null,
 	copyValue: null,
@@ -25,23 +27,25 @@ export default Ember.ObjectController.extend({
 	}.on('init').property(),
 	copiedFile: function() {
 		var copyValue = this.get('copyValue');
-		if (copyValue) this.send('notify', 'Success', 'The ' + copyValue + ' was successfully copied.');
+		if (copyValue) {
+			this.send('notify', 'Success', 'The ' + copyValue + ' was successfully copied.');
+		}
 		this.set('copyValue', null);
 	}.observes('copyValue'),
 	downloadFile: function() {
 		var url = this.get('downloadUrl');
 		$.ajax(url, {
 			statusCode: {
-				500: function(xhr) {
+				500: function() {
 					this.send('notify', 'Uh-Oh', 'Metadisk was unable to download your file. Please wait for the file to sync to the cloud or try again later.');
 				}.bind(this),
-				404: function(xhr) {
+				404: function() {
 					this.send('notify', 'Uh-Oh', 'A file with this specified key and/or hash was not found and could not be downloaded.');
 				}.bind(this),
-				402: function(xhr) {
+				402: function() {
 					this.send('notify', 'Uh-Oh', 'You do not have sufficient balance to download this file. Please purchase additional bandwidth.');
 				}.bind(this),
-				200: function(xhr) {
+				200: function() {
 					//201?
 					this.send('updateBandwidth');
 				}.bind(this)
@@ -148,7 +152,7 @@ export default Ember.ObjectController.extend({
 					} else {
 						alert(body);
 					}
-				})
+				});
 			} else {
 				alert(body);
 			}
@@ -187,10 +191,8 @@ export default Ember.ObjectController.extend({
 			if (file.size > this.get('maxFileSize')) {
 				this.send('notify', 'Uh-Oh', file.name + ' is too large to be uploaded to this node.');
 			} else if (file.size > this.get('currentTokenRecord.yourBandwidth')) {
-				console.log('file size:', file.size, 'yourBandwidth:', this.get('currentTokenRecord.yourBandwidth'))
 				this.send('notify', 'Uh-Oh', 'You do not have enough bandwidth to upload ' + file.name + ' to this node. Please purchase additional bandwidth.');
 			} else {
-				var reader = new FileReader();
 				var xhr = new XMLHttpRequest();
 				var fd = new FormData();
 				var fileRecord = this.store.createRecord('file', {title: file.name, fileSize: file.size});
@@ -206,7 +208,7 @@ export default Ember.ObjectController.extend({
 					}
 				}, false);
 
-				xhr.upload.addEventListener('load', function(e) {
+				xhr.upload.addEventListener('load', function() {
 					fileRecord.set('bytesUploaded', file.size);
 				}, false);
 

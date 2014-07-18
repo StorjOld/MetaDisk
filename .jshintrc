@@ -2,7 +2,9 @@
   "predef": {
     "document": true,
     "window": true,
-    "MetadiskENV": true
+    "MetadiskENV": true,
+    "Notification": false,
+    "$": false
   },
   "browser" : true,
   "boss" : true,

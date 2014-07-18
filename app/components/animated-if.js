@@ -1,3 +1,5 @@
+import Ember from 'ember';
+
 export default Ember.Component.extend({
   condition: null,
   classNames: 'animated-if',
