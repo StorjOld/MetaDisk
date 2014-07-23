@@ -103,17 +103,12 @@ export default Ember.ObjectController.extend({
 	actions: {
 		getFreeSpaceTemp: function() {
 			var currentToken = this.get('currentToken');
-			$.ajax(this.get('baseUrl') + '/accounts/token/redeem/' + currentToken, {
-				type: 'POST', 
-				contentType: 'application/json; charset=utf-8',
-				data: '{"promocode":"PLEASE"}',
-				dataType: 'json'})
-				.fail(function() {
-					this.send('notify', 'Uh-Oh', 'Metadisk was unable to redeem your free space. Please remember that you can only ask for free space once per token.');
-				}.bind(this)
-				).then(function() {
-					this.send('notify', 'Success', 'Metadisk has added 100MB of bandwidth to your current token on this node.');
-				}.bind(this));
+			$.post(this.get('baseUrl') + '/accounts/token/redeem/' + currentToken, {'promocode':'PLEASE'}, function(){
+				this.send('notify', 'Success', 'Metadisk has added 100MB of bandwidth to your current token on this node.');
+			}.bind(this))
+			.fail(function() {
+				this.send('notify', 'Uh-Oh', 'Metadisk was unable to redeem your free space. Please remember that you can only ask for free space once per token.');
+			}.bind(this);
 		},
 		updateCurrentToken: function(token) {
 			this.set('currentToken', token);
