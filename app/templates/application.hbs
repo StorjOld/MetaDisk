@@ -33,7 +33,7 @@ Steps:
 			{{section-information caption="Your Bandwidth" helpType="bandwidth" unit="GB" value=currentTokenRecord.yourBandwidth valueTotal=null fileCount=null}}
 			{{section-information unit="GB" caption="Estimated Storage" helpType="storage" value=currentTokenRecord.estimatedStorage valueTotal=null fileCount=null}}
 			<fieldset>
-				<button>FREE SPACE</button>
+				<button {{action 'getFreeSpaceTemp'}}>FREE SPACE</button>
 				<button>BUY SPACE</button>
 			</fieldset>
 		{{/section-wrapper}}
