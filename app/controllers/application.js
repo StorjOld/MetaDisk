@@ -108,7 +108,7 @@ export default Ember.ObjectController.extend({
 			}.bind(this))
 			.fail(function() {
 				this.send('notify', 'Uh-Oh', 'Metadisk was unable to redeem your free space. Please remember that you can only ask for free space once per token.');
-			}.bind(this);
+			}.bind(this));
 		},
 		updateCurrentToken: function(token) {
 			this.set('currentToken', token);
