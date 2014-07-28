@@ -11,6 +11,7 @@ uploaded to Metadisk accessible through any node in the network.
 
 This project depends on several other projects:
 
+- [accounts](https://github.com/Storj/accounts)(Optional) - Library for managing bandwidth on shared Metadisk nodes.        Allows users to buy, earn, or receive their bandwidth.
 
 - [cloud-manager](https://github.com/Storj/cloud-manager) contains most of the
   file handling logic. It keeps track of all the uploaded files, keeps track of
