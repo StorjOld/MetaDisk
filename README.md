@@ -38,7 +38,7 @@ synchronization state.
 
 #### Installation
 
-Check [INSTALL.md](INSTALL.md) for installation instructions.
+Check [INSTALL.md](INSTALL.md) for installation instructions. We use [lunchbox](https://github.com/Storj/lunchbox) for automated deployment.
 
 #### API 
 All API documentation is contained in Metadisk's [web-core](https://github.com/Storj/web-core#api-documentation) repo.
