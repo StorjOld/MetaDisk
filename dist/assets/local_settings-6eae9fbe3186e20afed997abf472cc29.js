@@ -1,1 +1,0 @@
-window.API_HOST_NAME = 'node2.storj.io';
