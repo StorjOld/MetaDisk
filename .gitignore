@@ -12,6 +12,7 @@ old/static/index.html
 /bower_components/*
 
 # misc
+/dist/*
 /.sass-cache
 /connect.lock
 /coverage/*
