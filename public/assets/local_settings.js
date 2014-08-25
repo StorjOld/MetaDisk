@@ -1,1 +1,1 @@
-window.API_HOST_NAME = 'node2.storj.io';
+window.API_HOST_NAME = 'node3.metadisk.org';
