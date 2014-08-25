@@ -4,7 +4,7 @@
   "title": "Metadisk",
   "description": "Metadisk is a filehost web application which allows anyone to upload files via a web interface to the Storj network.",
   "private": true,
-  "homepage": "http://storj.io",
+  "homepage": "http://metadisk.org",
   "directories": {
     "doc": "doc",
     "test": "test"
@@ -21,8 +21,8 @@
   },
   "author": {
     "name": "Joshua Brandoff",
-    "company": "Storj Foundation",
-    "email": "josh@joshua.is"
+    "company": "Storj Labs",
+    "email": "josh@storj.io"
   },
   "license": "MIT",
   "devDependencies": {
