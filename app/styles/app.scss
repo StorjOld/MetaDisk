@@ -430,6 +430,7 @@ progress:not([value])::-moz-progress-bar {
 div.drop-zone {
 	&.active {
 		opacity: 0.4;
+		border: 10px dashed $black;
 	}
 }
 
