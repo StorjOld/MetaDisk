@@ -23,7 +23,7 @@ export default Ember.ObjectController.extend({
 	uploadsCompleted: 0,
 	searchValue: null,
 	baseUrl: function() {
-		return MetadiskENV.environment === 'development' ? 'http://node2.storj.io' : 'http://' + window.location.hostname;
+		return MetadiskENV.environment === 'development' ? 'http://node2.metadisk.org' : 'http://' + window.location.hostname;
 	}.on('init').property(),
 	copiedFile: function() {
 		var copyValue = this.get('copyValue');
