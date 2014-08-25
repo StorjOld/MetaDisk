@@ -427,6 +427,12 @@ progress:not([value])::-moz-progress-bar {
 }
 
 // UPLOAD SECTION
+div.drop-zone {
+	&.active {
+		opacity: 0.4;
+	}
+}
+
 span.uploading {
 	position: relative;
 	bottom: 15px;
@@ -462,7 +468,7 @@ section.upload {
 	}
 
 	button:after {
-		//content: '\AOR USE DRAG-AND-DROP';
+		content: '\AOR USE DRAG-AND-DROP';
 		white-space: pre;
 		font-size: 10px;
 		font-weight: $regular;
