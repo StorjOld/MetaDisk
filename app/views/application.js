@@ -16,6 +16,10 @@ export default Ember.View.extend({
   	e.preventDefault();
   },
 
+  dragLeave: function(e) {
+  	this.set('isActive', false);
+  },
+
   drop: function(e) {
   	this.set('isActive', false);
   	e.stopPropagation();
