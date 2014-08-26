@@ -103,7 +103,12 @@ export default Ember.ObjectController.extend({
 	actions: {
 		getFreeSpaceTemp: function() {
 			var currentToken = this.get('currentToken');
-			$.post(this.get('baseUrl') + '/accounts/token/redeem/' + currentToken, {'promocode':'PLEASE'}, function(){
+			$.ajax({
+				type:  'POST',
+				 url:  this.get('baseUrl') + '/accounts/token/redeem/' + currentToken,
+				 data: JSON.stringify({promocode:'PLEASE'}),
+				 contentType: 'application/json; charset=UTF-8'
+			}).done(function(){
 				this.send('notify', 'Success', 'Metadisk has added 100MB of bandwidth to your current token on this node.');
 			}.bind(this))
 			.fail(function() {
