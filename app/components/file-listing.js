@@ -9,14 +9,15 @@ export default Ember.Component.extend({
 	fileKey: null,
 	fileUri: null,
 	fileSize: null,
-	bytesUploaded: null,
+	bytesUploaded: 0,
 	lastBytesUploaded: 0,
 	isClosed: false,
 	downloadUrl: null,
 	copyValue: null,
 	baseUrl: null,
 	currentToken: null,
-	uploadSpeed: null,
+	uploadSpeed: 0,
+	abortedFilename: null,
 	preparedDownloadUrl: function() {
 		return this.get('baseUrl') + '/api/download/' + this.get('fileHash') + '?key=' + this.get('fileKey') + '?token=' + this.get('currentToken');
 	}.property('hostName', 'fileHash', 'fileKey', 'currentToken'),
@@ -50,20 +51,12 @@ export default Ember.Component.extend({
 		var fileSize = this.get('fileSize');
 		var uploadedSoFar = this.get('bytesUploaded');
 		var uploadSpeed = this.get('uploadSpeed');
-		var timeRemaining = ((fileSize - uploadedSoFar) / uploadSpeed);
+		var timeRemaining = ((fileSize - uploadedSoFar) / uploadSpeed) || 0;
 		var hours = Math.floor(timeRemaining / 3600);
 		var minutes = Math.floor((timeRemaining - (hours * 3600)) / 60);
 		var seconds = Math.floor(timeRemaining - (hours * 3600) - (minutes * 60));
 
-    	if (hours > 0) {
-    		return hours + ' hours and '     + minutes + ' minutes and ' + seconds + ' seconds';
-    	} else if (minutes > 0) {
-    		return minutes + ' minutes and '   + seconds  + ' seconds';
-    	} else if (seconds > 0) {
-    		return seconds + ' seconds remaining.';
-    	} else {
-    		return 'All done!';
-    	}
+		return (hours < 10 ? '0' + hours : hours) + ':' + (minutes < 10 ? '0' + minutes : minutes)  + ':' + (seconds < 10 ? '0' + seconds : seconds);
 	}.property('uploadSpeed'),
 	isCompletelyUploaded: function() {
 		return this.get('fileSize') === this.get('bytesUploaded');
