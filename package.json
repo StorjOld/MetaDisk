@@ -1,6 +1,6 @@
 {
   "name": "metadisk",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "title": "Metadisk",
   "description": "Metadisk is a filehost web application which allows anyone to upload files via a web interface to the Storj network.",
   "private": true,
@@ -29,13 +29,13 @@
     "body-parser": "^1.2.0",
     "broccoli-asset-rev": "0.0.17",
     "broccoli-ember-hbs-template-compiler": "^1.6.1",
-    "ember-cli": "0.0.40",
+    "ember-cli": "0.0.41",
     "ember-cli-ember-data": "0.1.0",
     "ember-cli-inject-live-reload": "^1.0.2",
     "ember-cli-ic-ajax": "0.1.1",
     "ember-cli-qunit": "0.0.5",
     "broccoli-sass": "^0.2.2",
-    "express": "^4.1.1",
-    "glob": "^3.2.9"
+    "express": "^4.8.5",
+    "glob": "^4.0.5"
   }
 }
