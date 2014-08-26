@@ -46,6 +46,25 @@ export default Ember.Component.extend({
 			return (speed/1000000000).toFixed(2) + ' GB/s';
 		}
 	}.property('uploadSpeed'),
+	uploadTimeRemaining: function() {
+		var fileSize = this.get('fileSize');
+		var uploadedSoFar = this.get('bytesUploaded');
+		var uploadSpeed = this.get('uploadSpeed');
+		var timeRemaining = ((fileSize - uploadedSoFar) / uploadSpeed);
+		var hours = Math.floor(timeRemaining / 3600);
+		var minutes = Math.floor((timeRemaining - (hours * 3600)) / 60);
+		var seconds = Math.floor(timeRemaining - (hours * 3600) - (minutes * 60));
+
+    	if (hours > 0) {
+    		return hours + ' hours and '     + minutes + ' minutes and ' + seconds + ' seconds';
+    	} else if (minutes > 0) {
+    		return minutes + ' minutes and '   + seconds  + ' seconds';
+    	} else if (seconds > 0) {
+    		return seconds + ' seconds remaining.';
+    	} else {
+    		return 'All done!';
+    	}
+	}.property('uploadSpeed'),
 	isCompletelyUploaded: function() {
 		return this.get('fileSize') === this.get('bytesUploaded');
 	}.property('fileSize', 'bytesUploaded'),
