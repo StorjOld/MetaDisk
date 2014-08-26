@@ -434,15 +434,35 @@ div.drop-zone {
 	}
 }
 
-span.uploading {
+div.upload-stats {
 	position: relative;
 	bottom: 15px;
 	font-family: $exo;
+	width: 100%;
 
-	&:before {
-		content: '\f0ee';
-		padding-right: 5px;
-		@extend .fa;
+	div {
+		float: left;
+		padding-top: 4px;
+		text-align: center;
+
+		&:first-of-type {
+			width: 112px;
+			padding: 0;
+			border-right: 2px solid $blue;
+		}
+
+		&:nth-of-type(2) {
+			padding-left: 16px;
+			width: 112px;
+		}
+
+		&:nth-of-type(3) {
+			width: 165px;
+		}
+
+		&:last-of-type {
+			width: 140px;
+		}
 	}
 }
 
@@ -561,27 +581,40 @@ section.file {
 			outline: 0
 		}
 
-		&:first-of-type:before {
+		&.cancel{
+			margin-right: 0;
+			padding: 4px 9px;
+		}
+		
+		&.cancel:before {
+			content: '\f00d';
+		}
+
+		&.cancel:after {
+			content: 'CANCEL'
+		}
+
+		&.copyHashKey:before {
 			content: '\f084';
 		}
 
-		&:first-of-type:after {
+		&.copyHashKey:after {
 			content: 'COPY HASH/KEY';
 		}
 
-		&:nth-of-type(2):before {
+		&.copyUrl:before {
 			content: '\f0ea';
 		}
 
-		&:nth-of-type(2):after {
+		&.copyUrl:after {
 			content: 'COPY URL';
 		}
 
-		&:last-of-type:before {
+		&.download:before {
 			content: '\f019';
 		}
 
-		&:last-of-type:after {
+		&.download:after {
 			content: 'DOWNLOAD';
 		}
 

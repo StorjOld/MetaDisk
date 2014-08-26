@@ -1,14 +1,19 @@
 <h1 {{action "toggleClosed"}}>{{title}}</h1>
-
+{{#animated-unless condition=isCompletelyUploaded}}
 	{{progress-bar max=fileSize toValue=bytesUploaded}}
-	<span class="uploading">
-		<strong>Status</strong>: {{uploadedPercent}}% 
-		<strong>Speed</strong>: {{formattedUploadSpeed}} 
-		<strong>Time Left</strong>: {{uploadTimeRemaining}}
-	</span>
-
+	<div class="upload-stats">
+		<div>
+			<button class="cancel"></button>
+		</div>
+		<div><strong>Status</strong>: {{uploadedPercent}}%</div>
+		<div><strong>Speed</strong>: {{formattedUploadSpeed}}</div>
+		<div><strong>Time</strong>: {{uploadTimeRemaining}}</div>
+	</div>
+{{/animated-unless}}
+{{#animated-if condition=isCompletelyUploaded}}
 	<fieldset>
-		{{clipboard-button copyValue=copyValue copyText="hash and key" data-clipboard-text=hashAndKey}}
-		{{clipboard-button copyValue=copyValue copyText="download URL" data-clipboard-text=preparedDownloadUrl}}
-		<button {{action "downloadFile"}}></button>
+		{{clipboard-button class="copyHashKey" copyValue=copyValue copyText="hash and key" data-clipboard-text=hashAndKey}}
+		{{clipboard-button class="copyUrl" copyValue=copyValue copyText="download URL" data-clipboard-text=preparedDownloadUrl}}
+		<button class="download" {{action "downloadFile"}}></button>
 	</fieldset>
+{{/animated-if}}
