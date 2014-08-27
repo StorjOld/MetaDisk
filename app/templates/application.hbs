@@ -8,8 +8,11 @@
 </header>
 <!-- 
 Steps:
+* enable cancel button
 * enable buy/free space modals and system (update bandwidth on purchase)
-* enable complete offline manifest for all application files
+* Allow disabling accounts
+* bug test persistence/bandwidth
+* enable complete offline manifest for all application files | online detection?
 -->
 {{#animated-unless condition=notifyAccessGranted}}
 	<div {{action "notify" "Great!" "Thank you for allowing Metadisk to send you important notifications!"}} id="notify-ask"><span></span> Click here to allow Metadisk to send you important notifications. <span></span></div>
@@ -62,7 +65,7 @@ Steps:
 	</section>
 	<section class="uploaded-files">
 		{{#each file in currentTokenRecord.files}}
-			{{file-listing title=file.title baseUrl=baseUrl currentToken=currentToken copyValue=copyValue fileHash=file.hash fileKey=file.key downloadUrl=downloadUrl bytesUploaded=file.bytesUploaded fileSize=file.fileSize}}
+			{{file-listing title=file.title baseUrl=baseUrl currentToken=currentToken copyValue=copyValue fileHash=file.hash fileKey=file.key downloadUrl=downloadUrl bytesUploaded=file.bytesUploaded fileSize=file.fileSize abortedFilename=abortedFilename}}
 		{{/each}}
 	</section>
 </main>
