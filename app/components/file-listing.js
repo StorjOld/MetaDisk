@@ -67,6 +67,9 @@ export default Ember.Component.extend({
 		},
 		downloadFile: function() {
 			this.set('downloadUrl', this.get('preparedDownloadUrl'));
+		},
+		cancelUpload: function() {
+			this.set('abortedFilename', this.get('title'));
 		}
 	}
 });
