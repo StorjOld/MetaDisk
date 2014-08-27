@@ -3,7 +3,7 @@
 	{{progress-bar max=fileSize toValue=bytesUploaded}}
 	<div class="upload-stats">
 		<div>
-			<button class="cancel"></button>
+			<button {{action "cancelUpload"}} class="cancel"></button>
 		</div>
 		<div><strong>Status</strong>: {{uploadedPercent}}%</div>
 		<div><strong>Speed</strong>: {{formattedUploadSpeed}}</div>
