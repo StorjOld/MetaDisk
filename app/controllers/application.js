@@ -22,6 +22,7 @@ export default Ember.ObjectController.extend({
 	uploadsStarted: 0,
 	uploadsCompleted: 0,
 	searchValue: null,
+	abortedFilename: '',
 	baseUrl: function() {
 		return MetadiskENV.environment === 'development' ? 'http://node3.metadisk.org' : 'http://' + window.location.hostname;
 	}.on('init').property(),
@@ -217,14 +218,24 @@ export default Ember.ObjectController.extend({
 				}.bind(this));
 
 				xhr.upload.addEventListener('progress', function(e) { 
-					if (e.lengthComputable) {
-						fileRecord.set('bytesUploaded', e.loaded);
+					if (this.get('abortedFilename') === file.name) {
+						xhr.abort();
+					} else {
+						if (e.lengthComputable) {
+							fileRecord.set('bytesUploaded', e.loaded);
+						}
 					}
-				}, false);
+				}.bind(this), false);
 
 				xhr.upload.addEventListener('load', function() {
 					fileRecord.set('bytesUploaded', file.size);
 				}, false);
+
+				xhr.upload.addEventListener('abort', function() {
+					this.set('abortedFilename', '');
+					this.get('currentTokenRecord.files').removeObject(fileRecord);
+					this.send('notify', 'Success', 'Upload of ' + file.name + ' has been cancelled.');
+				}.bind(this), false);
 
 				xhr.open('POST', this.get('baseUrl') + '/api/upload', true);
 				
@@ -254,7 +265,7 @@ export default Ember.ObjectController.extend({
 									this.set('uploadsStarted', 0);
 									this.send('updateBandwidth');
 								}
-								//
+								
 							}.bind(this));
 
 							this.send('notify', 'Success', file.name + ' was successfully uploaded.');
