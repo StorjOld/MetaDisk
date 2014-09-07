@@ -1,8 +1,6 @@
-/* global require */
-
-var Application = require('metadisk/app')['default'];
-var Router = require('metadisk/router')['default'];
 import Ember from 'ember';
+import Application from 'metadisk/app';
+import Router from 'metadisk/router';
 
 export default function startApp(attrs) {
   var App;
