@@ -16,13 +16,12 @@
   <body>
     <script src="assets/local_settings.js"></script>
     <script>
-      window.MetadiskENV = {{ENV}};
-      window.EmberENV = window.MetadiskENV.EmberENV;
+      window.EmberENV = {{EMBER_ENV}};
     </script>
     <script src="assets/vendor.js"></script>
     <script src="assets/metadisk.js"></script>
     <script>
-      window.Metadisk = require('metadisk/app')['default'].create(MetadiskENV.APP);
+     window.Metadisk = require('metadisk/app')['default'].create({{APP_CONFIG}});
     </script>
   </body>
 </html>
