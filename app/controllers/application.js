@@ -24,7 +24,7 @@ export default Ember.ObjectController.extend({
 	searchValue: null,
 	abortedFilename: '',
 	baseUrl: function() {
-		return MetadiskENV.environment === 'development' ? 'http://node3.metadisk.org' : 'http://' + window.location.hostname;
+		return EmberENV.environment === 'development' ? 'http://node3.metadisk.org' : 'http://' + window.location.hostname;
 	}.on('init').property(),
 	copiedFile: function() {
 		var copyValue = this.get('copyValue');
