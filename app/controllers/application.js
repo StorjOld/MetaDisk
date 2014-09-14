@@ -205,7 +205,7 @@ export default Ember.ObjectController.extend({
 		handleFiles: function(file) {
 			if (file.size > this.get('maxFileSize')) {
 				this.send('notify', 'Uh-Oh', file.name + ' is too large to be uploaded to this node.');
-			} else if (file.size > this.get('currentTokenRecord.yourBandwidth')) {
+			} else if (file.size > this.get('currentTokenRecord.yourBandwidth') && this.get('accountsEnabled')) {
 				this.send('notify', 'Uh-Oh', 'You do not have enough bandwidth to upload ' + file.name + ' to this node. Please purchase additional bandwidth.');
 			} else {
 				var xhr = new XMLHttpRequest();
