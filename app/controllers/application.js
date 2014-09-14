@@ -22,7 +22,7 @@ export default Ember.ObjectController.extend({
 	accountsEnabled: function() {
 		// Indicates whether accounts feature should be enabled or not
 		// based upon ENV variable.
-		return window.ACCOUNTS_ENABLED;
+		return EmberENV.APP.ACCOUNTS_ENABLED;
 	}.property(),
 
 	baseUrl: function() {
