@@ -32,7 +32,9 @@ export default Ember.Component.extend({
 			this.set('uploadSpeed', this.get('bytesUploaded') - this.get('lastBytesUploaded'));
 
 			this.set('lastBytesUploaded', this.get('bytesUploaded'));
-			if (this.get('uploadedPercent') < 99) this.startPolling();
+			if (this.get('uploadedPercent') < 99) {
+				this.startPolling();
+			}
 		}, 500);
 	}.on('didInsertElement'),
 	formattedUploadSpeed: function() {
