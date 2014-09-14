@@ -27,23 +27,25 @@ AFTER DEPLOY:
 			{{file-upload multiple=true}}
 			{{section-information caption="File Size Limit" unit="GB" value=maxFileSize valueTotal=null fileCount=null}}
 		</section>
-		{{#section-wrapper name="your-account" title="YOUR ACCOUNT"}}
-			<h3>
-				<span class="with-help token"><span class="help-icon">Access Token</span></span>
-			</h3>
-			<fieldset class="token-select">
-				<div>
-					{{select-option options=model}}
-				</div>
-				<div {{action 'generateToken'}}></div>
-			</fieldset>
-			{{section-information caption="Your Bandwidth" helpType="bandwidth" unit="GB" value=currentTokenRecord.yourBandwidth valueTotal=null fileCount=null}}
-			{{section-information unit="GB" caption="Estimated Storage" helpType="storage" value=currentTokenRecord.estimatedStorage valueTotal=null fileCount=null}}
-			<fieldset>
-				<button {{action 'getFreeSpaceTemp'}}>FREE SPACE</button>
-				<button>BUY SPACE</button>
-			</fieldset>
-		{{/section-wrapper}}
+		{{#if accountsEnabled}}
+			{{#section-wrapper name="your-account" title="YOUR ACCOUNT"}}
+				<h3>
+					<span class="with-help token"><span class="help-icon">Access Token</span></span>
+				</h3>
+				<fieldset class="token-select">
+					<div>
+						{{select-option options=model}}
+					</div>
+					<div {{action 'generateToken'}}></div>
+				</fieldset>
+				{{section-information caption="Your Bandwidth" helpType="bandwidth" unit="GB" value=currentTokenRecord.yourBandwidth valueTotal=null fileCount=null}}
+				{{section-information unit="GB" caption="Estimated Storage" helpType="storage" value=currentTokenRecord.estimatedStorage valueTotal=null fileCount=null}}
+				<fieldset>
+					<button {{action 'getFreeSpaceTemp'}}>FREE SPACE</button>
+					<button>BUY SPACE</button>
+				</fieldset>
+			{{/section-wrapper}}
+		{{/if}}
 		{{#section-wrapper name="sharing" title="SHARING"}}
 			<h3>
 				<span class="with-help address"><span class="help-icon">Data Address</span></span>
