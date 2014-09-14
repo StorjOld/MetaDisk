@@ -7,12 +7,16 @@
 	</section>
 </header>
 <!-- 
-Steps:
-* enable cancel button
-* enable buy/free space modals and system (update bandwidth on purchase)
-* Allow disabling accounts
-* bug test persistence/bandwidth
-* enable complete offline manifest for all application files | online detection?
+TODO:
+* Hard-code disabling of accounts, note they will stay that way until SJCX integrated
+* bug test persistence/bandwidth (client/server)
+* enable complete offline manifest for all application files
+
+AFTER DEPLOY:
+* add test coverage
+* SSL/TLS
+* Client-side encryption
+* DriveShare integration + file chunking
 -->
 {{#animated-unless condition=notifyAccessGranted}}
 	<div {{action "notify" "Great!" "Thank you for allowing Metadisk to send you important notifications!"}} id="notify-ask"><span></span> Click here to allow Metadisk to send you important notifications. <span></span></div>
@@ -58,9 +62,6 @@ Steps:
 			{{section-information caption="Cache Used" unit="GB" value=cacheUsed valueTotal=cacheUsedTotal fileCount=null}}
 			{{progress-bar max=cacheUsedTotal toValue=cacheUsed}}
 			{{section-information caption="Files Syncing to Cloud" unit="GB" value=null valueTotal=cloudFileSize fileCount=cloudFileCount}}
-			{{section-information caption="Files Syncing to Block" unit="GB" value=null valueTotal=syncFileSize fileCount=syncFileCount}}
-			{{section-information caption="Datacoin Address" unit="DTC" value=datacoinBalance valueTotal=null fileCount=null}}
-			<code>{{datacoinAddress}}</code>
 		{{/section-wrapper}}
 	</section>
 	<section class="uploaded-files">
