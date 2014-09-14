@@ -19,6 +19,12 @@ export default Ember.ObjectController.extend({
 	uploadsCompleted: 0,
 	searchValue: null,
 	abortedFilename: '',
+	accountsEnabled: function() {
+		// Indicates whether accounts feature should be enabled or not
+		// based upon ENV variable.
+		return window.ACCOUNTS_ENABLED;
+	}.property(),
+
 	baseUrl: function() {
 		return EmberENV.environment === 'development' ? 'http://node3.metadisk.org' : 'http://' + window.location.hostname;
 	}.on('init').property(),
