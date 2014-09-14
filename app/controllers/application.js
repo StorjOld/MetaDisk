@@ -118,15 +118,17 @@ export default Ember.ObjectController.extend({
 			this.set('currentToken', token);
 		},
 		updateBandwidth: function() {
-			$.ajax(this.get('baseUrl') + '/accounts/token/balance/' + this.get('currentToken'))
+			if (this.get('accountsEnabled')) {
+				$.ajax(this.get('baseUrl') + '/accounts/token/balance/' + this.get('currentToken'))
 				.fail(function() {
 					this.send('notify', 'Uh-Oh', 'Metadisk was unable to sync your available bandwidth amount.');
 				}.bind(this)
-			).then(function(response) {
-				var model = this.get('model').filterBy('token', this.get('currentToken'))[0];
-				model.set('yourBandwidth', response.balance);
-				model.save();
-			}.bind(this));
+				).then(function(response) {
+					var model = this.get('model').filterBy('token', this.get('currentToken'))[0];
+					model.set('yourBandwidth', response.balance);
+					model.save();
+				}.bind(this));
+			}	
 		},
 		generateToken: function() {
 			$.ajax(this.get('baseUrl') + '/accounts/token/new', {type: 'POST'})
