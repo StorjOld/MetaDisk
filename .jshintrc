@@ -2,7 +2,12 @@
   "predef": {
     "document": true,
     "window": true,
-    "-Promise": true
+    "-Promise": true,
+    "EmberENV": false,
+    "$": false,
+    "Notification": false,
+    "ZeroClipboard": false,
+    "EmberSockets": false
   },
   "browser" : true,
   "boss" : true,
