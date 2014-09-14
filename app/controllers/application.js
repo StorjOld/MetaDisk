@@ -11,10 +11,6 @@ export default Ember.ObjectController.extend({
 	cacheUsedTotal: null,
 	cloudFileCount: null,
 	cloudFileSize: null,
-	syncFileCount: null,
-	syncFileSize: null,
-	datacoinAddress: null,
-	datacoinBalance: null,
 	maxFileSize: null,
 	currentToken: null,
 	currentTokenRecord: null,
@@ -84,8 +80,6 @@ export default Ember.ObjectController.extend({
 	sockets: {
 		status: function(data) {
 			this.setProperties({
-				datacoinAddress: data.datacoin.address,
-				datacoinBalance: data.datacoin.balance,
 				uploadBandwidth: data.bandwidth.current.incoming,
 				uploadBandwidthTotal: data.bandwidth.limits.incoming,
 				downloadBandwidth: data.bandwidth.current.outgoing,
@@ -94,8 +88,6 @@ export default Ember.ObjectController.extend({
 				cacheUsedTotal: data.storage.capacity,
 				cloudFileCount: data.sync.cloud_queue.count,
 				cloudFileSize: data.sync.cloud_queue.size,
-				syncFileCount: data.sync.blockchain_queue.count,
-				syncFileSize: data.sync.blockchain_queue.size,
 				maxFileSize: data.storage.max_file_size
 			});
 		}
