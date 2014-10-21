@@ -1,11 +1,11 @@
-Metadisk
+MetaDisk
 ========
 
-Metadisk is a filehost web app, that allows anyone to upload files via a web
+MetaDisk is a filehost web app, that allows anyone to upload files via a web
 interface or API. Files are hashed and uploaded to public file hosting. Using
 the hashes a node can look up the information of where that file was stored
 using the [Datacoin](http://datacoin.info/) blockchain. This makes a file
-uploaded to Metadisk accessible through any node in the network.
+uploaded to MetaDisk accessible through any node in the network.
 
 #### Screenshot
 
@@ -16,7 +16,7 @@ uploaded to Metadisk accessible through any node in the network.
 
 This project depends on several other projects:
 
-- [accounts](https://github.com/Storj/accounts) (Optional) - Library for managing bandwidth on shared Metadisk nodes.        Allows users to buy, earn, or receive their bandwidth.
+- [accounts](https://github.com/Storj/accounts) (Optional) - Library for managing bandwidth on shared MetaDisk nodes.        Allows users to buy, earn, or receive their bandwidth.
 
 - [cloud-manager](https://github.com/Storj/cloud-manager) contains most of the
   file handling logic. It keeps track of all the uploaded files, keeps track of
@@ -34,10 +34,10 @@ This project depends on several other projects:
   sites. It is a python wrapper of the plowshare tool.
 
 - [web-core](https://github.com/Storj/web-core) is the backend server that powers
-  Metadisk. It provides a JSON API web service, and the daemons to synchronize
+  MetaDisk. It provides a JSON API web service, and the daemons to synchronize
   files to the cloud hosting services and to the blockchain.
 
-Metadisk, this project, provides a web interface to web-core, allowing you to
+MetaDisk, this project, provides a web interface to web-core, allowing you to
 upload files and check the server status regarding bandwidth, disk usage, and
 synchronization state.
 
@@ -47,4 +47,4 @@ synchronization state.
 Check [INSTALL.md](INSTALL.md) for installation instructions. We use [lunchbox](https://github.com/Storj/lunchbox) for automated deployment.
 
 #### API 
-All API documentation is contained in Metadisk's [web-core](https://github.com/Storj/web-core#api-documentation) repo.
+All API documentation is contained in MetaDisk's [web-core](https://github.com/Storj/web-core#api-documentation) repo.
