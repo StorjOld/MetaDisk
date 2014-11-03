@@ -10,7 +10,7 @@ $ cd ember-cli
 $ npm link
 ```
 
-After changing directory to the cloned StoryPilot repository:
+After changing directory to the cloned MetaDisk repository:
 
 ```bash
 $ npm link ember-cli
