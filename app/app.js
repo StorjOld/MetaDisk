@@ -10,7 +10,7 @@ var App = Ember.Application.extend({
   podModulePrefix: config.podModulePrefix,
   Resolver: Resolver,
   Socket: EmberSockets.extend({
-  	host: EmberENV.APP.API_HOST_NAME, //TODO: should be configurable
+  	host: config.APP.API_HOST_NAME,
   	path: 'metadisk',
   	controllers: ['application']
   })

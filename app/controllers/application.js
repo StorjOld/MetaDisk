@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import config from '../config/environment';
 
 export default Ember.ObjectController.extend({
 	downloadUrl: null,
@@ -22,7 +23,7 @@ export default Ember.ObjectController.extend({
 	accountsEnabled: function() {
 		// Indicates whether accounts feature should be enabled or not
 		// based upon ENV variable.
-		return EmberENV.APP.ACCOUNTS_ENABLED;
+		return config.APP.ACCOUNTS_ENABLED;
 	}.property(),
 
 	baseUrl: function() {
