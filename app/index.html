@@ -8,19 +8,15 @@
     <meta name="description" content="World's first blockchain-based decentralized file-sharing app.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    {{BASE_TAG}}
+    {{content-for 'head'}}
 
     <link rel="stylesheet" href="assets/vendor.css">
     <link rel="stylesheet" href="assets/metadisk.css">
   </head>
   <body>
-    <script>
-      window.EmberENV = {{EMBER_ENV}};
-    </script>
+
+    {{content-for 'body'}}
     <script src="assets/vendor.js"></script>
     <script src="assets/metadisk.js"></script>
-    <script>
-      window.Metadisk = require('metadisk/app')['default'].create({{APP_CONFIG}});
-    </script>
   </body>
 </html>
