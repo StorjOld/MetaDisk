@@ -7,6 +7,7 @@ Ember.MODEL_FACTORY_INJECTIONS = true;
 
 var App = Ember.Application.extend({
   modulePrefix: config.modulePrefix,
+  podModulePrefix: config.podModulePrefix,
   Resolver: Resolver,
   Socket: EmberSockets.extend({
   	host: EmberENV.APP.API_HOST_NAME, //TODO: should be configurable
