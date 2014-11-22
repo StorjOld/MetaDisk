@@ -201,8 +201,8 @@
       $("#cont-dl-bandwidth").html(gigabytes_ratio(info.bandwidth.current.outgoing, info.bandwidth.limits.outgoing));
       $("#bar-storage").css("width", percentage(info.storage.used, info.storage.capacity));
       $("#cont-storage").text(gigabytes_ratio(info.storage.used, info.storage.capacity));
-      $("#cont-datacoin-bal").text(info.datacoin.balance + " DTC");
-      $("#cont-datacoin-addr").html("<code>" + info.datacoin.address + "</code>").find("code").on("click", function() {
+      $("#cont-florincoin-bal").text(info.florincoin.balance + " DTC");
+      $("#cont-florincoin-addr").html("<code>" + info.florincoin.address + "</code>").find("code").on("click", function() {
         return selectElementText($(this)[0]);
       });
       $("#cont-sync-cloud").text(info.sync.cloud_queue.count + " (" + gigabytes(info.sync.cloud_queue.size) + ")");
