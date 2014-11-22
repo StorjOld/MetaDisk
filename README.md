@@ -4,7 +4,7 @@ MetaDisk
 MetaDisk is a filehost web app, that allows anyone to upload files via a web
 interface or API. Files are hashed and uploaded to public file hosting. Using
 the hashes a node can look up the information of where that file was stored
-using the [Datacoin](http://datacoin.info/) blockchain. This makes a file
+using the [Florincoin](http://florincoin.org/) blockchain. This makes a file
 uploaded to MetaDisk accessible through any node in the network.
 
 #### Screenshot
@@ -25,8 +25,8 @@ This project depends on several other projects:
 - [file-encryptor](https://github.com/Storj/file-encryptor) is an encryption 
   package that implements convergent encryption using HMAC-SHA256 and AES128-CTR.
 
-- [metachains-dtc](https://github.com/Storj/metachains-dtc) is a wrapper for
-  the Datacoin client, using JSON RPC. It also contains a synchronization class,
+- [metachains](https://github.com/Storj/metachains) is a wrapper for
+  the Florincoin client, using JSON RPC. It also contains a synchronization class,
   which allows one to synchronize data from and to the blockchain.
 
 - [plowshare-wrapper](https://github.com/Storj/plowshare-wrapper) provides a
