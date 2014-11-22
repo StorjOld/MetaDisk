@@ -201,7 +201,7 @@
       $("#cont-dl-bandwidth").html(gigabytes_ratio(info.bandwidth.current.outgoing, info.bandwidth.limits.outgoing));
       $("#bar-storage").css("width", percentage(info.storage.used, info.storage.capacity));
       $("#cont-storage").text(gigabytes_ratio(info.storage.used, info.storage.capacity));
-      $("#cont-florincoin-bal").text(info.florincoin.balance + " DTC");
+      $("#cont-florincoin-bal").text(info.florincoin.balance + " FLO");
       $("#cont-florincoin-addr").html("<code>" + info.florincoin.address + "</code>").find("code").on("click", function() {
         return selectElementText($(this)[0]);
       });
